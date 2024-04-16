@@ -172,5 +172,9 @@ namespace StanfordHospital.Controllers
             //return NotFound();
         }
 
+        public IActionResult UserEditProfile(EditProfile editProfile) 
+        {
+            return View();
+        }
     }
 }
