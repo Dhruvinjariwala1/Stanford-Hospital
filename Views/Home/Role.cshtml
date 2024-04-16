@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Role Page";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <partial name="Form" />
+                <button type="button" class="btn btn-primary btn-lg float-right" data-toggle="modal" data-target=".bd-example-modal-lg">Add</button><br /><br /><br />
+               <br/>
+               <div class="card">
+                   <div class="card-body">
+                        <h1 class="text-bold">Roles</h1>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Action</th>
+                    </tr>
+                    @foreach (var Roles in Model)
+                    {
+                        <tr>
+                            <td>@Roles.Id</td>
+                            <td>@Roles.Name</td>
+                            <td>
+                                <button type="button" class="edit btn btn-warning" data-id="@Roles.Id">
+                                    <i class='fas fa-edit'></i>
+                                </button>
+                                <button type="button" class="delete btn btn-danger" data-id="@Roles.Id">
+                                            <i class='fas fa-trash-alt'></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }   
+                </table>
+                </div>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".edit").click(function () {
+
+                $.ajax({
+                    url: "@Url.Action("GetRoleById", "Home")",
+                    datatype: "json",
+                    data: { id: $(this).attr("data-id") },
+                    success: function (resp) {    
+                        $("#roleId").val(resp.id)
+                        $("#Name").val(resp.name)
+                        $('#roleModel').modal('show');
+                    },
+                    error: function (resp) {
+                        console.log("Edit Role error:", resp);
+                    }
+                });
+            })
+
+            $(".delete").click(function () {
+
+                $.ajax({
+                    url: "@Url.Action("DeleteRole", "Home")",
+                    datatype: "json",
+                    data: { id: $(this).attr("data-id") },
+                    success: function (resp) {
+                        if (resp.status) {
+                            location.reload();
+                        }
+                        else {
+                            alert("Role is not deleted");
+                        }
+                    },
+                    error: function (resp) {
+                        console.log("Delete Role error:", resp);
+                    }
+                });
+            })
+        })
+    </script>           
+}
