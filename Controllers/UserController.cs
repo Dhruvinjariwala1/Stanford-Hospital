@@ -70,7 +70,7 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Delete(User user)
         {
-            var getdeleteUser = _context.Users.Where(u => u.Id == user.Id)
+            var deleteUser = _context.Users.Where(u => u.Id == user.Id)
                 .Select(u => new User
                 {
                     FirstName = u.FirstName,
@@ -83,7 +83,7 @@ namespace StanfordHospital.Controllers
                    // Image = u.Image,
                 }).FirstOrDefault();
 
-            return View("DeleteUser", getdeleteUser);
+            return View("DeleteUser", deleteUser);
         }
 
         public IActionResult AddUser(User user)
@@ -159,14 +159,17 @@ namespace StanfordHospital.Controllers
 
         public IActionResult DeleteUser(string id)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == id);
+            var user = _context.Users.Find(id);
             if (user != null)
             {
                 _context.Users.Remove(user);
                 _context.SaveChanges();
-                return RedirectToAction("User"); 
+
+                return Json(new { status = true });
+                //return RedirectToAction("User"); 
             }
-            return NotFound();
+            return Json(new { status = false });
+            //return NotFound();
         }
 
     }

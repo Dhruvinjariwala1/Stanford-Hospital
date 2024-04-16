@@ -8,7 +8,7 @@
 <h1 class="text-bold">User Details</h1>
 <br />
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create User</a>
 </p>
 
 
@@ -73,7 +73,7 @@
                 </td> *@
             <td>
                     <a class="edit btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class='fas fa-edit'></i></a>
-                    <a class="delete btn btn-danger" data-id="@item.Id"><i class='fas fa-trash-alt'></i></a>
+                    <button class="btn btn-danger" onclick="confirmFunction('@item.Id')"><i class='fas fa-trash-alt'></i></button>
             </td>
         </tr>
 }
@@ -84,24 +84,32 @@
     <script src="~/js/datatables.js"></script>
 }
 
-@section scripts {
+@section deleteuser{
     <script>
-        $(document).ready(function () {
-            $('.delete').click(function () {
-                var id = $(this).data('id');
-                if (confirm("Are you sure you want to delete this user?")) {
-                    $.ajax({
-                        url: '/User/Delete/' + id,
-                        type: 'POST',
-                        success: function (result) {
-                            window.location.href = '/User/DeleteUser';
-                        },
-                        error: function (xhr, status, error) {
-                            alert('Error deleting user: ' + error);
-                        }
-                    });
+        function confirmFunction(id) {
+            if (confirm('Are you sure you want to delete this item') == true) {
+                deleteUser(id)
+            }
+        }
+
+        function deleteUser(userId) {
+            $.ajax({
+                url: "@Url.Action("DeleteUser", "User")",
+                datatype: "json",
+                data: { id: userId },
+                success: function (resp) {
+
+                    if (resp.status) {
+                        location.reload();
+                    }
+                    else {
+                        alert("Role is not deleted");
+                    }
+                },
+                error: function (resp) {
+                    console.log("Delete role error:", resp);
                 }
             });
-        });
+        }
     </script>
 }
