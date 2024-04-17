@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="EditProfile" class="row g-3">
+        <form asp-action="EditProfile" class="row g-3" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group col-md-6">
@@ -65,7 +65,7 @@
                 <span asp-validation-for="Image" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-warning" />
+                <button type="submit" class="btn btn-warning">Save</button>
             </div>
         </form>
     </div>

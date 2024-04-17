@@ -205,5 +205,7 @@ namespace StanfordHospital.Controllers
             }
             return View("EditProfile", editprofile);
         }
+
+
     }
 }
