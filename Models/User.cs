@@ -26,7 +26,7 @@ namespace StanfordHospital.Models
         public DateTime BirthDate { get; set; }
         [Required]
         public string? Gender { get; set; }
-        //public string? Image { get; set; }
+        public string? Image { get; set; }
         public string? Action { get; set; }
     }
 }

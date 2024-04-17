@@ -12,6 +12,6 @@ namespace StanfordHospital.Models
         public string? Address { get; set; }
         public DateTime BirthDate { get; set; }
         public string? Gender { get; set; }
-        //public string? Image { get; set; }
+        public string? Image { get; set; }
     }
 }
