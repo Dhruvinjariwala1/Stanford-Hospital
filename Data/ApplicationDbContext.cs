@@ -18,7 +18,5 @@ namespace StanfordHospital.Data
         {
             base.OnModelCreating(builder);
         }
-
-
     }
 }
