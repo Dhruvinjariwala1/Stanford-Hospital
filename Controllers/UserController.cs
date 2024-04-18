@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
 
+
 namespace StanfordHospital.Controllers
 {
     [Authorize]
@@ -180,34 +181,11 @@ namespace StanfordHospital.Controllers
             //return NotFound();
         }
 
-
-        public IActionResult EditProfile(User editprofile)
+        public async Task<IActionResult> EditProfile()
         {
-            if (ModelState.IsValid)
-            {
-                var applicationUser = _context.Users.Find(editprofile.Id);
-                if (applicationUser != null)
-                {
-                    applicationUser.FirstName = editprofile.FirstName;
-                    applicationUser.LastName = editprofile.LastName;
-                    applicationUser.Email = editprofile.Email;
-                    applicationUser.PhoneNo = editprofile.PhoneNo;
-                    applicationUser.Address = editprofile.Address;
-                    applicationUser.BirthDate = editprofile.BirthDate;
-                    applicationUser.Gender = editprofile.Gender;
-                    applicationUser.Image = editprofile.Image;
-                    _context.Users.Update(applicationUser);
-                    _context.SaveChanges();
-                    return RedirectToAction("User");
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            return View("EditProfile", editprofile);
+            var currentUserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+            var applicationUser = _context.Users.Find(currentUserId);
+            return View("EditProfile", applicationUser);
         }
-
-
     }
 }
