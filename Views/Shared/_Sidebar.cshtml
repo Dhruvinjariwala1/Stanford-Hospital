@@ -2,6 +2,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @{
     var fullName = @UserManager.GetUserAsync(User).Result.FirstName + " " + @UserManager.GetUserAsync(User).Result.LastName;
+    var userimg = UserManager.GetUserAsync(User).Result.Image;
 }
 
 <!-- Main Sidebar Container -->
@@ -18,8 +19,16 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="nav-item">
                 <a asp-controller="User" asp-action="EditProfile" class="nav-link @ViewBag.isusereditprofile">
-                    <img src="~/dist/img/1.jpg" class="img-circle" alt="Image" width="40px" style="border-radius:10em;"/>
-                        @fullName
+                   @*  <img src="~/dist/img/1.jpg" class="img-circle" alt="Image" width="40px" style="border-radius:10em;"/> *@
+                   @if(!string.IsNullOrWhiteSpace(userimg))
+                    {
+                        <img src="~/dist/img/@userimg" class="img-circle" alt="Image" width="40px" style="border-radius:10em;" />
+                    }
+                    else
+                    {
+                        <img src="~/dist/img/AdminLTELogo.png" class="img-circle" alt="Image" width="40px" style="border-radius:10em;" />
+                    }
+                    @fullName
                 </a>
             </div>
         </div>

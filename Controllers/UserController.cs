@@ -13,12 +13,14 @@ namespace StanfordHospital.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserController(ILogger<UserController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public UserController(ILogger<UserController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult isusereditprofile()
@@ -186,6 +188,46 @@ namespace StanfordHospital.Controllers
             var currentUserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
             var applicationUser = _context.Users.Find(currentUserId);
             return View("EditProfile", applicationUser);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(ApplicationUser user, IFormFile ImageFile)
+        {
+            if(ModelState.IsValid) 
+            {
+                var updateuser = _context.Users.Where(u => u.Id == user.Id).FirstOrDefault();
+                if(updateuser != null) 
+                {
+                    updateuser.FirstName = user.FirstName;
+                    updateuser.LastName = user.LastName;
+                    updateuser.Email = user.Email;
+                    updateuser.PhoneNo = user.PhoneNo;
+                    updateuser.Address = user.Address;
+                    updateuser.BirthDate = user.BirthDate;
+                    updateuser.Gender = user.Gender;
+                    //updateuser.Image = user.Image;
+                    if (ImageFile != null && ImageFile.Length > 0)
+                    {
+                        // Generate a unique file name to avoid conflicts
+                        var uniqueFileName = Guid.NewGuid().ToString() + "_" + Path.GetFileName(ImageFile.FileName);
+                        var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "dist/img");
+                        var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                        // Save the file to the specified path
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await ImageFile.CopyToAsync(fileStream);
+                        }
+
+                        // Update user's image path
+                        updateuser.Image = uniqueFileName;
+                    }
+
+
+                    _context.SaveChanges();
+                }
+            }
+            return View("EditProfile", user);
         }
     }
 }

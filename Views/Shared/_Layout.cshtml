@@ -9,10 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - StanfordHospital</title>
 
-    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/StanfordHospital.styles.css" asp-append-version="true" /> *@
-
     <link href="~/css/datatablecss/datatables.css" rel="stylesheet" />
 
     <link href="~/css/datatablecss/datatables.min.css" rel="stylesheet" />
@@ -49,29 +45,24 @@
                 <img class="animation__shake" src="~/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
             </div>
 
-            <partial name="_Navbar"   />
-            <partial name="_Sidebar"   />
-
-
-
+            <partial name="_Navbar" />
+            <partial name="_Sidebar" />
+            <partial name="_Header" />
+            <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
-                <div class="container-fluid">
-                    <partial name="_Header"   />
-                    <!--/ .content-header-->
-                    <!--Main Context-->
-                    <section class="content">
-                        <div class="container-fluid">
-                            @RenderBody()
-                        </div> <!-- /.content-header -->
-                    </section>
-                    <!--content-->
-                </div>
-                <!--content-wrapper->
-
-                <!-- /.content-wrapper -->
+                <!-- /.content-header -->
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div><!-- /.container-fluid -->
+                </section>
+                <!-- /.content -->
             </div>
+            <!-- /.content-wrapper -->
         </div>
+        <!-- ./wrapper -->
 
         <partial name="_Footer" />
     }
