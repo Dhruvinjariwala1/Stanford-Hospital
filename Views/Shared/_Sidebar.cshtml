@@ -2,7 +2,7 @@
 @inject UserManager<ApplicationUser> UserManager
 @{
     var fullName = @UserManager.GetUserAsync(User).Result.FirstName + " " + @UserManager.GetUserAsync(User).Result.LastName;
-    var userimg = UserManager.GetUserAsync(User).Result.Image;
+    var userimg = @UserManager.GetUserAsync(User).Result.Image;
 }
 
 <!-- Main Sidebar Container -->
