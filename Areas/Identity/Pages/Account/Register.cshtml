@@ -7,7 +7,6 @@
 <br />
 <br />
 <br />
-<br />
 <center>
     <div class="register-box">
         <div class="register-logo">
@@ -15,7 +14,6 @@
         </div>
         <div class="card">
             <div class="card-body register-card-body">
-                <p class="login-box-msg">Register a new membership</p>
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                     <h2>Create a new account.</h2>
                     <hr />
@@ -48,6 +46,18 @@
                     </div>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     <button id="registerSubmit" type="submit" class="w-100 btn btn-primary">Register</button>
+                    <div>
+                        <br />
+                        <p>
+                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                        </p>
+                        <p>
+                            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login as a User</a>
+                        </p>
+                        <p>
+                            <a hidden="true" id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+                        </p>
+                    </div>
                 </form>
             </div>
             <div class="col-md-6 col-md-offset-2">
