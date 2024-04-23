@@ -20,7 +20,7 @@
                     <hr />
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="input-group mb-3">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Enter Your Email"/>
+                        <input type="email" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Enter Your Email"/>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
@@ -29,7 +29,7 @@
                     </div>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                     <div class="input-group mb-3">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Enter Your Password"/>
+                        <input type="password" asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Enter Your Password"/>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>

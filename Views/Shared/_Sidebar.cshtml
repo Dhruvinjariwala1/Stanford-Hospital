@@ -1,14 +1,14 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@* @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> UserManager
 @{
     var fullName = @UserManager.GetUserAsync(User).Result.FirstName + " " + @UserManager.GetUserAsync(User).Result.LastName;
     var userimg = @UserManager.GetUserAsync(User).Result.Image;
-}
+} *@
 
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="#" class="brand-link">
+    <a asp-action="Index" asp-controller="Home" class="brand-link">
         <img src="~/dist/img/medical-team.png" alt="medical-team" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Stanford Hospital</span>
     </a>
@@ -16,9 +16,9 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div class="nav-item">
-                <a asp-controller="User" asp-action="EditProfile" class="nav-link @ViewBag.isusereditprofile">
+        @* <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="nav-item"> *@
+                @* <a asp-controller="User" asp-action="EditProfile" class="nav-link @ViewBag.isusereditprofile">
                    @if(!string.IsNullOrWhiteSpace(userimg))
                     {
                         <img src="~/dist/img/@userimg" class="img-circle" alt="Image" width="40px" style="border-radius:10em;" />
@@ -28,10 +28,10 @@
                         <img src="~/dist/img/AdminLTELogo.png" class="img-circle" alt="Image" width="40px" style="border-radius:10em;" />
                     }
                     @fullName
-                </a>
-            </div>
-        </div>
-
+                </a> *@
+            @* </div>
+        </div> *@
+        <br />
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -60,12 +60,6 @@
                             User
                         </p>
                     </a>
-                </li>
-
-                <li class="nav-item">
-                    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                        <button type="submit" class="nav-link">Logout</button>
-                    </form>
                 </li>
             </ul>
         </nav>

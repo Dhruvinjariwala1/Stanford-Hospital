@@ -1,8 +1,10 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<ApplicationUser> UserManager
 @{
+    var fullName = @UserManager.GetUserAsync(User).Result.FirstName + " " + @UserManager.GetUserAsync(User).Result.LastName;
+    var userimg = @UserManager.GetUserAsync(User).Result.Image;
 }
+
 
 <style>
     body.light-mode {
@@ -36,6 +38,12 @@
     .navbar.light-mode .nav-link {
         color: #333;
     }
+
+    .btn-no-border {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
 </style>
 
 <!-- Navbar -->
@@ -55,7 +63,7 @@
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
         <!-- Navbar Search -->
-        <li class="nav-item">
+        @* <li class="nav-item">
             <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                 <i class="fas fa-search"></i>
             </a>
@@ -74,15 +82,24 @@
                     </div>
                 </form>
             </div>
-        </li>
+        </li> *@
 
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="fa fa-cog" aria-hidden="true"></i>
+                @if (!string.IsNullOrWhiteSpace(userimg))
+                {
+                    <img src="~/dist/img/@userimg" class="img-circle" alt="Image" width="40px" style="border-radius:10em;" />
+                }
+                else
+                {
+                    <img src="~/dist/img/AdminLTELogo.png" class="img-circle" alt="Image" width="40px" style="border-radius:10em;" />
+                }
+                @fullName
             </a>
+            <a asp-controller="User" asp-action="EditProfile" class="dropdown-item @ViewBag.isusereditprofile"></a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
+                <a asp-action="EditProfile" asp-controller="User" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
                         <div class="media-body">
@@ -95,7 +112,7 @@
                     <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
+                <a href="~/Identity/Account/Manage/ChangePassword" class="dropdown-item">
                     <!-- Message Start -->
                     <div class="media">
                         <div class="media-body">
@@ -108,18 +125,17 @@
                     <!-- Message End -->
                 </a>
                 <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
+                @* <a href="~/Identity/Account/Logout" class="dropdown-item"> *@
                     <!-- Message Start -->
                     <div class="media">
                         <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                               Logout
-                                <span class="float-right text-sm text-warning"><i class='fas fa-sign-out-alt'></i></span>
-                            </h3>
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                            <button type="submit" class="nav-link btn-no-border" style="color:black;">Logout<span class="float-right text-sm text-warning" style="margin-left:185px;"><i class='fas fa-sign-out-alt'></i></span></button>
+                        </form>
                         </div>
                     </div>
                     <!-- Message End -->
-                </a>
+                @* </a> *@
             </div>
         </li>
         <!-- Notifications Dropdown Menu -->
