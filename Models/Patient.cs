@@ -23,6 +23,7 @@ namespace StanfordHospital.Models
         [Required]
         public string? ContactNumber { get; set; }
         [Required]
+        [EmailAddress]
         [Display(Name ="Email Id")]
         public string? EmailId { get; set; }
         [Required]
