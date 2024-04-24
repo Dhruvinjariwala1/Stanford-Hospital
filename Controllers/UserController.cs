@@ -29,11 +29,11 @@ namespace StanfordHospital.Controllers
             return View();
         }
 
-        public IActionResult Userdetails()
-        {
-            ViewBag.isuser = "active";
-            return View();
-        }
+        //public IActionResult Userdetails()
+        //{
+        //    ViewBag.isuser = "active";
+        //    return View();
+        //}
 
         public IActionResult User(List<User> users)
         {

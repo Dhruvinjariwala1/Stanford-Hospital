@@ -1,0 +1,80 @@
+﻿@model IEnumerable<StanfordHospital.Models.Patient>
+
+@{
+    ViewData["Title"] = "Patient";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Patient</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create Patient</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            @* <th>
+                @Html.DisplayNameFor(model => model.Action)
+            </th> *@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Firstname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lastname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Patientid"><i class='fas fa-edit'></i></a>
+                <a class ="btn btn-danger" asp-action="Delete" asp-route-id="@item.Patientid"><i class='fas fa-trash-alt'></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
