@@ -31,6 +31,5 @@ namespace StanfordHospital.Models
         [Display(Name ="Age")]
         public string? Age { get; set; }
         public string? Address { get; set;}
-        //public string? Action { get; set;}
     }
 }
