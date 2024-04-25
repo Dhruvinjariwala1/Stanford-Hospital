@@ -13,11 +13,13 @@ namespace StanfordHospital.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
             _context = context;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -41,30 +43,30 @@ namespace StanfordHospital.Controllers
         }
         
 
-        public IActionResult AddRole(Roles roleName)
+        public async Task<IActionResult> AddRole(Roles roleName)
         {
             if (ModelState.IsValid)
             {
-                var identityRole = new IdentityRole
-                {
-                    Name = roleName.Name
-                };
+                
 
                 if (!string.IsNullOrEmpty(roleName.Id))
                 {
                     // Edit
                     var role = _context.Roles.Find(roleName.Id);
-                    if (role != null)
-                    {
-                        role.Name = roleName.Name;
-                        _context.SaveChanges();
-                    }
+                    role.Name = roleName.Name;
+                    await _context.SaveChangesAsync();
+                    
                 }
                 else
                 {
                     // Create
-                    _context.Roles.Add(identityRole);
-                    _context.SaveChanges();
+                    var identityRole = new IdentityRole
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Name = roleName.Name,
+                    };
+
+                    var result = await _roleManager.CreateAsync(identityRole);
                 }
                 return RedirectToAction("Role");
             }

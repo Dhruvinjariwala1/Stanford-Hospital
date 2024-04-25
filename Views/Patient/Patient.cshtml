@@ -10,7 +10,7 @@
 <p>
     <a class="btn btn-primary" asp-action="Create">Create Patient</a>
 </p>
-<table class="table">
+<table class="table" id="patientlist">
     <thead>
         <tr>
             <th>
@@ -37,7 +37,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            @* <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Action)
             </th> *@
             <th></th>
@@ -72,9 +72,44 @@
             </td>
             <td>
                 <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Patientid"><i class='fas fa-edit'></i></a>
-                <a class ="btn btn-danger" asp-action="Delete" asp-route-id="@item.Patientid"><i class='fas fa-trash-alt'></i></a>
+                <button type="button" class="btn btn-danger" onclick="confirmFunction('@item.Patientid')"><i class='fas fa-trash-alt'></i></button>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+@section Scripts {
+    <script>
+        function confirmFunction(Patientid) {
+            if (confirm('Are you sure you want to delete this Patient') == true) {
+                deletePatient(Patientid)
+            }
+        }
+
+        function deletePatient(Patientid) {
+            $.ajax({
+                url: "@Url.Action("DeletePatient", "Patient")",
+                datatype: "json",
+                data: { Patientid: Patientid },
+                success: function (resp) {
+
+                    if (resp.status) {
+                        location.reload();
+                    }
+                    else {
+                        alert("Patient is not deleted");
+                    }
+
+                },
+                error: function (resp) {
+                    console.log("Delete Patient error:", resp);
+                }
+            });
+        }
+    </script>
+}
+
+@section patientlist{
+    <script src="~/js/patientlist.js"></script>
+}

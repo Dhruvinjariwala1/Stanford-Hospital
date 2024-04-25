@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
 
@@ -13,14 +15,16 @@ namespace StanfordHospital.Controllers
         private readonly ILogger<UserController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public UserController(ILogger<UserController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment)
+        public UserController(ILogger<UserController> logger, ApplicationDbContext context, UserManager<ApplicationUser> userManager, IWebHostEnvironment webHostEnvironment, RoleManager<IdentityRole> roleManager)
         {
             _logger = logger;
             _context = context;
             _userManager = userManager;
             _webHostEnvironment = webHostEnvironment;
+            _roleManager = roleManager;
         }
 
         public IActionResult isusereditprofile()
@@ -50,7 +54,7 @@ namespace StanfordHospital.Controllers
                 Address = u.Address,
                 BirthDate = u.BirthDate,
                 Gender = u.Gender,
-                //Image = u.Image,
+                Role = u.Role
             }).ToList();
 
             return View(model);
@@ -61,21 +65,34 @@ namespace StanfordHospital.Controllers
             return View("AddUser", user);
         }
 
-        public IActionResult Edit(User user)
+        public async Task<IActionResult> Edit(User user)
         {
-            var getUser = _context.Users.Where(u => u.Id == user.Id)
+            var getUser = await _context.Users.Where(u => u.Id == user.Id)
                 .Select(u => new User
                 { 
+                    Id = u.Id,
                     FirstName = u.FirstName,
                     LastName = u.LastName,
                     Email = u.Email,
                     PhoneNo = u.PhoneNo,
                     Address = u.Address,
                     BirthDate = u.BirthDate,
-                    Gender = u.Gender,
-                   // Image = u.Image,
-            }).FirstOrDefault();
+                    Gender = u.Gender
+            }).FirstOrDefaultAsync();
 
+            if(getUser != null) 
+            {
+                var appplicationUser = await _userManager.FindByIdAsync(getUser.Id);
+                var userRoles = await _userManager.GetRolesAsync(appplicationUser);
+                if (userRoles.Count() > 0)
+                {
+                    var role = await _context.Roles.FirstOrDefaultAsync(x => x.Name == userRoles[0]);
+                    if (role != null)
+                    {
+                        getUser.Role = role.Name;
+                    }
+                }
+            }
             return View("EditUser", getUser);
         }
 
@@ -97,7 +114,7 @@ namespace StanfordHospital.Controllers
             return View("DeleteUser", deleteUser);
         }
 
-        public IActionResult AddUser(User user)
+        public async Task<IActionResult> AddUser(User user)
         {
             if (ModelState.IsValid)
             {
@@ -110,13 +127,15 @@ namespace StanfordHospital.Controllers
                     Address = user.Address,
                     BirthDate = user.BirthDate,
                     Gender = user.Gender,
-                    //Image = user.Image,
+                    Role = user.Role,
+                    EmailConfirmed = true,
+                    UserName = Guid.NewGuid().ToString().Replace('-','a'),
                 };
 
                 if (!string.IsNullOrEmpty(user.Id))
                 {
                     // Edit
-                    var users = _context.Users.Find(user.Id);
+                    var users = await _context.Users.FindAsync(user.Id);
                     if (user != null)
                     {
                         user.FirstName = user.FirstName;
@@ -126,22 +145,27 @@ namespace StanfordHospital.Controllers
                         user.Address = user.Address;
                         user.BirthDate = user.BirthDate;
                         user.Gender = user.Gender;
-                        //user.Image = user.Image;
-                        _context.SaveChanges();
+                        user.Role = user.Role;
+                        await _context.SaveChangesAsync();
                     }
                 }
                 else
                 {
                     // Create
                     _context.Users.Add(applicationUser);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
+
+                    var roleResult = await _userManager.AddToRoleAsync(applicationUser, user.Role);
+                    if(roleResult.Succeeded) 
+                    {
+                        return RedirectToAction("User");
+                    }
                 }
-                return RedirectToAction("User");
             }
             return View("AddUser",user);
         }
 
-        public IActionResult EditUser(User user)
+        public async Task<IActionResult> EditUser(User user)
         {
             if (ModelState.IsValid)
             {
@@ -155,9 +179,20 @@ namespace StanfordHospital.Controllers
                     applicationUser.Address = user.Address;
                     applicationUser.BirthDate = user.BirthDate;
                     applicationUser.Gender = user.Gender;
-                    //applicationUser.Image = user.Image;
+                    applicationUser.Role = user.Role;
                     _context.Users.Update(applicationUser);
-                    _context.SaveChanges();
+                    await _context.SaveChangesAsync();
+
+                    var userRoles = await _userManager.GetRolesAsync(applicationUser);
+                    var removeRoleResult = await _userManager.RemoveFromRolesAsync(applicationUser, userRoles);
+                    if (removeRoleResult != null)
+                    {
+                        var roleResult = await _userManager.AddToRoleAsync(applicationUser, user.Role);
+                        if (roleResult.Succeeded)
+                        {
+                            return RedirectToAction("User");
+                        }
+                    }
                     return RedirectToAction("User");
                 }
                 else
@@ -228,6 +263,14 @@ namespace StanfordHospital.Controllers
                 }
             }
             return View("EditProfile", user);
+        }
+        public IActionResult RoleAction()
+        {
+            var roles = _context.Roles
+                        .Select(r => new SelectListItem { Value = r.Id, Text = r.Name })
+                        .ToList();
+
+            return Json(roles);
         }
     }
 }

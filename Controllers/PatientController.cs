@@ -31,6 +31,7 @@ namespace StanfordHospital.Controllers
             var model = new List<Patient>();
             model = _context.Patient.Select(p => new Patient
             {
+               Patientid = p.Patientid,
                Firstname = p.Firstname,
                Lastname = p.Lastname,
                Gender = p.Gender,
@@ -50,7 +51,6 @@ namespace StanfordHospital.Controllers
             {
                 var Patient = new Patient
                 {
-                    //CategoryId = category.CategoryId,
                     Firstname = patient.Firstname,
                     Lastname = patient.Lastname,
                     Gender = patient.Gender,
@@ -99,6 +99,7 @@ namespace StanfordHospital.Controllers
                 var Patient = _context.Patient.Find(patient.Patientid);
                 if(Patient != null) 
                 {
+                    Patient.Patientid = patient.Patientid;
                     Patient.Firstname = patient.Firstname;
                     Patient.Lastname = patient.Lastname;
                     Patient.Gender = patient.Gender;
@@ -119,12 +120,12 @@ namespace StanfordHospital.Controllers
             return View("EditPatient",patient);
         }
 
-        public IActionResult DeletePatient(string id) 
+        public IActionResult DeletePatient(int Patientid) 
         {
-            var Patient = _context.Patient.Find(id);
-            if(Patient != null) 
+            var patient = _context.Patient.Find(Patientid);
+            if(patient != null) 
             {
-                _context.Patient.Remove(Patient);
+                _context.Patient.Remove(patient);
                 _context.SaveChanges();
 
                 return Json(new { status = true });
@@ -137,11 +138,12 @@ namespace StanfordHospital.Controllers
             return View("AddPatient",patient);
         }
 
-        public IActionResult Edit(Patient patient) 
+        public IActionResult Edit(int Id) 
         {
-            var editpatient = _context.Patient.Where(p => p.Patientid == patient.Patientid)
+            var editpatient = _context.Patient.Where(p => p.Patientid == Id)
                 .Select(p => new Patient
                 {
+                    Patientid = p.Patientid,
                     Firstname = p.Firstname,
                     Lastname = p.Lastname,
                     Gender = p.Gender,

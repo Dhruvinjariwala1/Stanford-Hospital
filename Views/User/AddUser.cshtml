@@ -43,11 +43,6 @@
                 <input asp-for="BirthDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="BirthDate" class="text-danger"></span>
             </div>
-            @* <div class="form-group col-md-6">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" type="file" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
-            </div> *@
             <div class="form-group col-md-6">
                 <label>Gender</label>
                 <div class="form-check">
@@ -64,6 +59,12 @@
                 </div>
                 <span asp-validation-for="Gender" class="text-danger"></span>
             </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Role" class="control-label"></label>
+                <select asp-for="Role" class="form-control selectrole">
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
             <div class="form-group col-md-12">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
@@ -73,5 +74,33 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            function getRoles() {
+                $.ajax({
+                    url: "@Url.Action("RoleAction", "User")",
+                type: "GET",
+                dataType: "Json",
+                success: function (result) {
+
+                    var mySelect = $('.selectrole');
+                    $.each(result, function (idx, item) {
+
+                        mySelect.append(
+                            $('<option></option>').val(item.text).html(item.text)
+                        );
+                    });
+                },
+                error: function () {
+                    alert('Failed to retrieve Sub Departments.');
+                }
+            });
+        }
+
+        getRoles();
+    })
+</script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
