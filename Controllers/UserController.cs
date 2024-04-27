@@ -158,10 +158,12 @@ namespace StanfordHospital.Controllers
                     var roleResult = await _userManager.AddToRoleAsync(applicationUser, user.Role);
                     if(roleResult.Succeeded) 
                     {
+                        TempData["SuccessMessage"] = "User Added Successfully....";
                         return RedirectToAction("User");
                     }
                 }
             }
+            TempData["ErrorMessage"] = "Failed to Add User.";
             return View("AddUser",user);
         }
 
@@ -190,6 +192,7 @@ namespace StanfordHospital.Controllers
                         var roleResult = await _userManager.AddToRoleAsync(applicationUser, user.Role);
                         if (roleResult.Succeeded)
                         {
+                            TempData["SuccessMessage"] = "User Updated Successfully....";
                             return RedirectToAction("User");
                         }
                     }
@@ -200,6 +203,7 @@ namespace StanfordHospital.Controllers
                     return NotFound();
                 }
             }
+            TempData["ErrorMessage"] = "Failed to Update User.";
             return View("EditUser",user);
         }
 

@@ -53,9 +53,16 @@ namespace StanfordHospital.Controllers
                 {
                     // Edit
                     var role = _context.Roles.Find(roleName.Id);
-                    role.Name = roleName.Name;
-                    await _context.SaveChangesAsync();
-                    
+                    if (role != null)
+                    {
+                        role.Name = roleName.Name;
+                        await _context.SaveChangesAsync();
+                        TempData["Message"] = "Role Updated SuccessFully....";
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 else
                 {
@@ -67,6 +74,18 @@ namespace StanfordHospital.Controllers
                     };
 
                     var result = await _roleManager.CreateAsync(identityRole);
+                    if (result.Succeeded) 
+                    {
+                        TempData["Message"] = "Role Added SuccessFully....";
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors) 
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return View(roleName);
+                    }
                 }
                 return RedirectToAction("Role");
             }

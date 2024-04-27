@@ -77,7 +77,7 @@ namespace StanfordHospital.Controllers
                         patient.Age = patient.Age;
                         patient.Address = patient.Address;
                         _context.SaveChanges();
-
+                        TempData["Message"] = "Patient Updated Successfully....";
                     }
                 }
                 else
@@ -85,6 +85,7 @@ namespace StanfordHospital.Controllers
                     //Create
                     _context.Patient.Add(Patient);
                     _context.SaveChanges();
+                    TempData["Message"] = "Patient Added Successfully....";
                 }
                 return RedirectToAction("Patient");
             }
@@ -110,6 +111,7 @@ namespace StanfordHospital.Controllers
                     Patient.Address = patient.Address;
                     _context.Patient.Update(Patient);
                     _context.SaveChanges();
+                    TempData["Message"] = "Patient Updated Successfully....";
                     return RedirectToAction("Patient");
                 }
                 else

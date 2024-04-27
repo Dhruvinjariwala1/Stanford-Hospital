@@ -4,6 +4,17 @@
     ViewData["Title"] = "Patient";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<!-- Rest of your Patient view HTML -->
 
 <h1>Patient</h1>
 
