@@ -129,7 +129,7 @@ namespace StanfordHospital.Controllers
                     Gender = user.Gender,
                     Role = user.Role,
                     EmailConfirmed = true,
-                    UserName = Guid.NewGuid().ToString().Replace('-','a'),
+                    UserName = user.Email/*Guid.NewGuid().ToString().Replace('-','a'),*/
                 };
 
                 if (!string.IsNullOrEmpty(user.Id))
@@ -152,15 +152,24 @@ namespace StanfordHospital.Controllers
                 else
                 {
                     // Create
-                    _context.Users.Add(applicationUser);
-                    await _context.SaveChangesAsync();
-
-                    var roleResult = await _userManager.AddToRoleAsync(applicationUser, user.Role);
-                    if(roleResult.Succeeded) 
+                    var isEmailExist = await _context.Users.Where(x => x.Id != user.Id && x.Email == user.Email).FirstOrDefaultAsync();
+                    if(isEmailExist != null) 
                     {
-                        TempData["SuccessMessage"] = "User Added Successfully....";
-                        return RedirectToAction("User");
+                        ModelState.AddModelError("Email", "Email already exist");
                     }
+                    else
+                    {
+                        var userResult = await _userManager.CreateAsync(applicationUser, "Test@123");
+                        if (userResult.Succeeded)
+                        {
+                            var roleResult = await _userManager.AddToRoleAsync(applicationUser, user.Role);
+                            if (roleResult.Succeeded)
+                            {
+                                TempData["SuccessMessage"] = "User Added Successfully....";
+                                return RedirectToAction("User");
+                            }
+                        }
+                    } 
                 }
             }
             TempData["ErrorMessage"] = "Failed to Add User.";
@@ -169,6 +178,12 @@ namespace StanfordHospital.Controllers
 
         public async Task<IActionResult> EditUser(User user)
         {
+            var isEmailExist = await _context.Users.Where(x => x.Id != user.Id && x.Email == user.Email).FirstOrDefaultAsync();
+            if(isEmailExist != null) 
+            {
+                ModelState.AddModelError("Email", "Email already exist");   
+            }
+
             if (ModelState.IsValid)
             {
                 var applicationUser = _context.Users.Find(user.Id);

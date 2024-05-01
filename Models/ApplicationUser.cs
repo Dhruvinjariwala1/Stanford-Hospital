@@ -8,16 +8,17 @@ namespace StanfordHospital.Models
     public class ApplicationUser : IdentityUser
     {
         [Required]
-        [Display(Name ="FirstName")]
+        [Display(Name ="First Name")]
         public string? FirstName { get; set; }
         [Required]
-        [Display(Name = "LastName")]
+        [Display(Name = "Last Name")]
         public string? LastName { get; set; }
         [MaxLength(10)]
+        [Display(Name = "Phone No")]
         public string? PhoneNo { get; set; }
         public string? Address { get; set; }
         [Required]
-        [Display(Name = "DateOfBirth")]
+        [Display(Name = "Date Of Birth")]
         public DateTime BirthDate { get; set; }
         [Required]
         public string? Gender { get; set; }

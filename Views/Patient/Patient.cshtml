@@ -23,7 +23,7 @@
 </p>
 <table class="table" id="patientlist">
     <thead>
-        <tr>
+        <tr style="background-color:#1E90FF;">
             <th>
                 @Html.DisplayNameFor(model => model.Firstname)
             </th>
@@ -37,13 +37,13 @@
                 @Html.DisplayNameFor(model => model.DateOfBirth)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.ContactNumber)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmailId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Address)
@@ -52,38 +52,39 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Firstname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Patientid"><i class='fas fa-edit'></i></a>
-                <button type="button" class="btn btn-danger" onclick="confirmFunction('@item.Patientid')"><i class='fas fa-trash-alt'></i></button>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lastname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Patientid"><i class='fas fa-edit'></i></a>
+                    <button type="button" class="btn btn-danger" onclick="confirmFunction('@item.Patientid')"><i class='fas fa-trash-alt'></i></button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
@@ -118,6 +119,6 @@
     </script>
 }
 
-@section patientlist{
+@section patientlist {
     <script src="~/js/patientlist.js"></script>
 }

@@ -106,7 +106,7 @@ namespace StanfordHospital.Controllers
                     Patient.Gender = patient.Gender;
                     Patient.DateOfBirth = patient.DateOfBirth;
                     Patient.ContactNumber = patient.ContactNumber;
-                    Patient.EmailId = Patient.EmailId;
+                    Patient.EmailId = patient.EmailId;
                     Patient.Age = patient.Age;
                     Patient.Address = patient.Address;
                     _context.Patient.Update(Patient);

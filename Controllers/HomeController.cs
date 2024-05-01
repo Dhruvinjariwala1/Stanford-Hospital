@@ -28,6 +28,7 @@ namespace StanfordHospital.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Role(List<Roles> roles)
         {
             ViewBag.isrole = "active";
