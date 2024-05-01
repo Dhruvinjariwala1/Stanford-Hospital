@@ -45,7 +45,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="DateOfBirth" class="control-label"></label>
-                <input asp-for="DateOfBirth" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <input asp-for="DateOfBirth" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="dateOfBirth" max="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="calculateAge()" />
                 <span asp-validation-for="DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
@@ -60,7 +60,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
+                <input asp-for="Age" class="form-control" id="age" readonly />
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
@@ -68,11 +68,6 @@
                 <textarea asp-for="Address" class="form-control"></textarea>
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
-            @* <div class="form-group">
-                <label asp-for="Action" class="control-label"></label>
-                <input asp-for="Action" class="form-control" />
-                <span asp-validation-for="Action" class="text-danger"></span>
-            </div> *@
             <div class="form-group">
                 <button type="submit" class="btn btn-warning">Save</button>
             </div>
@@ -83,4 +78,23 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function calculateAge() {
+            var dob = document.getElementById('dateOfBirth').value;
+            var dobDate = new Date(dob);
+            var now = new Date();
+            if (dobDate > now) {
+                alert("Please select a date before today.");
+                document.getElementById('dateOfBirth').value = '';
+                return;
+            }
+
+            var age = now.getFullYear() - dobDate.getFullYear();
+            var m = now.getMonth() - dobDate.getMonth();
+            if (m < 0 || (m === 0 && now.getDate() < dobDate.getDate())) {
+                age--;
+            }
+            document.getElementById('age').value = age;
+        }
+    </script>
 }
