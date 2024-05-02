@@ -48,7 +48,7 @@ namespace StanfordHospital.Controllers
                 var Appointment = new Appointment
                 {
                     Patientid = appointment.Patientid,
-                    User = appointment.User,
+                    Id = appointment.Id,
                     AppointmentDate = appointment.AppointmentDate,
                     AppointmentTime = appointment.AppointmentTime,
                     AppointmentStatus = appointment.AppointmentStatus,
@@ -125,7 +125,7 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Create(Appointment appointment)
         {
-            ViewBag.Patient = new SelectList(_context.Patient, "Patientid", "Firstname");
+            ViewBag.Patients = new SelectList(_context.Patient, "Patientid", "Firstname");
             ViewBag.Doctors = new SelectList(_context.Users.Where(u => u.Role == "doctor"), "Id", "FirstName");
             //ViewBag.Users = new SelectList(_context.Users, "Id", "FirstName");
             return View("AddAppointment", appointment);
