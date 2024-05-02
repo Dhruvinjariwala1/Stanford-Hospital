@@ -5,52 +5,60 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>AddAppointment</h1>
+<h1>Add Appointment</h1>
 
-<h4>Appointment</h4>
+<div>
+    <a class="btn btn-primary" asp-action="Appointment">Back to List</a>
+</div>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddAppointment">
+    <div class="col-md-12">
+        <form asp-action="AddAppointment" class="row g-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="Patientid" class="control-label">PatientName</label>
-                <select asp-for="Patientid" class="form-control" asp-items="@(ViewBag.Patients as SelectList)"></select>
+                <select asp-for="Patientid" class="form-control" asp-items="@(ViewBag.Patient as SelectList)">
+                    <option value="">Select Patient</option>
+                </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="Id" class="control-label"></label>
-                <select asp-for="Id" class="form-control" asp-items="@(ViewBag.Users as SelectList)"></select>
+                <select asp-for="Id" class="form-control" asp-items="@(ViewBag.Doctors as SelectList)">
+                    <option value="">Select Doctor</option>
+                </select>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="AppointmentDate" class="control-label"></label>
                 <input asp-for="AppointmentDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                 <span asp-validation-for="AppointmentDate" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="AppointmentTime" class="control-label"></label>
-                <input asp-for="AppointmentTime" class="form-control" type="time"/>
+                <input asp-for="AppointmentTime" class="form-control" type="time" />
                 <span asp-validation-for="AppointmentTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="AppointmentStatus" class="control-label"></label>
-                <input asp-for="AppointmentStatus" class="form-control" />
+                <select asp-for="AppointmentStatus" class="form-control">
+                    <option value="completed">Completed</option>
+                    <option value="pending">Pending</option>
+                    <option value="canceled">Canceled</option>
+                </select>
                 <span asp-validation-for="AppointmentStatus" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
                 <label asp-for="ReasonForAppointment" class="control-label"></label>
-                <textarea asp-for="ReasonForAppointment" class="form-control" cols="4" rows="5"></textarea>
+                <textarea asp-for="ReasonForAppointment" class="form-control" cols="5" rows="3"></textarea>
                 <span asp-validation-for="ReasonForAppointment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Appointment">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

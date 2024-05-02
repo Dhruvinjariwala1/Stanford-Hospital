@@ -32,5 +32,6 @@ namespace StanfordHospital.Models
         public string? Age { get; set; }
         public string? Address { get; set;}
         public string? Action { get; set; }
+
     }
 }

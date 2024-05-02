@@ -20,9 +20,11 @@ namespace StanfordHospital.Models
 
         [Required]
         [Display(Name = "Appointment Date")]
+        [DataType(DataType.Date)]
         public DateTime AppointmentDate { get; set; }
         [Required]
         [Display(Name = "Appointment Time")]
+        [DataType(DataType.Time)]
         public DateTime AppointmentTime { get; set;}
         [Required]
         [Display(Name = "Appointment Status")]
