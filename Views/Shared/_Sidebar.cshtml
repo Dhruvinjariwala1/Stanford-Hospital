@@ -70,10 +70,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a asp-controller="Appointment" asp-action="Appointment" class="nav-link @ViewBag.isappointment">
+                    <a asp-controller="Appointment" asp-action="Index" class="nav-link @ViewBag.isappointment">
                         <img src="~/dist/img/medical-appointment.png" alt="Image" width="30px" />
                         <p>
                             Appointment
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Room" asp-action="Room" class="nav-link @ViewBag.isroom">
+                        <img src="~/dist/img/Hospital Room.png" alt="Image" width="30px" />
+                        <p>
+                            Room
                         </p>
                     </a>
                 </li>

@@ -18,16 +18,16 @@
 <h1>Appointment</h1>
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create Appointment</a>
 </p>
-<table class="table">
+<table class="table" id="appointmentlist">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Patient)
+                Select Patient
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                Select Doctor
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AppointmentDate)
@@ -50,9 +50,13 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Patient.Firstname)
+
+                    @Html.DisplayFor(modelItem => item.Patient.Lastname)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User)
+                <td>Dr. 
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+
+                    @Html.DisplayFor(modelItem => item.User.LastName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AppointmentDate)
@@ -96,7 +100,6 @@
                     else {
                         alert("Appointment is not deleted");
                     }
-
                 },
                 error: function (resp) {
                     console.log("Delete Appointment error:", resp);
@@ -104,4 +107,8 @@
             });
         }
     </script>
+}
+
+@section appointmentlist{
+    <script src="~/js/appointmentlist.js"></script>
 }

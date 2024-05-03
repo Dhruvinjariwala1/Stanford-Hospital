@@ -8,7 +8,7 @@
 <h1>Edit Appointment</h1>
 
 <div>
-    <a class="btn btn-primary" asp-action="Appointment">Back to List</a>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
 </div>
 <hr />
 <div class="row">
@@ -17,12 +17,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Appointmentid" />
             <div class="form-group col-md-6">
-                <label asp-for="Patientid" class="control-label"></label>
+                <label asp-for="Patientid" class="control-label">Select Patient</label>
                 <select asp-for="Patientid" class="form-control" asp-items="@(ViewBag.Patients as SelectList)"></select>
                 <span asp-validation-for="Patientid" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Id" class="control-label"></label>
+                <label asp-for="Id" class="control-label">Select Doctor</label>
                 <select asp-for="Id" class="form-control" asp-items="@(ViewBag.Doctors as SelectList)"></select>
                 <span asp-validation-for="Id" class="text-danger"></span>
             </div>

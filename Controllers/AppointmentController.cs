@@ -22,7 +22,7 @@ namespace StanfordHospital.Controllers
         //    return View();
         //}
 
-        public IActionResult Appointment() 
+        public IActionResult Index() 
         {
             ViewBag.isappointment = "active";
 
@@ -31,16 +31,17 @@ namespace StanfordHospital.Controllers
             {
                 Appointmentid = a.Appointmentid,
                 Patient = a.Patient,
-                Id = a.Id,
+                User = a.User,
                 AppointmentDate = a.AppointmentDate,
                 AppointmentTime = a.AppointmentTime,
                 AppointmentStatus = a.AppointmentStatus,
                 ReasonForAppointment = a.ReasonForAppointment,
             }).ToList();
 
-            return View(model);
+            return View("Appointment", model);
         }
 
+        [HttpPost]
         public IActionResult AddAppointment(Appointment appointment) 
         {
             if(ModelState.IsValid) 
@@ -78,7 +79,7 @@ namespace StanfordHospital.Controllers
                     _context.SaveChanges();
                     TempData["Message"] = "Appointment Added Successfully....";
                 }
-                return RedirectToAction("Appointment");
+                return RedirectToAction("Index");
             }
             return View("AddAppointment", appointment);
         }
@@ -100,7 +101,7 @@ namespace StanfordHospital.Controllers
                     _context.Appointment.Update(Appointment);
                     _context.SaveChanges();
                     TempData["Message"] = "Appointment Updated Successfully....";
-                    return RedirectToAction("Appointment");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -125,16 +126,38 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Create(Appointment appointment)
         {
-            ViewBag.Patients = new SelectList(_context.Patient, "Patientid", "Firstname");
-            ViewBag.Doctors = new SelectList(_context.Users.Where(u => u.Role == "doctor"), "Id", "FirstName");
+            var patients = _context.Patient.Select(p => new {
+                p.Patientid,
+                FullName = $"{p.Firstname} {p.Lastname}"
+            }).ToList();
+            ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
+            var doctors = _context.Users.Where(u => u.Role == "doctor")
+                               .Select(u => new
+                               {
+                                   Id = u.Id,
+                                   FullName = $"Dr. {u.FirstName} {u.LastName}"
+                               })
+                               .ToList();
+            ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
             //ViewBag.Users = new SelectList(_context.Users, "Id", "FirstName");
             return View("AddAppointment", appointment);
         }
 
         public IActionResult Edit(int Id)
         {
-            ViewBag.Patients = new SelectList(_context.Patient, "Patientid", "Firstname");
-            ViewBag.Doctors = new SelectList(_context.Users.Where(u => u.Role == "doctor"), "Id", "FirstName");
+            var patients = _context.Patient.Select(p => new {
+                p.Patientid,
+                FullName = $"{p.Firstname} {p.Lastname}"
+            }).ToList();
+            ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
+            var doctors = _context.Users.Where(u => u.Role == "doctor")
+                               .Select(u => new
+                               {
+                                   Id = u.Id,
+                                   FullName = $"Dr. {u.FirstName} {u.LastName}"
+                               })
+                               .ToList();
+            ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
             var editappointment = _context.Appointment.Where(a => a.Appointmentid == Id)
                 .Select(a => new Appointment
                 {

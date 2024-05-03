@@ -2,19 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using StanfordHospital.Models;
 
-
 namespace StanfordHospital.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+            : base(options) 
         {
         }
-            
+
         public DbSet<User> users { get; set; }
-        public DbSet<Patient> Patient { get; set; }
+        public DbSet<Patient> Patient {  get; set; }
         public DbSet<Appointment> Appointment { get; set; }
+        public DbSet<Room> Room { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
