@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
 
@@ -30,6 +31,7 @@ namespace StanfordHospital.Controllers
             {
                 Roomid = r.Roomid,
                 RoomName = r.RoomName,
+                RoomFloor = r.RoomFloor,
                 RoomType = r.RoomType,
                 RoomPrice = r.RoomPrice,
             }).ToList();
@@ -37,58 +39,62 @@ namespace StanfordHospital.Controllers
             return View(model);
         }
 
-        public IActionResult AddRoom(Room room) 
+        public IActionResult AddRoom(Room room)
         {
-            if(ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var Room = new Room
                 {
-                    Roomid = room.Roomid,
-                    RoomName = room.RoomName,
-                    RoomType = room.RoomType,
-                    RoomPrice = room.RoomPrice,
+                   Roomid =room.Roomid,
+                   RoomName = room.RoomName,
+                   RoomFloor = room.RoomFloor,
+                   RoomType = room.RoomType,
+                   RoomPrice = room.RoomPrice,
                 };
 
-                if(room.Roomid != 0) 
+                if (room.Roomid != 0)
                 {
                     //Edit
                     var rooms = _context.Room.Find(room.Roomid);
-                    if(Room != null) 
+                    if (Room != null)
                     {
                         room.Roomid = room.Roomid;
                         room.RoomName = room.RoomName;
+                        room.RoomFloor = room.RoomFloor;
                         room.RoomType = room.RoomType;
                         room.RoomPrice = room.RoomPrice;
                         _context.SaveChanges();
-                        TempData["Message"] = "Room Updated SuccessFully....";
+                        TempData["Message"] = "Room Updated Successfully....";
                     }
                 }
-                else 
+                else
                 {
                     //Create
                     _context.Room.Add(Room);
                     _context.SaveChanges();
-                    TempData["Message"] = "Room Added SuccessFully....";
+                    TempData["Message"] = "Room Added Successfully....";
                 }
                 return RedirectToAction("Room");
             }
-            return RedirectToAction("AddRoom", room);
+
+            return View("AddRoom", room);
         }
 
         public IActionResult EditRoom(Room room)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var Room = _context.Room.Find(room.Roomid);
-                if(Room != null) 
+                if (Room != null)
                 {
                     Room.Roomid = room.Roomid;
                     Room.RoomName = room.RoomName;
+                    Room.RoomFloor = room.RoomFloor;
                     Room.RoomType = room.RoomType;
                     Room.RoomPrice = room.RoomPrice;
                     _context.Room.Update(Room);
                     _context.SaveChanges();
-                    TempData["Message"] = "Room Updated SuccessFully....";
+                    TempData["Message"] = "Room Updated Successfully....";
                     return RedirectToAction("Room");
                 }
                 else
@@ -99,10 +105,10 @@ namespace StanfordHospital.Controllers
             return View("EditRoom", room);
         }
 
-        public IActionResult DeleteRoom(int Roomid) 
+        public IActionResult DeleteRoom(int Roomid)
         {
             var room = _context.Room.Find(Roomid);
-            if(room != null) 
+            if (room != null)
             {
                 _context.Room.Remove(room);
                 _context.SaveChanges();
@@ -124,25 +130,27 @@ namespace StanfordHospital.Controllers
                 {
                     Roomid = r.Roomid,
                     RoomName = r.RoomName,
+                    RoomFloor = r.RoomFloor,
                     RoomType = r.RoomType,
                     RoomPrice = r.RoomPrice,
                 }).FirstOrDefault();
 
-            return RedirectToAction("EditRoom", updateroom);
+            return View("EditRoom", updateroom);
         }
 
-        public IActionResult Delete(Room room) 
+        public IActionResult Delete(Room room)
         {
-            var removeroom = _context.Room.Where(r => r.Roomid ==  room.Roomid)
+            var removeroom = _context.Room.Where(r => r.Roomid == room.Roomid)
                 .Select(r => new Room
                 {
-                    Roomid = r.Roomid,
-                    RoomName = r.RoomName,
+                    Roomid=r.Roomid,
+                    RoomName=r.RoomName,
+                    RoomFloor=r.RoomFloor,
                     RoomType = r.RoomType,
                     RoomPrice = r.RoomPrice,
                 }).FirstOrDefault();
 
-            return RedirectToAction("DeleteRoom", removeroom);
+            return View("DeleteRoom", removeroom);
         }
     }
 }

@@ -1,0 +1,70 @@
+﻿@model StanfordHospital.Models.Room
+
+@{
+    ViewData["Title"] = "EditRoom";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Room</h1>
+
+<div>
+    <a class="btn btn-primary" asp-action="Room">Back to List</a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="EditRoom" class="row g-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Roomid" />
+            <div class="form-group col-md-6">
+                <label asp-for="RoomName" class="control-label"></label>
+                <select asp-for="RoomName" class="form-control">
+                    <option value="Medical Surgical Room">Medical Surgical Room</option>
+                    <option value="ICU">ICU</option>
+                    <option value="Maternity care room">Maternity care room</option>
+                    <option value="Behavioral and mental health room">Behavioral and mental health room</option>
+                    <option value="Sick room">Sick room</option>
+                    <option value="Patient room">Patient room</option>
+                    <option value="Clinic">Clinic</option>
+                    <option value="Emergency room">Emergency room</option>
+                    <option value="Infirmary">Infirmary</option>
+                    <option value="CCU">CCU</option>
+                    <option value="TICU">TICU</option>
+                </select>
+                <span asp-validation-for="RoomName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="RoomFloor" class="control-label"></label>
+                <input asp-for="RoomFloor" class="form-control" />
+                <span asp-validation-for="RoomFloor" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="RoomType" class="control-label"></label>
+                <select asp-for="RoomType" class="form-control">
+                    <option value="General Room">General Room</option>
+                    <option value="ICU Room">ICU Room</option>
+                    <option value="Private Room">Private Room</option>
+                    <option value="Single Room (Non-AC and AC)">Single Room (Non-AC and AC)</option>
+                    <option value="Deluxe Room (Non-AC and AC)">Deluxe Room (Non-AC and AC)</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Presidential Suite">Presidential Suite</option>
+                </select>
+                <span asp-validation-for="RoomType" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="RoomPrice" class="control-label"></label>
+                <input asp-for="RoomPrice" class="form-control" />
+                <span asp-validation-for="RoomPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" >Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

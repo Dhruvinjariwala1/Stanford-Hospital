@@ -11,6 +11,10 @@ namespace StanfordHospital.Models
         public string? RoomName { get; set; }
 
         [Required(ErrorMessage ="*")]
+        [Display(Name ="RoomFloor")]
+        public int RoomFloor { get; set; }
+
+        [Required(ErrorMessage ="*")]
         [Display(Name ="RoomType")]
         public string? RoomType { get; set; }
 

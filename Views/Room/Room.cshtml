@@ -1,0 +1,93 @@
+﻿@model IEnumerable<StanfordHospital.Models.Room>
+
+@{
+    ViewData["Title"] = "Room";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+<h1>Room</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomFloor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomFloor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomPrice)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Roomid"><i class='fas fa-edit'></i></a>
+                    <button type="button" class="btn btn-danger" onclick="confirmFunction('@item.Roomid')"><i class='fas fa-trash-alt'></i></button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmFunction(Roomid) {
+            if (confirm('Are you sure you want to delete this Room') == true) {
+                deleteRoom(Roomid)
+            }
+        }
+
+        function deleteRoom(Roomid) {
+            $.ajax({
+                url: "@Url.Action("DeleteRoom", "Room")",
+                datatype: "json",
+                data: { Roomid: Roomid },
+                success: function (resp) {
+
+                    if (resp.status) {
+                        location.reload();
+                    }
+                    else {
+                        alert("Room is not deleted");
+                    }
+
+                },
+                error: function (resp) {
+                    console.log("Delete Room error:", resp);
+                }
+            });
+        }
+    </script>
+}
