@@ -11,27 +11,27 @@ namespace StanfordHospital.Models
         public int Appointmentid { get; set; }
 
         [ForeignKey("Patient")]
-        [Required(ErrorMessage = "*")]
+        [Required]
         public int Patientid { get; set; }
         public virtual Patient? Patient { get; set; }
 
         [ForeignKey("User")]
-        [Required(ErrorMessage = "*")]
+        [Required]
         public string? Id { get; set; }
         public virtual ApplicationUser? User { get; set; }
 
-        [Required(ErrorMessage ="*")]
+        [Required]
         [Display(Name = "Appointment Date")]
         [DataType(DataType.Date)]
         public DateTime AppointmentDate { get; set; }
-        [Required(ErrorMessage = "*")]
+        [Required]
         [Display(Name = "Appointment Time")]
         [DataType(DataType.Time)]
         public DateTime AppointmentTime { get; set;}
-        [Required(ErrorMessage = "*")]
+        [Required]
         [Display(Name = "Appointment Status")]
         public string? AppointmentStatus { get; set;}
-        [Required(ErrorMessage = "*")]
+        [Required]
         [Display(Name = "Reason For Appointment")]
         public string? ReasonForAppointment { get; set; }
     }

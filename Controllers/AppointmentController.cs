@@ -22,6 +22,29 @@ namespace StanfordHospital.Controllers
         //    return View();
         //}
 
+        public IActionResult Doctor()
+        {
+            ViewBag.isdoctor = "active";
+
+            var currentDate = DateTime.Today;
+
+            var model = _context.Appointment
+                .Where(a => a.AppointmentDate.Date == currentDate)
+                .Select(a => new Appointment
+                {
+                    Appointmentid = a.Appointmentid,
+                    Patient = a.Patient,
+                    User = a.User,
+                    AppointmentDate = a.AppointmentDate,
+                    AppointmentTime = a.AppointmentTime,
+                    AppointmentStatus = a.AppointmentStatus,
+                    ReasonForAppointment = a.ReasonForAppointment
+                })
+                .ToList();
+
+            return View("Appointment", model);
+        }
+
         public IActionResult Index() 
         {
             ViewBag.isappointment = "active";
