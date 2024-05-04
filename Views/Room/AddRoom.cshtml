@@ -16,15 +16,15 @@
         <form asp-action="AddRoom" class="row g-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomName" class="control-label">Room Name<span class="text-danger">*</span></label>
+                <label asp-for="RoomName" class="control-label">Room Name<span asp-validation-for="RoomName" class="text-danger"></span></label>
                 <input asp-for="RoomName" class="form-control" />
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomFloor" class="control-label">Room Floor<span class="text-danger">*</span></label>
+                <label asp-for="RoomFloor" class="control-label">Room Floor<span asp-validation-for="RoomFloor" class="text-danger"></span></label>
                 <input asp-for="RoomFloor" class="form-control" />
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomType" class="control-label">Romm Type<span class="text-danger">*</span></label>
+                <label asp-for="RoomType" class="control-label">Romm Type<span asp-validation-for="RoomType" class="text-danger"></span></label>
                 <select asp-for="RoomType" class="form-control">
                     <option value="General Room">General Room</option>
                     <option value="ICU Room">ICU Room</option>
@@ -36,7 +36,7 @@
                </select>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomPrice" class="control-label">Room Price<span class="text-danger">*</span></label>
+                <label asp-for="RoomPrice" class="control-label">Room Price<span asp-validation-for="RoomPrice" class="text-danger"></span></label>
                 <input asp-for="RoomPrice" class="form-control" />
             </div>
             <div class="form-group">

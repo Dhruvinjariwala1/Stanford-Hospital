@@ -6,25 +6,25 @@ namespace StanfordHospital.Models
     {
         public string? Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name = "First Name")]
         public string? FirstName { get; set; }
         [Display(Name = "Last Name")]
-        [Required]
+        [Required(ErrorMessage = "*")]
         public string? LastName { get; set; }
-        [Required]
+        [Required(ErrorMessage = "*")]
         [EmailAddress]
         public string? Email { get; set; }
         [Display(Name = "Phone No")]
-        [Required]
+        [Required(ErrorMessage = "*")]
         [MaxLength(10)]
         public string? PhoneNo { get; set; }
         public string? Address { get; set; }
         [Display(Name = "Birth Date")]
-        [Required]
+        [Required(ErrorMessage = "*")]
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
-        [Required]
+        [Required(ErrorMessage ="*")]
         public string? Gender { get; set; }
         public string? Image { get; set; }
         public string? Role { get; set; }

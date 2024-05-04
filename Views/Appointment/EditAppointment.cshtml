@@ -17,31 +17,31 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Appointmentid" />
             <div class="form-group col-md-6">
-                <label asp-for="Patientid" class="control-label">Select Patient<span class="text-danger">*</span></label>
+                <label asp-for="Patientid" class="control-label">Select Patient<span asp-validation-for="Patientid" class="text-danger"></span></label>
                 <select asp-for="Patientid" class="form-control" asp-items="@(ViewBag.Patients as SelectList)"></select>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Id" class="control-label">Select Doctor<span class="text-danger">*</span></label>
+                <label asp-for="Id" class="control-label">Select Doctor<span asp-validation-for="Id" class="text-danger"></span></label>
                 <select asp-for="Id" class="form-control" asp-items="@(ViewBag.Doctors as SelectList)"></select>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentDate" class="control-label">Appointment Date<span class="text-danger">*</span></label>
+                <label asp-for="AppointmentDate" class="control-label">Appointment Date<span asp-validation-for="AppointmentDate" class="text-danger"></span></label>
                 <input asp-for="AppointmentDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentTime" class="control-label">Appointment Time<span class="text-danger">*</span></label>
+                <label asp-for="AppointmentTime" class="control-label">Appointment Time<span asp-validation-for="AppointmentTime" class="text-danger"></span></label>
                 <input asp-for="AppointmentTime" class="form-control" type="time" />
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentStatus" class="control-label">Appointment Status<span class="text-danger">*</span></label>
+                <label asp-for="AppointmentStatus" class="control-label">Appointment Status<span asp-validation-for="AppointmentStatus" class="text-danger"></span></label>
                 <select asp-for="AppointmentStatus" class="form-control">
-                    <option value="completed">Completed</option>
-                    <option value="pending">Pending</option>
-                    <option value="canceled">Canceled</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Canceled">Canceled</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="ReasonForAppointment" class="control-label">Reason For Appointment<span class="text-danger">*</span></label>
+                <label asp-for="ReasonForAppointment" class="control-label">Reason For Appointment<span asp-validation-for="ReasonForAppointment" class="text-danger"></span></label>
                 <textarea asp-for="ReasonForAppointment" class="form-control" cols="5" rows="3"></textarea>
             </div>
             <div class="form-group">

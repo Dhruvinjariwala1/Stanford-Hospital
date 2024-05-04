@@ -6,19 +6,19 @@ namespace StanfordHospital.Models
     {
         public int Roomid { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="*")]
         [Display(Name ="Room Name")]
         public string? RoomName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="*")]
         [Display(Name ="Room Floor")]
         public int RoomFloor { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "*")]
         [Display(Name ="Room Type")]
         public string? RoomType { get; set; }
 
-        [Required]
+        [Required(ErrorMessage ="*")]
         [Display(Name ="Room Price")]
         public int RoomPrice { get; set; }
     }
