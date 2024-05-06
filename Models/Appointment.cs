@@ -31,9 +31,17 @@ namespace StanfordHospital.Models
         [Required(ErrorMessage ="*")]
         [Display(Name = "Appointment Status")]
         public string? AppointmentStatus { get; set;}
+
+        [Display(Name ="Diagnosis")]
+        public string? Diagnosis { get; set; }
+
+        [Display(Name ="Prescription")]
+        public string? Prescription { get; set; }
+
         [Required(ErrorMessage = "*")]
         [Display(Name = "Reason For Appointment")]
         public string? ReasonForAppointment { get; set; }
+
 
         
     }

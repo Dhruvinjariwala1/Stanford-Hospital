@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
@@ -22,6 +23,7 @@ namespace StanfordHospital.Controllers
         //    return View();
         //}
 
+       
         public IActionResult Doctor()
         {
             ViewBag.isdoctor = "active";
@@ -38,6 +40,8 @@ namespace StanfordHospital.Controllers
                     AppointmentDate = a.AppointmentDate,
                     AppointmentTime = a.AppointmentTime,
                     AppointmentStatus = a.AppointmentStatus,
+                    Diagnosis = a.Diagnosis,
+                    Prescription = a.Prescription,
                     ReasonForAppointment = a.ReasonForAppointment
                 })
                 .ToList();
@@ -58,6 +62,8 @@ namespace StanfordHospital.Controllers
                 AppointmentDate = a.AppointmentDate,
                 AppointmentTime = a.AppointmentTime,
                 AppointmentStatus = a.AppointmentStatus,
+                Diagnosis = a.Diagnosis,
+                Prescription = a.Prescription,
                 ReasonForAppointment = a.ReasonForAppointment,
             }).ToList();
 
@@ -76,6 +82,8 @@ namespace StanfordHospital.Controllers
                     AppointmentDate = appointment.AppointmentDate,
                     AppointmentTime = appointment.AppointmentTime,
                     AppointmentStatus = appointment.AppointmentStatus,
+                    Diagnosis = appointment.Diagnosis,
+                    Prescription = appointment.Prescription,
                     ReasonForAppointment = appointment.ReasonForAppointment,
                 };
 
@@ -90,6 +98,8 @@ namespace StanfordHospital.Controllers
                         appointment.AppointmentDate = appointment.AppointmentDate;
                         appointment.AppointmentTime = appointment.AppointmentTime;
                         appointment.AppointmentStatus = appointment.AppointmentStatus;
+                        appointment.Diagnosis = appointment.Diagnosis;
+                        appointment.Prescription = appointment.Prescription;
                         appointment.ReasonForAppointment = appointment.ReasonForAppointment;
                         _context.SaveChanges();
                         TempData["Message"] = "Appointment Updated Successfully....";
@@ -120,6 +130,8 @@ namespace StanfordHospital.Controllers
                     Appointment.AppointmentDate = appointment.AppointmentDate;
                     Appointment.AppointmentTime = appointment.AppointmentTime;
                     Appointment.AppointmentStatus = appointment.AppointmentStatus;
+                    Appointment.Diagnosis = appointment.Diagnosis;
+                    Appointment.Prescription = appointment.Prescription;
                     Appointment.ReasonForAppointment= appointment.ReasonForAppointment;
                     _context.Appointment.Update(Appointment);
                     _context.SaveChanges();
@@ -190,6 +202,8 @@ namespace StanfordHospital.Controllers
                     AppointmentDate = a.AppointmentDate,
                     AppointmentTime = a.AppointmentTime,
                     AppointmentStatus = a.AppointmentStatus,
+                    Diagnosis = a.Diagnosis,
+                    Prescription = a.Prescription,
                     ReasonForAppointment = a.ReasonForAppointment,
                 }).FirstOrDefault();
 
@@ -207,6 +221,8 @@ namespace StanfordHospital.Controllers
                     AppointmentDate = a.AppointmentDate,
                     AppointmentTime = a.AppointmentTime,
                     AppointmentStatus = a.AppointmentStatus,
+                    Diagnosis = a.Diagnosis,
+                    Prescription = a.Prescription,
                     ReasonForAppointment = a.ReasonForAppointment,
                 }).FirstOrDefault();
 

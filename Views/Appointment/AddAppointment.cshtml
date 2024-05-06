@@ -40,6 +40,25 @@
                 </select>
             </div>
             <div class="form-group col-md-6">
+                <label asp-for="Diagnosis" class="control-label">Diagnosis<span asp-validation-for="Diagnosis" class="text-danger"></span></label>
+                <select asp-for="Diagnosis" class="form-control">
+                    <option value="Clinical Diagnosis">Clinical Diagnosis</option>
+                    <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
+                    <option value="Imaging Diagnosis">Imaging Diagnosis</option>
+                    <option value="Pathological Diagnosis">Pathological Diagnosis</option>
+                    <option value="Differential Diagnosis">Differential Diagnosis</option>
+                    <option value="Genetic Diagnosis">Genetic Diagnosis</option>
+                    <option value="Provisional Diagnosis">Provisional Diagnosis</option>
+                    <option value="Primary Diagnosis">Primary Diagnosis</option>
+                    <option value="Secondary Diagnosis">Secondary Diagnosis</option>
+                    <option value="Comorbid Diagnosis">Comorbid Diagnosis</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Prescription" class="control-label">Prescription<span asp-validation-for="Prescription" class="text-danger"></span></label>
+                <textarea asp-for="Prescription" class="form-control"></textarea>
+            </div>
+            <div class="form-group col-md-6">
                 <label asp-for="ReasonForAppointment" class="control-label">Reason For Appointment<span asp-validation-for="ReasonForAppointment" class="text-danger"></span></label>
                 <textarea asp-for="ReasonForAppointment" class="form-control"></textarea>
             </div>
