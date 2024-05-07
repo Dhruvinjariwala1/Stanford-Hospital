@@ -82,7 +82,8 @@ namespace StanfordHospital.Controllers
         [HttpPost]
         public IActionResult AddAppointment(Appointment appointment) 
         {
-            if(ModelState.IsValid) 
+            ViewBag.isappointment = "active";
+            if (ModelState.IsValid) 
             {
                 var Appointment = new Appointment
                 {
@@ -132,7 +133,8 @@ namespace StanfordHospital.Controllers
 
         public IActionResult EditAppointment(Appointment appointment)
         {
-            if(ModelState.IsValid) 
+            ViewBag.isappointment = "active";
+            if (ModelState.IsValid) 
             {
                 var Appointment = _context.Appointment.Find(appointment.Appointmentid);
                 if(Appointment != null) 
@@ -176,6 +178,7 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Create(Appointment appointment)
         {
+            ViewBag.isappointment = "active";
             var patients = _context.Patient.Select(p => new {
                 p.Patientid,
                 FullName = $"{p.Firstname} {p.Lastname}"
@@ -195,6 +198,7 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Edit(int Id)
         {
+            ViewBag.isappointment = "active";
             var patients = _context.Patient.Select(p => new {
                 p.Patientid,
                 FullName = $"{p.Firstname} {p.Lastname}"

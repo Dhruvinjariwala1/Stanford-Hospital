@@ -48,6 +48,7 @@ namespace StanfordHospital.Controllers
 
         public IActionResult AddPatient(Patient patient)
         {
+            ViewBag.ispatient = "active";
             if (ModelState.IsValid)
             {
                 var Patient = new Patient
@@ -96,7 +97,8 @@ namespace StanfordHospital.Controllers
 
         public IActionResult EditPatient(Patient patient)
         {
-            if(ModelState.IsValid) 
+            ViewBag.ispatient = "active";
+            if (ModelState.IsValid) 
             {
                 var Patient = _context.Patient.Find(patient.Patientid);
                 if(Patient != null) 
@@ -138,11 +140,13 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Create(Patient patient)
         {
+            ViewBag.ispatient = "active";
             return View("AddPatient",patient);
         }
 
         public IActionResult Edit(int Id) 
         {
+            ViewBag.ispatient = "active";
             var editpatient = _context.Patient.Where(p => p.Patientid == Id)
                 .Select(p => new Patient
                 {

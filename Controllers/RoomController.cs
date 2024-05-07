@@ -43,6 +43,7 @@ namespace StanfordHospital.Controllers
 
         public IActionResult AddRoom(Room room)
         {
+            ViewBag.isroom = "active";
             if (ModelState.IsValid)
             {
                 var Room = new Room
@@ -84,6 +85,7 @@ namespace StanfordHospital.Controllers
 
         public IActionResult EditRoom(Room room)
         {
+            ViewBag.isroom = "active";
             if (ModelState.IsValid)
             {
                 var Room = _context.Room.Find(room.Roomid);
@@ -122,11 +124,13 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Create(Room room)
         {
+            ViewBag.isroom = "active";
             return View("AddRoom", room);
         }
 
         public IActionResult Edit(int Id)
         {
+            ViewBag.isroom = "active";
             var updateroom = _context.Room.Where(r => r.Roomid == Id)
                 .Select(r => new Room
                 {
