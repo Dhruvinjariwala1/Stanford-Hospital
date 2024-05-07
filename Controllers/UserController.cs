@@ -62,11 +62,13 @@ namespace StanfordHospital.Controllers
 
         public IActionResult Create(User user) 
         {
+            ViewBag.isuser = "active";
             return View("AddUser", user);
         }
 
         public async Task<IActionResult> Edit(User user)
         {
+            ViewBag.isuser = "active";
             var getUser = await _context.Users.Where(u => u.Id == user.Id)
                 .Select(u => new User
                 { 
@@ -116,6 +118,7 @@ namespace StanfordHospital.Controllers
 
         public async Task<IActionResult> AddUser(User user)
         {
+            ViewBag.isuser = "active";
             if (ModelState.IsValid)
             {
                 var applicationUser = new ApplicationUser
@@ -178,6 +181,7 @@ namespace StanfordHospital.Controllers
 
         public async Task<IActionResult> EditUser(User user)
         {
+            ViewBag.isuser = "active";
             var isEmailExist = await _context.Users.Where(x => x.Id != user.Id && x.Email == user.Email).FirstOrDefaultAsync();
             if(isEmailExist != null) 
             {

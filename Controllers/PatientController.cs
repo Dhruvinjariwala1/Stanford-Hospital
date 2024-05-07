@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using StanfordHospital.Data;
@@ -6,7 +7,7 @@ using StanfordHospital.Models;
 
 namespace StanfordHospital.Controllers
 {
-
+    [Authorize]
     public class PatientController : Controller
     {
         private readonly ILogger<PatientController> _logger;

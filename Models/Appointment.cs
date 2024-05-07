@@ -42,7 +42,11 @@ namespace StanfordHospital.Models
         [Display(Name = "Reason For Appointment")]
         public string? ReasonForAppointment { get; set; }
 
+        [Display(Name ="Cases")]
+        public string? Cases { get; set; }
 
-        
+        [Display(Name ="Price")]
+        public int? Price { get; set; }
+
     }
 }

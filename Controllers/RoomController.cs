@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
 
 namespace StanfordHospital.Controllers
 {
+    [Authorize]
     public class RoomController : Controller
     {
         private readonly ILogger<RoomController> _logger;

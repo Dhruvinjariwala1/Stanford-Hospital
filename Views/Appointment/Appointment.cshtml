@@ -18,11 +18,14 @@
 <h1>Appointment</h1>
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create Appointment</a>
+    @if (User.IsInRole("Staff"))
+    {
+        <a class="btn btn-primary" asp-action="Create">Create Appointment</a>
+    }
 </p>
 <table class="table" id="appointmentlist">
     <thead>
-        <tr>
+        <tr style="background-color:dodgerblue;">
             <th>
                 Select Patient
             </th>
@@ -47,6 +50,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.ReasonForAppointment)
             </th>
+            <th>
+                Case
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -59,7 +68,8 @@
 
                     @Html.DisplayFor(modelItem => item.Patient.Lastname)
                 </td>
-                <td>Dr. 
+                <td>
+                    Dr.
                     @Html.DisplayFor(modelItem => item.User.FirstName)
 
                     @Html.DisplayFor(modelItem => item.User.LastName)
@@ -83,9 +93,19 @@
                     @Html.DisplayFor(modelItem => item.ReasonForAppointment)
                 </td>
                 <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Appointmentid"><i class='fas fa-edit'></i></a>
-                    <a class="btn btn-danger" asp-action="Delete" onclick="confirmFunction('@item.Appointmentid')"><i class='fas fa-trash-alt'></i></a>
+                    @Html.DisplayFor(modelItem => item.Cases)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                @if (User.IsInRole("Staff")||User.IsInRole("Doctor"))
+                {
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Appointmentid"><i class='fas fa-edit'></i></a>
+                        <a class="btn btn-danger" asp-action="Delete" onclick="confirmFunction('@item.Appointmentid')"><i class='fas fa-trash-alt'></i></a>
+                        <a class="btn btn-primary" asp-action="AppointmentPrint"><i class="fas fa-print"></i></a>
+                    </td>
+                }
             </tr>
         }
     </tbody>
@@ -121,6 +141,6 @@
     </script>
 }
 
-@section appointmentlist{
+@section appointmentlist {
     <script src="~/js/appointmentlist.js"></script>
 }
