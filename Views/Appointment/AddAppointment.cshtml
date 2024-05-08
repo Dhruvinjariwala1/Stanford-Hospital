@@ -4,7 +4,7 @@
     ViewData["Title"] = "AddAppointment";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
 <h1>Add Appointment</h1>
 
 <div>
@@ -18,12 +18,12 @@
             <div class="form-group col-md-6">
                 <label asp-for="Patientid" class="control-label">Select Patient<span asp-validation-for="Patientid" class="text-danger"></span></label>
                 <select asp-for="Patientid" class="form-control" asp-items="@(ViewBag.Patients as SelectList)">
-                    <option>--Select Patient--</option>
+                    <option>--Select Patient--</option> 
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Id" class="control-label">Select Doctor<span asp-validation-for="Id" class="text-danger"></span></label>
-                <select asp-for="Id" class="form-control" asp-items="@(ViewBag.Doctors as SelectList)">
+                <select asp-for="Id" class="form-control selectdoctor">
                     <option>--Select Doctor</option>
                 </select>
             </div>
@@ -52,7 +52,7 @@
             {
                 <div class="form-group col-md-6">
                     <label asp-for="Diagnosis" class="control-label">Diagnosis<span asp-validation-for="Diagnosis" class="text-danger"></span></label>
-                    <select asp-for="Diagnosis" class="form-control">
+                    <select asp-for="Diagnosis" name="diagnosis" id="diagnosis" class="form-control">
                         <option>--Select Diagnosis--</option>
                         <option value="Clinical Diagnosis">Clinical Diagnosis</option>
                         <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
@@ -100,11 +100,12 @@
         </form>
     </div>
 </div>
-
-
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
+<script>
+    new MultiSelectTag('diagnosis')
+</script>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
         function calculatePrice() {
             var priceInput = document.getElementById("Price");
@@ -112,13 +113,47 @@
             var newCaseRadio = document.getElementById("newcase");
 
             if (oldCaseRadio.checked) {
-                priceInput.value = 200; 
+                priceInput.value = 200;
             } else if (newCaseRadio.checked) {
-                priceInput.value = 500; 
+                priceInput.value = 500;
             }
         }
         document.getElementById("oldcase").addEventListener("change", calculatePrice);
         document.getElementById("newcase").addEventListener("change", calculatePrice);
         calculatePrice();
     </script>
+    <script>
+        $(document).ready(function () {
+            function getDoctotRole() {
+                $.ajax({
+                    url: "@Url.Action("DoctorRole", "Appointment")",
+                    type: "GET",
+                    dataType: "Json",
+                    success: function (result) {
+                        let selectdoctor = $("#Id")
+                        selectdoctor.empty();
+                        selectdoctor.append('<option>--Select Doctor--</option>');
+
+                        var mySelect = $('.selectdoctor');
+                        $.each(result, function (idx, item) {
+
+                            mySelect.append(
+                                $('<option></option>').val(item.id).html(item.fullName)
+                            );
+
+                        });
+
+                    },
+                    error: function () {
+                        alert('Failed to retrieve Sub Departments.');
+                    }
+                });
+            }
+
+            getDoctotRole();
+        })
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

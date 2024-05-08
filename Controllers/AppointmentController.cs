@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
+using System.Data;
 
 namespace StanfordHospital.Controllers
 {
@@ -204,14 +205,14 @@ namespace StanfordHospital.Controllers
                 FullName = $"{p.Firstname} {p.Lastname}"
             }).ToList();
             ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
-            var doctors = _context.Users.Where(u => u.Role == "doctor")
-                               .Select(u => new
-                               {
-                                   Id = u.Id,
-                                   FullName = $"Dr. {u.FirstName} {u.LastName}"
-                               })
-                               .ToList();
-            ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
+            //var doctors = _context.Users.Where(u => u.Role == "doctor")
+            //                   .Select(u => new
+            //                   {
+            //                       Id = u.Id,
+            //                       FullName = $"Dr. {u.FirstName} {u.LastName}"
+            //                   })
+            //                   .ToList();
+            //ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
             var editappointment = _context.Appointment.Where(a => a.Appointmentid == Id)
                 .Select(a => new Appointment
                 {
@@ -250,6 +251,20 @@ namespace StanfordHospital.Controllers
                 }).FirstOrDefault();
 
             return View("DeleteAppointment", deleteappointment);
+        }
+
+        public IActionResult DoctorRole()
+        {
+            var doctors = _context.Users.Where(u => u.Role == "doctor")
+                              .Select(u => new
+                              {
+                                  Id = u.Id,
+                                  FullName = $"Dr. {u.FirstName} {u.LastName}"
+                              })
+                              .ToList();
+
+
+            return Json(doctors);
         }
     }
 }
