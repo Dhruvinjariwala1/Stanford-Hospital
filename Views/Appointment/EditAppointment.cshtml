@@ -19,7 +19,7 @@
             <input type="hidden" asp-for="Appointmentid" />
             <div class="form-group col-md-6">
                 <label asp-for="Patientid" class="control-label">Select Patient<span asp-validation-for="Patientid" class="text-danger"></span></label>
-                <select asp-for="Patientid" class="form-control" asp-items="@(ViewBag.Patients as SelectList)">
+                <select asp-for="Patientid" class="form-control selectpatient">
                 </select>
             </div>
             <div class="form-group col-md-6">
@@ -124,7 +124,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            function getDoctotRole() {
+            function getDoctorRole() {
                 $.ajax({
                     url: "@Url.Action("DoctorRole", "Appointment")",
                     type: "GET",
@@ -132,25 +132,52 @@
                     success: function (result) {
                         let selectdoctor = $("#Id")
                         selectdoctor.empty();
-                        selectdoctor.append('<option>--Select Doctor--</option>');
-
                         var mySelect = $('.selectdoctor');
                         $.each(result, function (idx, item) {
-
                             mySelect.append(
                                 $('<option></option>').val(item.id).html(item.fullName)
                             );
-
                         });
-
+                        var selectedDoctorId = "@Model.Id";
+                        if (selectedDoctorId !== null && selectedDoctorId !== "") {
+                            selectdoctor.val(selectedDoctorId);
+                        }
                     },
                     error: function () {
-                        alert('Failed to retrieve Sub Departments.');
+                        alert('Failed to retrieve doctors.');
                     }
                 });
             }
-
-            getDoctotRole();
+            getDoctorRole();
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            function getPatientName() {
+                $.ajax({
+                    url: "@Url.Action("PatientName", "Appointment")",
+                    type: "GET",
+                    dataType: "Json",
+                    success: function (result) {
+                        let selectpatient = $("#Patientid")
+                        selectpatient.empty();
+                        var mySelect = $('.selectpatient');
+                        $.each(result, function (idx, item) {
+                            mySelect.append(
+                                $('<option></option>').val(item.patientid).html(item.fullName)
+                            );
+                        });
+                        var selectedPatientId = "@Model.Patientid";
+                        if (selectedPatientId !== null && selectedPatientId !== "") {
+                            selectpatient.val(selectedPatientId);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to retrieve patients.');
+                    }
+                });
+            }
+            getPatientName();
         })
     </script>
     @{

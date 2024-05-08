@@ -262,9 +262,17 @@ namespace StanfordHospital.Controllers
                                   FullName = $"Dr. {u.FirstName} {u.LastName}"
                               })
                               .ToList();
-
-
             return Json(doctors);
+        }
+
+        public IActionResult PatientName() 
+        {
+            var patients = _context.Patient.Select(p => new {
+                p.Patientid,
+                FullName = $"{p.Firstname} {p.Lastname}"
+            }).ToList();
+
+            return Json(patients);
         }
     }
 }
