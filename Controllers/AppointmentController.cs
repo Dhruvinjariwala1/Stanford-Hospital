@@ -185,14 +185,14 @@ namespace StanfordHospital.Controllers
                 FullName = $"{p.Firstname} {p.Lastname}"
             }).ToList();
             ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
-            var doctors = _context.Users.Where(u => u.Role == "doctor")
-                               .Select(u => new
-                               {
-                                   Id = u.Id,
-                                   FullName = $"Dr. {u.FirstName} {u.LastName}"
-                               })
-                               .ToList();
-            ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
+            //var doctors = _context.Users.Where(u => u.Role == "doctor")
+            //                   .Select(u => new
+            //                   {
+            //                       Id = u.Id,
+            //                       FullName = $"Dr. {u.FirstName} {u.LastName}"
+            //                   })
+            //                   .ToList();
+            //ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
             //ViewBag.Users = new SelectList(_context.Users, "Id", "FirstName");
             return View("AddAppointment", appointment);
         }
