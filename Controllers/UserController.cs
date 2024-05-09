@@ -116,6 +116,7 @@ namespace StanfordHospital.Controllers
             return View("DeleteUser", deleteUser);
         }
 
+        [HttpPost]
         public async Task<IActionResult> AddUser(User user)
         {
             ViewBag.isuser = "active";

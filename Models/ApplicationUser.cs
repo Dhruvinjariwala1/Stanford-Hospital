@@ -16,6 +16,8 @@ namespace StanfordHospital.Models
         [MaxLength(10)]
         [Display(Name = "Phone No")]
         public string? PhoneNo { get; set; }
+        [Required]
+        [Display(Name ="Address")]
         public string? Address { get; set; }
         [Required]
         [Display(Name = "Date Of Birth")]

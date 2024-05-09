@@ -13,18 +13,20 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="AddRoom" class="row g-3">
+        <form asp-action="AddRoom" class="row g-3" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomName" class="control-label">Room Name<span asp-validation-for="RoomName" class="text-danger"></span></label>
+                <label asp-for="RoomName" class="control-label">Room Name</label><span class="text-danger">*</span>
                 <input asp-for="RoomName" class="form-control" />
+                <span asp-validation-for="RoomName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomFloor" class="control-label">Room Floor<span asp-validation-for="RoomFloor" class="text-danger"></span></label>
+                <label asp-for="RoomFloor" class="control-label">Room Floor</label><span class="text-danger">*</span>
                 <input asp-for="RoomFloor" class="form-control" />
+                <span asp-validation-for="RoomFloor" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomType" class="control-label">Romm Type<span asp-validation-for="RoomType" class="text-danger"></span></label>
+                <label asp-for="RoomType" class="control-label">Room Type</label><span class="text-danger">*</span>
                 <select asp-for="RoomType" class="form-control">
                     <option value="General Room">General Room</option>
                     <option value="ICU Room">ICU Room</option>
@@ -34,10 +36,12 @@
                     <option value="Suite">Suite</option>
                     <option value="Presidential Suite">Presidential Suite</option>
                </select>
+                <span asp-validation-for="RoomType" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomPrice" class="control-label">Room Price<span asp-validation-for="RoomPrice" class="text-danger"></span></label>
+                <label asp-for="RoomPrice" class="control-label">Room Price</label><span class="text-danger">*</span>
                 <input asp-for="RoomPrice" class="form-control" />
+                <span asp-validation-for="RoomPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary" >Create</button>

@@ -46,6 +46,7 @@ namespace StanfordHospital.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult AddPatient(Patient patient)
         {
             ViewBag.ispatient = "active";

@@ -25,14 +25,14 @@
             </div><!-- /.container-fluid -->
         </section>
 
-        <section class="content">
+        @* <section class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="callout callout-info">
                             <h5><i class="fas fa-info"></i> Note:</h5>
                             This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-                        </div>
+                        </div> *@
 
 
                         <!-- Main content -->
@@ -41,8 +41,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h4>
-                                        <i class="fas fa-globe"></i> AdminLTE, Inc.
-                                        <small class="float-right">Date: 2/10/2014</small>
+                                        <i class="fas fa-globe"></i> Stanford Hospital
+                                        <small class="float-right">Date: 9/5/2024</small>
                                     </h4>
                                 </div>
                                 <!-- /.col -->
@@ -52,18 +52,18 @@
                                 <div class="col-sm-4 invoice-col">
                                     From
                                     <address>
-                                        <strong>Admin, Inc.</strong><br>
-                                        795 Folsom Ave, Suite 600<br>
-                                        San Francisco, CA 94107<br>
-                                        Phone: (804) 123-5432<br>
-                                        Email: info@almasaeedstudio.com
+                                        <strong>Stanford, Inc.</strong><br>
+                                        875 Blake Wilbur Dr,<br>
+                                        Palo Alto, CA 94304, United States<br>
+                                        Phone:  +1 650-724-4750<br>
+                                        Email: stanfordhospital@gmail.com
                                     </address>
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4 invoice-col">
                                     To
                                     <address>
-                                        <strong>John Doe</strong><br>
+                                        <strong>Patient Name</strong><br>
                                         795 Folsom Ave, Suite 600<br>
                                         San Francisco, CA 94107<br>
                                         Phone: (555) 539-1037<br>
@@ -72,11 +72,10 @@
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-4 invoice-col">
-                                    <b>Invoice #007612</b><br>
-                                    <br>
-                                    <b>Order ID:</b> 4F3S8J<br>
-                                    <b>Payment Due:</b> 2/22/2014<br>
-                                    <b>Account:</b> 968-34567
+                                    <b>Invoice 1</b><br>
+                                   @*  <b>Order ID:</b> 4F3S8J<br> *@
+                                    <b>Payment Due:</b> 9/5/2024<br>
+                                   @*  <b>Account:</b> 968-34567 *@
                                 </div>
                                 <!-- /.col -->
                             </div>
@@ -87,22 +86,38 @@
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
-                                                <th>Qty</th>
-                                                <th>Product</th>
-                                                <th>Serial #</th>
-                                                <th>Description</th>
-                                                <th>Subtotal</th>
+                                <th>@Html.DisplayNameFor(model => model.Patient)</th>
+                                <th>@Html.DisplayNameFor(model => model.User)</th>
+                                <th>@Html.DisplayNameFor(model => model.AppointmentDate)</th>
+                                <th>@Html.DisplayNameFor(model => model.AppointmentTime)</th>
+                                <th>@Html.DisplayNameFor(model => model.AppointmentStatus)</th>
+                                <th>@Html.DisplayNameFor(model => model.Diagnosis)</th>
+                                <th>@Html.DisplayNameFor(model => model.Prescription)</th>
+                                <th>@Html.DisplayNameFor(model => model.ReasonForAppointment)</th>
+                                <th>@Html.DisplayNameFor(model => model.Cases)</th>
+                                <th>@Html.DisplayNameFor(model => model.Price)</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>1</td>
-                                                <td>Call of Duty</td>
-                                                <td>455-981-221</td>
-                                                <td>El snort testosterone trophy driving gloves handsome</td>
-                                                <td>$64.50</td>
+                                <td>
+                                    @Html.DisplayFor(model => model.Patient.Firstname)
+                                    @Html.DisplayFor(model => model.Patient.Lastname)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => model.User.FirstName)
+                                    @Html.DisplayFor(model => model.User.LastName)
+                                </td>
+                                <td> @Html.DisplayFor(model => model.AppointmentDate)</td>
+                                <td>@Html.DisplayFor(model => model.AppointmentTime)</td>
+                                <td> @Html.DisplayFor(model => model.AppointmentStatus)</td>
+                                <td>@Html.DisplayFor(model => model.Diagnosis)</td>
+                                <td>@Html.DisplayFor(model => model.Prescription)</td>
+                                <td> @Html.DisplayFor(model => model.ReasonForAppointment)</td>
+                                <td> @Html.DisplayFor(model => model.Cases)</td>
+                                <td> @Html.DisplayFor(model => model.Price)</td>
                                             </tr>
-                                            <tr>
+                                           @*  <tr>
                                                 <td>1</td>
                                                 <td>Need for Speed IV</td>
                                                 <td>247-925-726</td>
@@ -122,7 +137,7 @@
                                                 <td>422-568-642</td>
                                                 <td>Tousled lomo letterpress</td>
                                                 <td>$25.99</td>
-                                            </tr>
+                                            </tr> *@
                                         </tbody>
                                     </table>
                                 </div>
@@ -147,7 +162,7 @@
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-6">
-                                    <p class="lead">Amount Due 2/22/2014</p>
+                                    <p class="lead">Amount Due 9/5/2024</p>
 
                                     <div class="table-responsive">
                                         <table class="table">

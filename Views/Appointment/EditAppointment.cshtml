@@ -18,35 +18,41 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Appointmentid" />
             <div class="form-group col-md-6">
-                <label asp-for="Patientid" class="control-label">Select Patient<span asp-validation-for="Patientid" class="text-danger"></span></label>
+                <label asp-for="Patientid" class="control-label">Select Patient</label><span class="text-danger">*</span>
                 <select asp-for="Patientid" class="form-control selectpatient">
                 </select>
+                <span asp-validation-for="Patientid" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Id" class="control-label">Select Doctor<span asp-validation-for="Id" class="text-danger"></span></label>
+                <label asp-for="Id" class="control-label">Select Doctor</label><span class="text-danger">*</span>
                 <select asp-for="Id" class="form-control selectdoctor">
                 </select>
+                <span asp-validation-for="Id" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentDate" class="control-label">Appointment Date<span asp-validation-for="AppointmentDate" class="text-danger"></span></label>
+                <label asp-for="AppointmentDate" class="control-label">Appointment Date</label><span class="text-danger">*</span>
                 <input asp-for="AppointmentDate" class="form-control" type="date" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="AppointmentDate" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentTime" class="control-label">Appointment Time<span asp-validation-for="AppointmentTime" class="text-danger"></span></label>
+                <label asp-for="AppointmentTime" class="control-label">Appointment Time</label><span class="text-danger">*</span>
                 <input asp-for="AppointmentTime" class="form-control" type="time" />
+                <span asp-validation-for="AppointmentTime" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentStatus" class="control-label">Appointment Status<span asp-validation-for="AppointmentStatus" class="text-danger"></span></label>
+                <label asp-for="AppointmentStatus" class="control-label">Appointment Status</label><span class="text-danger">*</span>
                 <select asp-for="AppointmentStatus" class="form-control">
                     <option>--Select Status--</option>
                     <option value="Completed">Completed</option>
                     <option value="Pending">Pending</option>
                     <option value="Canceled">Canceled</option>
                 </select>
+                <span asp-validation-for="AppointmentStatus" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="ReasonForAppointment" class="control-label">Reason For Appointment<span asp-validation-for="ReasonForAppointment" class="text-danger"></span></label>
+                <label asp-for="ReasonForAppointment" class="control-label">Reason For Appointment</label><span class="text-danger">*</span>
                 <textarea asp-for="ReasonForAppointment" class="form-control"></textarea>
+                <span asp-validation-for="ReasonForAppointment" class="text-danger"></span>
             </div>
             @if (User.IsInRole("Doctor"))
             {
@@ -70,12 +76,13 @@
             @if (User.IsInRole("Doctor"))
             {
                 <div class="form-group col-md-6">
-                    <label asp-for="Prescription" class="control-label">Prescription<span asp-validation-for="Prescription" class="text-danger"></span></label>
+                    <label asp-for="Prescription" class="control-label">Prescription</label><span class="text-danger">*</span>
                     <textarea asp-for="Prescription" class="form-control"></textarea>
+                    <span asp-validation-for="Prescription" class="text-danger"></span>
                 </div>
             }
             <div class="form-group col-md-6">
-                <label>Case</label>
+                <label>Case</label><span class="text-danger">*</span>
                 <div class="form-check">
                     <input asp-for="Cases" id="oldcase" class="form-check-input" type="radio" value="OldCase">
                     <label asp-for="Cases" class="form-check-label">
@@ -88,10 +95,12 @@
                         NewCase
                     </label>
                 </div>
+                <span asp-validation-for="Cases" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Price" class="control-label">Price<span asp-validation-for="Price" class="text-danger"></span></label>
+                <label asp-for="Price" class="control-label">Price</label><span class="text-danger">*</span>
                 <input asp-for="Price" class="form-control" readonly/>
+                <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-warning">Save</button>

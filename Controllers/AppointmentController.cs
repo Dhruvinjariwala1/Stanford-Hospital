@@ -25,7 +25,7 @@ namespace StanfordHospital.Controllers
         //    return View();
         //}
 
-        public IActionResult AppointmentPrint()
+        public IActionResult AppointmentPrint(int id)
         {
             return View();
         }

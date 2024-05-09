@@ -41,6 +41,7 @@ namespace StanfordHospital.Controllers
             return View(model);
         }
 
+        [HttpPost]
         public IActionResult AddRoom(Room room)
         {
             ViewBag.isroom = "active";
