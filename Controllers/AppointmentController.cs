@@ -27,7 +27,22 @@ namespace StanfordHospital.Controllers
 
         public IActionResult AppointmentPrint(int id)
         {
-            return View();
+            var model = new Appointment();
+            model = _context.Appointment.Where(x => x.Appointmentid == id).Select(a => new Appointment
+            {
+                Appointmentid = a.Appointmentid,
+                Patient = a.Patient,
+                User = a.User,
+                AppointmentDate = a.AppointmentDate,
+                AppointmentTime = a.AppointmentTime,
+                AppointmentStatus = a.AppointmentStatus,
+                Diagnosis = a.Diagnosis,
+                Prescription = a.Prescription,
+                ReasonForAppointment = a.ReasonForAppointment,
+                Cases = a.Cases,
+                Price = a.Price,
+            }).FirstOrDefault();
+            return View(model);
         }
 
         public IActionResult Doctor()

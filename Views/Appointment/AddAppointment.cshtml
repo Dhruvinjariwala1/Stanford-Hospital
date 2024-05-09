@@ -58,7 +58,7 @@
             {
                 <div class="form-group col-md-6">
                     <label asp-for="Diagnosis" class="control-label">Diagnosis<span asp-validation-for="Diagnosis" class="text-danger"></span></label>
-                    <select asp-for="Diagnosis" name="diagnosis" id="diagnosis" class="form-control">
+                    <select asp-for="Diagnosis" name="diagnosis" id="diagnosis" class="form-control" multiple>
                         <option>--Select Diagnosis--</option>
                         <option value="Clinical Diagnosis">Clinical Diagnosis</option>
                         <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
