@@ -163,7 +163,7 @@
 
             <div class="row">
                 <!-- accepted payments column -->
-                <div class="col-6">
+                @* <div class="col-6">
                     <p class="lead">Payment Methods:</p>
                     <img src="../../dist/img/credit/visa.png" alt="Visa">
                     <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
@@ -175,7 +175,7 @@
                         plugg
                         dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
                     </p>
-                </div>
+                </div> *@
                 <!-- /.col -->
                 <div class="col-6">
                     <div class="table-responsive">
@@ -205,7 +205,10 @@
             <!-- this row will not appear when printing -->
             <div class="row no-print">
                 <div class="col-12">
-                    <a href="invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                    <button id="print" onclick="appointmentprint()" class="btn btn-primary">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    @* <a href="~/invoice-print.html" rel="noopener" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a> *@
                     <button type="button" class="btn btn-success float-right">
                         <i class="far fa-credit-card"></i> Submit
                         Payment
@@ -224,3 +227,14 @@
 <!-- /.content -->
     </div>
 </div> *@
+@* script>
+  <  document.getElementById('print').addEventListener('click', function () {
+        window.open('@Url.Action("AppointmentPrint","Appointment")', '_blank');
+    });
+</script> *@
+<script>
+    function appointmentprint(){
+        var print = document.getElementById("print");
+        window.print();
+    }
+</script>

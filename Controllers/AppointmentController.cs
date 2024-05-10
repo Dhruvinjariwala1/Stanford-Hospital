@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
+using StanfordHospital.Models.Dtos;
 using System.Data;
 
 namespace StanfordHospital.Controllers
@@ -147,7 +148,7 @@ namespace StanfordHospital.Controllers
             return View("AddAppointment", appointment);
         }
 
-        public IActionResult EditAppointment(Appointment appointment)
+        public IActionResult EditAppointment(AppointmentDto appointment)
         {
             ViewBag.isappointment = "active";
             if (ModelState.IsValid) 
@@ -161,7 +162,7 @@ namespace StanfordHospital.Controllers
                     Appointment.AppointmentDate = appointment.AppointmentDate;
                     Appointment.AppointmentTime = appointment.AppointmentTime;
                     Appointment.AppointmentStatus = appointment.AppointmentStatus;
-                    Appointment.Diagnosis = appointment.Diagnosis;
+                    Appointment.Diagnosis = string.Join(",", appointment.MultipleDiagnosis);
                     Appointment.Prescription = appointment.Prescription;
                     Appointment.ReasonForAppointment= appointment.ReasonForAppointment;
                     Appointment.Cases = appointment.Cases;
@@ -229,7 +230,7 @@ namespace StanfordHospital.Controllers
             //                   .ToList();
             //ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
             var editappointment = _context.Appointment.Where(a => a.Appointmentid == Id)
-                .Select(a => new Appointment
+                .Select(a => new AppointmentDto
                 {
                     Appointmentid = a.Appointmentid,
                     Patientid = a.Patientid,
@@ -237,7 +238,7 @@ namespace StanfordHospital.Controllers
                     AppointmentDate = a.AppointmentDate,
                     AppointmentTime = a.AppointmentTime,
                     AppointmentStatus = a.AppointmentStatus,
-                    Diagnosis = a.Diagnosis,
+                    //Diagnosis = a.Diagnosis,
                     Prescription = a.Prescription,
                     ReasonForAppointment = a.ReasonForAppointment,
                     Cases = a.Cases,
