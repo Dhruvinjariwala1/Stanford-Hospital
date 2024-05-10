@@ -42,6 +42,7 @@ namespace StanfordHospital.Controllers
                 ReasonForAppointment = a.ReasonForAppointment,
                 Cases = a.Cases,
                 Price = a.Price,
+                DiagnosisCharges = a.DiagnosisCharges,
             }).FirstOrDefault();
             return View(model);
         }
@@ -66,7 +67,8 @@ namespace StanfordHospital.Controllers
                     Prescription = a.Prescription,
                     ReasonForAppointment = a.ReasonForAppointment,
                     Cases = a.Cases,
-                    Price = a.Price
+                    Price = a.Price,
+                    DiagnosisCharges = a.DiagnosisCharges
                 })
                 .ToList();
 
@@ -91,6 +93,7 @@ namespace StanfordHospital.Controllers
                 ReasonForAppointment = a.ReasonForAppointment,
                 Cases = a.Cases,
                 Price = a.Price,
+                DiagnosisCharges = a.DiagnosisCharges,
             }).ToList();
 
             return View("Appointment", model);
@@ -114,6 +117,7 @@ namespace StanfordHospital.Controllers
                     ReasonForAppointment = appointment.ReasonForAppointment,
                     Cases= appointment.Cases,
                     Price = appointment.Price,
+                    DiagnosisCharges = appointment.DiagnosisCharges,
                 };
 
                 if(Appointment.Appointmentid != 0) 
@@ -132,6 +136,7 @@ namespace StanfordHospital.Controllers
                         appointment.ReasonForAppointment = appointment.ReasonForAppointment;
                         appointment.Cases = appointment.Cases;
                         appointment.Price = appointment.Price;
+                        appointment.DiagnosisCharges = appointment.DiagnosisCharges;
                         _context.SaveChanges();
                         TempData["Message"] = "Appointment Updated Successfully....";
                     }
@@ -167,6 +172,7 @@ namespace StanfordHospital.Controllers
                     Appointment.ReasonForAppointment= appointment.ReasonForAppointment;
                     Appointment.Cases = appointment.Cases;
                     Appointment.Price = appointment.Price;
+                    Appointment.DiagnosisCharges = appointment.DiagnosisCharges;
                     _context.Appointment.Update(Appointment);
                     _context.SaveChanges();
                     TempData["Message"] = "Appointment Updated Successfully....";
@@ -243,6 +249,7 @@ namespace StanfordHospital.Controllers
                     ReasonForAppointment = a.ReasonForAppointment,
                     Cases = a.Cases,
                     Price = a.Price,
+                    DiagnosisCharges = a.DiagnosisCharges,
                 }).FirstOrDefault();
 
             return View("EditAppointment", editappointment);
@@ -264,6 +271,7 @@ namespace StanfordHospital.Controllers
                     ReasonForAppointment = a.ReasonForAppointment,
                     Cases = a.Cases,
                     Price = a.Price,
+                    DiagnosisCharges = a.DiagnosisCharges,
                 }).FirstOrDefault();
 
             return View("DeleteAppointment", deleteappointment);

@@ -102,6 +102,11 @@
                 <input asp-for="Price" class="form-control" readonly/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+            <div class="form-group col-md-6">
+                <label asp-for="DiagnosisCharges" class="control-label">Diagnosis Charges</label><span class="text-danger">*</span>
+                <input asp-for="DiagnosisCharges" class="form-control" readonly />
+                <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-warning">Save</button>
             </div>
