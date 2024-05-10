@@ -183,22 +183,25 @@
                     <div class="table-responsive">
                         <table class="table">
                             <tr>
-                                <th style="width:50%">Subtotal:</th>
-                                <td>@Model.Price  OldCase</td>
+                                <th style="width:50%;">Diagnosis</th>
+                                <th>Price</th>
                             </tr>
-                            @* <tr>
-                                <th>Tax (9.3%)</th>
-                                <td>$10.34</td>
-                            </tr> *@
-                            @* <tr>
-                                <th>Shipping:</th>
-                                <td>$5.80</td>
-                            </tr> *@
+                            <tr>
+                                <td><b>@Model.Diagnosis</b></td>
+                                <td>@Model.DiagnosisCharges</td>
+                            </tr>
+
+
                             <tr>
                                 <th>Extra Charges:</th>
                                 <td>@Model.Price</td>
                             </tr>
+                            <tr>
+                                <th style="width:50%">Subtotal:</th>
+                                <td>@(Model.DiagnosisCharges + Model.Price)</td>
+                            </tr>
                         </table>
+
                     </div>
                 </div>
                 <!-- /.col -->

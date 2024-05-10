@@ -104,7 +104,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="DiagnosisCharges" class="control-label">Diagnosis Charges</label><span class="text-danger">*</span>
-                <input asp-for="DiagnosisCharges" class="form-control" readonly />
+                <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
                 <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -114,9 +114,48 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
-<script>
+@* <script>
     new MultiSelectTag('diagnosis')
+</script> *@
+
+<script>
+    function calculateDiagnosisCharges() {
+        var diagnosisSelect = document.getElementById("diagnosis");
+        var selectedOptions = diagnosisSelect.selectedOptions;
+        var totalPrice = 0;
+
+        for (var i = 0; i < selectedOptions.length; i++) {
+            var option = selectedOptions[i].value;
+            totalPrice += getPriceForDiagnosis(option);
+        }
+        document.getElementById("DiagnosisCharges").value = totalPrice;
+    }
+    function getPriceForDiagnosis(diagnosis) {
+        var diagnosisPrices = {
+            "Clinical Diagnosis": 700,
+            "Laboratory Diagnosis": 1500,
+            "Imaging Diagnosis": 850,
+            "Pathological Diagnosis": 650,
+            "Differential Diagnosis": 500,
+            "Genetic Diagnosis": 450,
+            "Provisional Diagnosis": 350,
+            "Primary Diagnosis": 600,
+            "Secondary Diagnosis": 750,
+            "Comorbid Diagnosis": 250
+        };
+
+        // Return price for the selected diagnosis
+        return diagnosisPrices[diagnosis] || 0;
+    }
+
+    // Add event listener to the diagnosis select element
+    document.getElementById("diagnosis").addEventListener("change", calculateDiagnosisCharges);
+
+    // Call the function initially to calculate charges for any pre-selected options
+    calculateDiagnosisCharges();
 </script>
+
+
 
 
 @section Scripts {
