@@ -42,7 +42,7 @@
                 <div class="col-12">
                     <h4>
                         <i class="fas fa-globe"></i> Stanford Hospital
-                        <small class="float-right">@Model.AppointmentDate.ToString("dd/MM/yyyy")</small>
+                        <small class="float-right">@DateTime.Now.ToString("dd/MM/yyyy")</small>
                     </h4>
                 </div>
                 <!-- /.col -->
@@ -218,7 +218,7 @@
                         <i class="far fa-credit-card"></i> Submit
                         Payment
                     </button>
-                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                    <button type="button" onclick="generatePDF()" class="btn btn-primary float-right" style="margin-right: 5px;">
                         <i class="fas fa-download"></i> Generate PDF
                     </button>
                 </div>
@@ -241,5 +241,11 @@
     function appointmentprint(){
         var print = document.getElementById("print");
         window.print();
+    }
+</script>
+<script>
+    function generatePDF() {
+        // Assuming you have a variable 'appointmentId' containing the appointment ID
+        window.location.href = '@Url.Action("AppointmentPrint", "Appointment")' + '?id=' + appointmentId;
     }
 </script>

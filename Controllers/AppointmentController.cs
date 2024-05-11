@@ -167,7 +167,10 @@ namespace StanfordHospital.Controllers
                     Appointment.AppointmentDate = appointment.AppointmentDate;
                     Appointment.AppointmentTime = appointment.AppointmentTime;
                     Appointment.AppointmentStatus = appointment.AppointmentStatus;
-                    Appointment.Diagnosis = string.Join(",", appointment.MultipleDiagnosis);
+                    if (appointment.MultipleDiagnosis != null)
+                    {
+                        Appointment.Diagnosis = string.Join(",", appointment.MultipleDiagnosis);
+                    }
                     Appointment.Prescription = appointment.Prescription;
                     Appointment.ReasonForAppointment= appointment.ReasonForAppointment;
                     Appointment.Cases = appointment.Cases;

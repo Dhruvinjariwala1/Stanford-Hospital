@@ -29,7 +29,7 @@ namespace StanfordHospital.Models.Dtos
         [Display(Name = "Appointment Status")]
         public string? AppointmentStatus { get; set; }
 
-        public List<string> MultipleDiagnosis { get; set; }
+        public List<string>? MultipleDiagnosis { get; set; }
 
         [Display(Name = "Prescription")]
         public string? Prescription { get; set; }

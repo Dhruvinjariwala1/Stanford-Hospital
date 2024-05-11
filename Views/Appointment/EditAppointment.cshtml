@@ -56,6 +56,7 @@
             </div>
             @if (User.IsInRole("Doctor"))
             {
+                ViewBag.isdoctor = "active";
                 <div class="form-group col-md-6">
                     <label asp-for="MultipleDiagnosis" class="control-label">Diagnosis<span class="text-danger">*</span></label>
                     <select asp-for="MultipleDiagnosis" id="diagnosis" title="--Select Diagnosis--" class="form-control" multiple>
@@ -102,11 +103,15 @@
                 <input asp-for="Price" class="form-control" readonly/>
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-6">
+            @if (User.IsInRole("Doctor"))
+            {
+                ViewBag.isdoctor = "active";
+                <div class="form-group col-md-6">
                 <label asp-for="DiagnosisCharges" class="control-label">Diagnosis Charges</label><span class="text-danger">*</span>
                 <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
                 <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
             </div>
+            }
             <div class="form-group">
                 <button type="submit" class="btn btn-warning">Save</button>
             </div>
@@ -142,16 +147,10 @@
             "Primary Diagnosis": 600,
             "Secondary Diagnosis": 750,
             "Comorbid Diagnosis": 250
-        };
-
-        // Return price for the selected diagnosis
+        };   
         return diagnosisPrices[diagnosis] || 0;
     }
-
-    // Add event listener to the diagnosis select element
     document.getElementById("diagnosis").addEventListener("change", calculateDiagnosisCharges);
-
-    // Call the function initially to calculate charges for any pre-selected options
     calculateDiagnosisCharges();
 </script>
 
