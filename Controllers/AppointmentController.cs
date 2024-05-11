@@ -43,6 +43,7 @@ namespace StanfordHospital.Controllers
                 Cases = a.Cases,
                 Price = a.Price,
                 DiagnosisCharges = a.DiagnosisCharges,
+                ExtraCharges = a.ExtraCharges,
             }).FirstOrDefault();
             return View(model);
         }
@@ -68,7 +69,8 @@ namespace StanfordHospital.Controllers
                     ReasonForAppointment = a.ReasonForAppointment,
                     Cases = a.Cases,
                     Price = a.Price,
-                    DiagnosisCharges = a.DiagnosisCharges
+                    DiagnosisCharges = a.DiagnosisCharges,
+                    ExtraCharges = a.ExtraCharges,
                 })
                 .ToList();
 
@@ -94,6 +96,7 @@ namespace StanfordHospital.Controllers
                 Cases = a.Cases,
                 Price = a.Price,
                 DiagnosisCharges = a.DiagnosisCharges,
+                ExtraCharges = a.ExtraCharges,
             }).ToList();
 
             return View("Appointment", model);
@@ -118,6 +121,7 @@ namespace StanfordHospital.Controllers
                     Cases= appointment.Cases,
                     Price = appointment.Price,
                     DiagnosisCharges = appointment.DiagnosisCharges,
+                    ExtraCharges = appointment.ExtraCharges,
                 };
 
                 if(Appointment.Appointmentid != 0) 
@@ -137,6 +141,7 @@ namespace StanfordHospital.Controllers
                         appointment.Cases = appointment.Cases;
                         appointment.Price = appointment.Price;
                         appointment.DiagnosisCharges = appointment.DiagnosisCharges;
+                        appointment.ExtraCharges = appointment.ExtraCharges;
                         _context.SaveChanges();
                         TempData["Message"] = "Appointment Updated Successfully....";
                     }
@@ -153,6 +158,7 @@ namespace StanfordHospital.Controllers
             return View("AddAppointment", appointment);
         }
 
+        [HttpPost]
         public IActionResult EditAppointment(AppointmentDto appointment)
         {
             ViewBag.isappointment = "active";
@@ -176,6 +182,10 @@ namespace StanfordHospital.Controllers
                     Appointment.Cases = appointment.Cases;
                     Appointment.Price = appointment.Price;
                     Appointment.DiagnosisCharges = appointment.DiagnosisCharges;
+                    if (appointment.MultipleExtraCharges != null)
+                    {
+                        Appointment.ExtraCharges = string.Join(",", appointment.MultipleExtraCharges);
+                    }
                     _context.Appointment.Update(Appointment);
                     _context.SaveChanges();
                     TempData["Message"] = "Appointment Updated Successfully....";
@@ -275,6 +285,7 @@ namespace StanfordHospital.Controllers
                     Cases = a.Cases,
                     Price = a.Price,
                     DiagnosisCharges = a.DiagnosisCharges,
+                    ExtraCharges = a.ExtraCharges,
                 }).FirstOrDefault();
 
             return View("DeleteAppointment", deleteappointment);

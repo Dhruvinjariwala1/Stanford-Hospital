@@ -14,7 +14,7 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="EditAppointment" class="row g-3">
+        <form asp-action="EditAppointment" class="row g-3" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Appointmentid" />
             <div class="form-group col-md-6">
@@ -107,11 +107,28 @@
             {
                 ViewBag.isdoctor = "active";
                 <div class="form-group col-md-6">
-                <label asp-for="DiagnosisCharges" class="control-label">Diagnosis Charges</label><span class="text-danger">*</span>
-                <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
-                <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
-            </div>
+                    <label asp-for="DiagnosisCharges" class="control-label">Extra Charges SubTotal</label><span class="text-danger">*</span>
+                    <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
+                    <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
+                </div>
             }
+            <div class="form-group col-md-6">
+                <label asp-for="MultipleExtraCharges" class="control-label">Extra Charges<span asp-validation-for="MultipleExtraCharges" class="text-danger"></span></label>
+                <select asp-for="MultipleExtraCharges" id="extracharges" title="--Select Extra Charges--" class="form-control" multiple>
+                    <option>--Select Extra Charges--</option>
+                    <option value="Covid Vaccine">Covid Vaccine</option>
+                    <option value="X-Ray">X-Ray</option>
+                    <option value="Full Body Checkup">Full Body Checkup</option>
+                    <option value="ECG">ECG</option>
+                    <option value="Emergency Charge">Emergency Charge</option>
+                    <option value="Oxygen Charges">Oxygen Charges</option>
+                    <option value="RBS">RBS</option>
+                    <option value="Endoscopy">Endoscopy</option>
+                    <option value="Rehabilitation">Rehabilitation</option>
+                    <option value="Stethoscope">Stethoscope</option>
+                    <option value="MRI ">MRI </option>
+                </select>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-warning">Save</button>
             </div>
@@ -119,42 +136,41 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
-@* <script>
+<script>
     new MultiSelectTag('diagnosis')
-</script> *@
+</script> 
 
 <script>
-    function calculateDiagnosisCharges() {
-        var diagnosisSelect = document.getElementById("diagnosis");
-        var selectedOptions = diagnosisSelect.selectedOptions;
-        var totalPrice = 0;
+    function ExtraCharges() {
+        var extrachargesSelect = document.getElementById("extracharges");
+        var selectedOptions = extrachargesSelect.selectedOptions;
+        var TotalExtraCharges = 0;
 
         for (var i = 0; i < selectedOptions.length; i++) {
             var option = selectedOptions[i].value;
-            totalPrice += getPriceForDiagnosis(option);
+            TotalExtraCharges += getextracharges(option);
         }
-        document.getElementById("DiagnosisCharges").value = totalPrice;
+        document.getElementById("DiagnosisCharges").value = TotalExtraCharges;
     }
-    function getPriceForDiagnosis(diagnosis) {
-        var diagnosisPrices = {
-            "Clinical Diagnosis": 700,
-            "Laboratory Diagnosis": 1500,
-            "Imaging Diagnosis": 850,
-            "Pathological Diagnosis": 650,
-            "Differential Diagnosis": 500,
-            "Genetic Diagnosis": 450,
-            "Provisional Diagnosis": 350,
-            "Primary Diagnosis": 600,
-            "Secondary Diagnosis": 750,
-            "Comorbid Diagnosis": 250
-        };   
-        return diagnosisPrices[diagnosis] || 0;
+    function getextracharges(extracharges) {
+        var Extracharges = {
+            "Covid Vaccine": 225,
+            "X-Ray": 2000,
+            "Full Body Checkup": 1600,
+            "ECG": 500,
+            "Emergency Charge": 2500,
+            "Oxygen Charges": 5740,
+            "RBS": 270,
+            "Endoscopy": 4000,
+            "Rehabilitation": 5500,
+            "Stethoscope": 1200,
+            "MRI":7000
+        };
+        return Extracharges[extracharges] || 0;
     }
-    document.getElementById("diagnosis").addEventListener("change", calculateDiagnosisCharges);
-    calculateDiagnosisCharges();
+    document.getElementById("extracharges").addEventListener("change", ExtraCharges);
+    ExtraCharges();
 </script>
-
-
 
 
 @section Scripts {

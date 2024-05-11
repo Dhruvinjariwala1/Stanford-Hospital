@@ -46,8 +46,9 @@ namespace StanfordHospital.Models.Dtos
         [Display(Name = "Price")]
         public int? Price { get; set; }
 
-        
         [Display(Name = "Diagnosis Charges")]
         public int? DiagnosisCharges { get; set; }
+
+        public List<string>? MultipleExtraCharges { get; set; }
     }
 }

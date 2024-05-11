@@ -4,7 +4,7 @@
     ViewData["Title"] = "AppointmentPrint";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <div>
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" style="margin-left:auto;">
@@ -36,7 +36,7 @@
 
 
         <!-- Main content -->
-        <div class="invoice p-3 mb-3">
+        <div class="invoice p-3 mb-3" style="border-radius:20px;">
             <!-- title row -->
             <div class="row">
                 <div class="col-12">
@@ -112,7 +112,8 @@
                                 <th>@Html.DisplayNameFor(model => model.ReasonForAppointment)</th>
                                 <th>@Html.DisplayNameFor(model => model.Cases)</th>
                                 <th>@Html.DisplayNameFor(model => model.Price)</th>
-                                <th>@Html.DisplayNameFor(model => model.DiagnosisCharges)</th>
+                                <th>@Html.DisplayNameFor(model => model.ExtraCharges)</th>
+                                <th>Extra Charges Sub Total</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,6 +134,7 @@
                                 <td> @Html.DisplayFor(model => model.ReasonForAppointment)</td>
                                 <td> @Html.DisplayFor(model => model.Cases)</td>
                                 <td> @Html.DisplayFor(model => model.Price)</td>
+                                <td> @Html.DisplayFor(model => model.ExtraCharges)</td>
                                 <td> @Html.DisplayFor(model => model.DiagnosisCharges)</td>
                             </tr>
                             @*  <tr>
@@ -187,15 +189,16 @@
                                 <th>Price</th>
                             </tr>
                             <tr>
-                                <td><b>@Model.Diagnosis</b></td>
+                                <td><b>Extra Charges</b>:(@Model.ExtraCharges)</td>
                                 <td>@Model.DiagnosisCharges</td>
                             </tr>
 
 
                             <tr>
-                                <th>Extra Charges:</th>
+                                <th>Cases Charges:</th>
                                 <td>@Model.Price</td>
                             </tr>
+
                             <tr>
                                 <th style="width:50%">Subtotal:</th>
                                 <td>@(Model.DiagnosisCharges + Model.Price)</td>
@@ -218,7 +221,7 @@
                         <i class="far fa-credit-card"></i> Submit
                         Payment
                     </button>
-                    <button type="button" onclick="generatePDF()" class="btn btn-primary float-right" style="margin-right: 5px;">
+                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
                         <i class="fas fa-download"></i> Generate PDF
                     </button>
                 </div>
@@ -226,7 +229,7 @@
         </div>
         <!-- /.invoice -->
     </div><!-- /.col -->
-</div><!-- /.row -->
+</div><br /><!-- /.row -->
             @* </div><!-- /.container-fluid -->
         </section>
 <!-- /.content -->
@@ -241,11 +244,5 @@
     function appointmentprint(){
         var print = document.getElementById("print");
         window.print();
-    }
-</script>
-<script>
-    function generatePDF() {
-        // Assuming you have a variable 'appointmentId' containing the appointment ID
-        window.location.href = '@Url.Action("AppointmentPrint", "Appointment")' + '?id=' + appointmentId;
     }
 </script>

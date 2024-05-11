@@ -52,5 +52,8 @@ namespace StanfordHospital.Models
         
         [Display(Name ="Diagnosis Charges")]
         public int? DiagnosisCharges { get; set; }
+
+        
+        public string? ExtraCharges { get;set; }
     }
 }

@@ -59,6 +59,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.DiagnosisCharges)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExtraCharges)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -103,6 +106,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DiagnosisCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExtraCharges)
                 </td>
                 @if (User.IsInRole("Staff")||User.IsInRole("Doctor"))
                 {

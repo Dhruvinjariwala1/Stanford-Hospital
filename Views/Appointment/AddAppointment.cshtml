@@ -110,6 +110,23 @@
                 <input asp-for="DiagnosisCharges" class="form-control" readonly />
                 </div>
             }
+            <div class="form-group col-md-6">
+                <label asp-for="ExtraCharges" class="control-label">Extra Charges<span asp-validation-for="ExtraCharges" class="text-danger"></span></label>
+                <select asp-for="ExtraCharges" name="extracharges" id="extracharges" class="form-control" multiple>
+                    <option>--Select Extra Charges--</option>
+                    <option value="Covid Vaccine">Covid Vaccine</option>
+                    <option value="X-Ray">X-Ray</option>
+                    <option value="Full Body Checkup">Full Body Checkup</option>
+                    <option value="ECG">ECG</option>
+                    <option value="Emergency Charge">Emergency Charge</option>
+                    <option value="Oxygen Charges">Oxygen Charges</option>
+                    <option value="RBS">RBS</option>
+                    <option value="Endoscopy">Endoscopy</option>
+                    <option value="Rehabilitation">Rehabilitation</option>
+                    <option value="Stethoscope">Stethoscope</option>
+                    <option value="MRI ">MRI </option>
+                </select>
+            </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
