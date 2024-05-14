@@ -1,4 +1,4 @@
-﻿@model StanfordHospital.Models.Ipd
+﻿@model StanfordHospital.Models.Dtos.IpdDto
 
 @{
     ViewData["Title"] = "AddIpd";
@@ -21,33 +21,23 @@
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="Id" class="control-label">Select Patient</label><span class="text-danger">*</span>
+                <label asp-for="Id" class="control-label">Select Doctor</label><span class="text-danger">*</span>
                 <select asp-for="Id" class ="form-control selectdoctor">
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentDate" class="control-label">Appointment Date</label><span class="text-danger">*</span>
-                <input asp-for="AppointmentDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                <label asp-for="AdmitDate" class="control-label">Admit Date</label><span class="text-danger">*</span>
+                <input asp-for="AdmitDate" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="AdmitDate" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentTime" class="control-label">Appointment Time</label><span class="text-danger">*</span>
-                <input asp-for="AppointmentTime" class="form-control" type="time"/>
-                <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+                <label asp-for="DischargeDate" class="control-label">Discharge Date</label><span class="text-danger">*</span>
+                <input asp-for="DischargeDate" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DischargeDate" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="AppointmentStatus" class="control-label">Appointment Status</label><span class="text-danger">*</span>
-                <select asp-for="AppointmentStatus" class="form-control" >
-                    <option>--Select Status--</option>
-                    <option value="Completed">Completed</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Canceled">Canceled</option>
-                </select>
-                <span asp-validation-for="AppointmentStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Diagnosis" class="control-label">Diagnosis</label><span class="text-danger">*</span>
-                <select asp-for="Diagnosis" name="diagnosis" id="diagnosis" class="form-control" multiple>
+                <label asp-for="MultipleDiagnosis" class="control-label">Diagnosis</label><span class="text-danger">*</span>
+                <select asp-for="MultipleDiagnosis" name="diagnosis" id="diagnosis" class="form-control" multiple>
                     <option>--Select Diagnosis--</option>
                     <option value="Clinical Diagnosis">Clinical Diagnosis</option>
                     <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
@@ -60,7 +50,7 @@
                     <option value="Secondary Diagnosis">Secondary Diagnosis</option>
                     <option value="Comorbid Diagnosis">Comorbid Diagnosis</option>
                 </select>
-                <span asp-validation-for="Diagnosis" class="text-danger"></span>
+                <span asp-validation-for="MultipleDiagnosis" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Prescription" class="control-label">Prescription</label><span class="text-danger">*</span>
@@ -68,39 +58,8 @@
                 <span asp-validation-for="Prescription" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="ReasonForAppointment" class="control-label">Reason For Appointment</label><span class="text-danger">*</span>
-                <textarea asp-for="ReasonForAppointment" class="form-control" ></textarea>
-                <span asp-validation-for="ReasonForAppointment" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label>Case</label><span class="text-danger">*</span>
-                <div class="form-check">
-                    <input asp-for="Cases" id="oldcase" class="form-check-input" type="radio" value="OldCase">
-                    <label asp-for="Cases" class="form-check-label">
-                        OldCase
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input asp-for="Cases" id="newcase" class="form-check-input" type="radio" value="NewCase">
-                    <label asp-for="Cases" class="form-check-label">
-                        NewCase
-                    </label>
-                </div>
-                <span asp-validation-for="Cases" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Price" class="control-label">Price</label><span class="text-danger">*</span>
-                <input asp-for="Price" class="form-control" readonly/>
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="DiagnosisCharges" class="control-label">Diagnosis Charges</label><span class="text-danger">*</span>
-                <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
-                <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="ExtraCharges" class="control-label">Extra Charges</label><span class="text-danger">*</span>
-                <select asp-for="ExtraCharges" name="extracharges" id="extracharges" class="form-control" multiple>
+                <label asp-for="MultipleExtraCharges" class="control-label">Select Extra Charges</label><span class="text-danger">*</span>
+                <select asp-for="MultipleExtraCharges" name="extracharges" id="extracharges" class="form-control" >
                     <option>--Select Extra Charges--</option>
                     <option value="Covid Vaccine">Covid Vaccine</option>
                     <option value="X-Ray">X-Ray</option>
@@ -114,11 +73,17 @@
                     <option value="Stethoscope">Stethoscope</option>
                     <option value="MRI ">MRI </option>
                 </select>
-                <span asp-validation-for="ExtraCharges" class="text-danger"></span>
+                <span asp-validation-for="MultipleExtraCharges" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomType" class="control-label">Room Type</label><span class="text-danger">*</span>
-                <select asp-for="RoomType" name="roomtype" id="roomtype" class="form-control" multiple>
+                <label asp-for="DiagnosisCharges" class="control-label">Extra Charges Total</label><span class="text-danger">*</span>
+                <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
+                <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="RoomType" class="control-label">Select Room Type</label><span class="text-danger">*</span>
+                <select asp-for="RoomType" name="roomtype" id="roomtype" class="form-control">
+                    <option>--Select Room Type--</option>
                     <option value="General Room">General Room</option>
                     <option value="ICU Room">ICU Room</option>
                     <option value="Private Room">Private Room</option>
@@ -130,9 +95,19 @@
                 <span asp-validation-for="RoomType" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="RoomCharges" class="control-label">Room Charges</label><span class="text-danger">*</span>
+                <label asp-for="RoomCharges" class="control-label">Room Charge</label><span class="text-danger">*</span>
                 <input asp-for="RoomCharges" id="RoomCharges" class="form-control" readonly/>
                 <span asp-validation-for="RoomCharges" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="PerDayRoom" class="control-label">Per Day Room </label><span class="text-danger">*</span>
+                <input asp-for="PerDayRoom" id="PerDayRoom" class="form-control" />
+                <span asp-validation-for="PerDayRoom" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="TotalRoomPrice" class="control-label">Total Room Price</label><span class="text-danger">*</span>
+                <input asp-for="TotalRoomPrice" id="TotalRoomPrice" class="form-control" readonly/>
+                <span asp-validation-for="TotalRoomPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Create</button>
@@ -143,6 +118,45 @@
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
 <script>
     new MultiSelectTag('diagnosis')
+</script>
+
+<script>
+    document.getElementById('roomtype').addEventListener('change', function () {
+        var roomType = this.value;
+        var roomCharges = 0;
+        switch (roomType) {
+            case 'General Room':
+                roomCharges = 2000;
+                break;
+            case 'ICU Room':
+                roomCharges = 5500;
+                break;
+            case 'Private Room':
+                roomCharges = 4000;
+                break;
+            case 'Single Room (Non-AC and AC)':
+                roomCharges = 4500;
+                break;
+            case 'Deluxe Room (Non-AC and AC)':
+                roomCharges = 6000;
+                break;
+            case 'Suite':
+                roomCharges = 8000;
+                break;
+            case 'Presidential Suite':
+                roomCharges = 7500;
+                break;  
+        }
+        document.getElementById('RoomCharges').value = roomCharges;
+        TotalRoomPrice();
+    });   
+    function TotalRoomPrice() {
+        var roomCharges = parseFloat(document.getElementById('RoomCharges').value);
+        var perDayRoomPrice = parseFloat(document.getElementById('PerDayRoom').value);  
+        var totalRoomPrice = roomCharges * perDayRoomPrice;
+        document.getElementById('TotalRoomPrice').value = totalRoomPrice.toFixed(2);
+    }
+    document.getElementById('PerDayRoom').addEventListener('input', TotalRoomPrice);
 </script>
 
 <script>
@@ -208,22 +222,6 @@
 
 
 @section Scripts {
-    <script>
-        function calculatePrice() {
-            var priceInput = document.getElementById("Price");
-            var oldCaseRadio = document.getElementById("oldcase");
-            var newCaseRadio = document.getElementById("newcase");
-
-            if (oldCaseRadio.checked) {
-                priceInput.value = 200;
-            } else if (newCaseRadio.checked) {
-                priceInput.value = 500;
-            }
-        }
-        document.getElementById("oldcase").addEventListener("change", calculatePrice);
-        document.getElementById("newcase").addEventListener("change", calculatePrice);
-        calculatePrice();
-    </script>
     <script>
         $(document).ready(function () {
             function getDoctorRole() {

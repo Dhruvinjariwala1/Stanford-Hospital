@@ -18,42 +18,34 @@ namespace StanfordHospital.Models.Dtos
         public virtual ApplicationUser? User { get; set; }
 
         [Required]
-        [Display(Name = "Appointment Date")]
-        [DataType(DataType.Date)]
-        public DateTime AppointmentDate { get; set; }
+        [Display(Name = "Admit Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime AdmitDate { get; set; }
         [Required]
-        [Display(Name = "Appointment Time")]
-        [DataType(DataType.Time)]
-        public DateTime AppointmentTime { get; set; }
-        [Required]
-        [Display(Name = "Appointment Status")]
-        public string? AppointmentStatus { get; set; }
-
+        [Display(Name = "Discharge Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime DischargeDate { get; set; }
+        
         public List<string>? MultipleDiagnosis { get; set; }
 
         [Display(Name = "Prescription")]
         public string? Prescription { get; set; }
-
-        [Required]
-        [Display(Name = "Reason For Appointment")]
-        public string? ReasonForAppointment { get; set; }
-
-        [Required]
-        [Display(Name = "Cases")]
-        public string? Cases { get; set; }
-
-        [Required]
-        [Display(Name = "Price")]
-        public int? Price { get; set; }
 
         [Display(Name = "Diagnosis Charges")]
         public int? DiagnosisCharges { get; set; }
 
         public List<string>? MultipleExtraCharges { get; set; }
 
-        public List<string>? MultipleRoomType { get; set; }
+        [Display(Name = "Room Type")]
+        public string? RoomType { get; set; }
 
         [Display(Name = "Room Charges")]
         public int? RoomCharges { get; set; }
+
+        [Display(Name ="Per Day Room ")]
+        public int? PerDayRoom { get; set; }
+
+        [Display(Name = "Total Room Price ")]
+        public decimal? TotalRoomPrice { get; set; }
     }
 }

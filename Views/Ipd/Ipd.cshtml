@@ -30,13 +30,10 @@
                 Select Doctor
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentDate)
+                @Html.DisplayNameFor(model => model.AdmitDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AppointmentTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppointmentStatus)
+                @Html.DisplayNameFor(model => model.DischargeDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Diagnosis)
@@ -45,25 +42,22 @@
                 @Html.DisplayNameFor(model => model.Prescription)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReasonForAppointment)
+                Select Extra Charges
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cases)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DiagnosisCharges)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExtraCharges)
+                Extra Charges Total
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RoomType)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.RoomCharges)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerDayRoom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalRoomPrice)
             </th>
             <th></th>
         </tr>
@@ -83,13 +77,10 @@
                     @Html.DisplayFor(modelItem => item.User.LastName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentDate)
+                    @Html.DisplayFor(modelItem => item.AdmitDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AppointmentStatus)
+                    @Html.DisplayFor(modelItem => item.DischargeDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Diagnosis)
@@ -98,25 +89,22 @@
                     @Html.DisplayFor(modelItem => item.Prescription)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ReasonForAppointment)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cases)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
+                    @Html.DisplayFor(modelItem => item.ExtraCharges)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DiagnosisCharges)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExtraCharges)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RoomType)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RoomCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerDayRoom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalRoomPrice)
                 </td>
                 <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Ipdid"><i class='fas fa-edit'></i></a>

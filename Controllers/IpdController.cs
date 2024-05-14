@@ -27,25 +27,23 @@ namespace StanfordHospital.Controllers
                 Ipdid = a.Ipdid,
                 Patient = a.Patient,
                 User = a.User,
-                AppointmentDate = a.AppointmentDate,
-                AppointmentTime = a.AppointmentTime,
-                AppointmentStatus = a.AppointmentStatus,
+                AdmitDate = a.AdmitDate,
+                DischargeDate = a.DischargeDate,
                 Diagnosis = a.Diagnosis,
                 Prescription = a.Prescription,
-                ReasonForAppointment = a.ReasonForAppointment,
-                Cases = a.Cases,
-                Price = a.Price,
                 DiagnosisCharges = a.DiagnosisCharges,
                 ExtraCharges = a.ExtraCharges,
                 RoomType = a.RoomType,
                 RoomCharges = a.RoomCharges,
+                PerDayRoom = a.PerDayRoom,
+                TotalRoomPrice = a.TotalRoomPrice ,
             }).ToList();
 
             return View("Ipd",model);
         }
 
         [HttpPost]
-        public IActionResult AddIpd(Ipd ipd) 
+        public IActionResult AddIpd(IpdDto ipd) 
         {
             ViewBag.isipd = "active";
             if (ModelState.IsValid)
@@ -54,18 +52,16 @@ namespace StanfordHospital.Controllers
                 {
                     Patientid = ipd.Patientid,
                     Id = ipd.Id,
-                    AppointmentDate = ipd.AppointmentDate,
-                    AppointmentTime = ipd.AppointmentTime,
-                    AppointmentStatus = ipd.AppointmentStatus,
-                    Diagnosis = ipd.Diagnosis,
+                    AdmitDate = ipd.AdmitDate,
+                    DischargeDate = ipd.DischargeDate,
+                    //Diagnosis = ipd.Diagnosis,
                     Prescription = ipd.Prescription,
-                    ReasonForAppointment = ipd.ReasonForAppointment,
-                    Cases = ipd.Cases,
-                    Price = ipd.Price,
                     DiagnosisCharges = ipd.DiagnosisCharges,
-                    ExtraCharges = ipd.ExtraCharges,
+                    //ExtraCharges = ipd.ExtraCharges,
                     RoomType = ipd.RoomType,
                     RoomCharges = ipd.RoomCharges,
+                    PerDayRoom = ipd.PerDayRoom,
+                    TotalRoomPrice = ipd.TotalRoomPrice,
                 };
 
                 if (Ipd.Ipdid != 0)
@@ -76,18 +72,22 @@ namespace StanfordHospital.Controllers
                     {
                         ipd.Patientid = ipd.Patientid;
                         ipd.Id = ipd.Id;
-                        ipd.AppointmentDate = ipd.AppointmentDate;
-                        ipd.AppointmentTime = ipd.AppointmentTime;
-                        ipd.AppointmentStatus = ipd.AppointmentStatus;
-                        ipd.Diagnosis = ipd.Diagnosis;
+                        ipd.AdmitDate = ipd.AdmitDate;
+                        ipd.DischargeDate = ipd.DischargeDate;
+                        if (ipd.MultipleDiagnosis != null)
+                        {
+                            Ipd.Diagnosis = string.Join(",", ipd.MultipleDiagnosis);
+                        }
                         ipd.Prescription = ipd.Prescription;
-                        ipd.ReasonForAppointment = ipd.ReasonForAppointment;
-                        ipd.Cases = ipd.Cases;
-                        ipd.Price = ipd.Price;
                         ipd.DiagnosisCharges = ipd.DiagnosisCharges;
-                        ipd.ExtraCharges = ipd.ExtraCharges;
-                        ipd.RoomType = ipd.RoomType;
+                        if (ipd.MultipleExtraCharges != null)
+                        {
+                            Ipd.ExtraCharges = string.Join(",", ipd.MultipleExtraCharges);
+                        }
+                        ipd.RoomType= ipd.RoomType;
                         ipd.RoomCharges = ipd.RoomCharges;
+                        ipd.PerDayRoom = ipd.PerDayRoom;
+                        ipd.TotalRoomPrice = ipd.TotalRoomPrice;
                         _context.SaveChanges();
                         TempData["Message"] = "In-Patient Department Updated Successfully....";
                     }
@@ -116,27 +116,22 @@ namespace StanfordHospital.Controllers
                     Ipd.Ipdid = ipd.Ipdid;
                     Ipd.Patientid = ipd.Patientid;
                     Ipd.Id = ipd.Id;
-                    Ipd.AppointmentDate = ipd.AppointmentDate;
-                    Ipd.AppointmentTime = ipd.AppointmentTime;
-                    Ipd.AppointmentStatus = ipd.AppointmentStatus;
+                    Ipd.AdmitDate = ipd.AdmitDate;
+                    Ipd.DischargeDate = ipd.DischargeDate;
                     if (ipd.MultipleDiagnosis != null)
                     {
                         Ipd.Diagnosis = string.Join(",", ipd.MultipleDiagnosis);
                     }
                     Ipd.Prescription = ipd.Prescription;
-                    Ipd.ReasonForAppointment = ipd.ReasonForAppointment;
-                    Ipd.Cases = ipd.Cases;
-                    Ipd.Price = ipd.Price;
                     Ipd.DiagnosisCharges = ipd.DiagnosisCharges;
                     if (ipd.MultipleExtraCharges != null)
                     {
                         Ipd.ExtraCharges = string.Join(",", ipd.MultipleExtraCharges);
                     }
-                    if (ipd.MultipleRoomType != null)
-                    {
-                        Ipd.RoomType = string.Join(",", ipd.MultipleRoomType);
-                    }
+                    Ipd.RoomType = ipd.RoomType;
                     Ipd.RoomCharges = ipd.RoomCharges;
+                    Ipd.PerDayRoom = ipd.PerDayRoom;
+                    Ipd.TotalRoomPrice = ipd.TotalRoomPrice;
                     _context.Ipd.Update(Ipd);
                     _context.SaveChanges();
                     TempData["Message"] = "In-Patient Department Updated Successfully....";
@@ -163,7 +158,7 @@ namespace StanfordHospital.Controllers
             return Json(new { status = false });
         }
 
-        public IActionResult Create(Ipd ipd) 
+        public IActionResult Create(IpdDto ipd) 
         {
             ViewBag.isipd = "active";
             var patients = _context.Patient.Select(p => new {
@@ -205,18 +200,16 @@ namespace StanfordHospital.Controllers
                    Ipdid = a.Ipdid,
                    Patientid = a.Patientid,
                    Id = a.Id,
-                   AppointmentDate = a.AppointmentDate,
-                   AppointmentTime = a.AppointmentTime,
-                   AppointmentStatus = a.AppointmentStatus,
+                   AdmitDate = a.AdmitDate,
+                   DischargeDate = a.DischargeDate,
                    //Diagnosis = a.Diagnosis,
                    Prescription = a.Prescription,
-                   ReasonForAppointment = a.ReasonForAppointment,
-                   Cases = a.Cases,
-                   Price = a.Price,
                    DiagnosisCharges = a.DiagnosisCharges,
                    //ExtraCharges = a.ExtraCharges,
-                   //RoomType = a.RoomType,
+                   RoomType = a.RoomType,
                    RoomCharges = a.RoomCharges,
+                   PerDayRoom = a.PerDayRoom,
+                   TotalRoomPrice = a.TotalRoomPrice,
                }).FirstOrDefault();
 
             return View("EditIpd", editipds);
@@ -230,18 +223,16 @@ namespace StanfordHospital.Controllers
                     Ipdid = a.Ipdid,
                     Patientid = a.Patientid,
                     Id = a.Id,
-                    AppointmentDate = a.AppointmentDate,
-                    AppointmentTime = a.AppointmentTime,
-                    AppointmentStatus = a.AppointmentStatus,
+                    AdmitDate = a.AdmitDate,
+                    DischargeDate = a.DischargeDate,
                     Diagnosis = a.Diagnosis,
                     Prescription = a.Prescription,
-                    ReasonForAppointment = a.ReasonForAppointment,
-                    Cases = a.Cases,
-                    Price = a.Price,
                     DiagnosisCharges = a.DiagnosisCharges,
                     ExtraCharges = a.ExtraCharges,
                     RoomType = a.RoomType,
                     RoomCharges = a.RoomCharges,
+                    PerDayRoom = a.PerDayRoom,
+                    TotalRoomPrice = a.TotalRoomPrice,
                 }).FirstOrDefault();
 
             return View("DeleteIpd", deleteipd);
