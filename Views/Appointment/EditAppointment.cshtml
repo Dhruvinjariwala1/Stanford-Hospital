@@ -59,7 +59,7 @@
                 ViewBag.isdoctor = "active";
                 <div class="form-group col-md-6">
                     <label asp-for="MultipleDiagnosis" class="control-label">Diagnosis<span class="text-danger">*</span></label>
-                    <select asp-for="MultipleDiagnosis" id="diagnosis" title="--Select Diagnosis--" class="form-control" multiple>
+                    <select asp-for="MultipleDiagnosis" class="form-control" multiple>
                         <option value="Clinical Diagnosis">Clinical Diagnosis</option>
                         <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
                         <option value="Imaging Diagnosis">Imaging Diagnosis</option>
@@ -106,15 +106,17 @@
             @if (User.IsInRole("Doctor"))
             {
                 ViewBag.isdoctor = "active";
+                <div class="form-group col-md-6"></div>
                 <div class="form-group col-md-6">
                     <label asp-for="DiagnosisCharges" class="control-label">Extra Charges SubTotal</label><span class="text-danger">*</span>
                     <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
                     <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
                 </div>
             }
+            <div class="form-group col-md-6"></div>
             <div class="form-group col-md-6">
                 <label asp-for="MultipleExtraCharges" class="control-label">Extra Charges<span asp-validation-for="MultipleExtraCharges" class="text-danger"></span></label>
-                <select asp-for="MultipleExtraCharges" id="extracharges" title="--Select Extra Charges--" class="form-control" multiple>
+                <select asp-for="MultipleExtraCharges" id="extracharges" class="form-control" multiple>
                     <option>--Select Extra Charges--</option>
                     <option value="Covid Vaccine">Covid Vaccine</option>
                     <option value="X-Ray">X-Ray</option>
@@ -137,7 +139,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
 <script>
-    new MultiSelectTag('diagnosis')
+    new MultiSelectTag('MultipleDiagnosis')
 </script> 
 
 <script>

@@ -1,4 +1,4 @@
-﻿@model StanfordHospital.Models.Appointment
+﻿@model StanfordHospital.Models.Dtos.AppointmentDto
 
 @{
     ViewData["Title"] = "AddAppointment";
@@ -57,8 +57,8 @@
             @if (User.IsInRole("Doctor"))
             {
                 <div class="form-group col-md-6">
-                    <label asp-for="Diagnosis" class="control-label">Diagnosis<span asp-validation-for="Diagnosis" class="text-danger"></span></label>
-                    <select asp-for="Diagnosis" name="diagnosis" id="diagnosis" class="form-control" multiple>
+                    <label asp-for="MultipleDiagnosis" class="control-label">Diagnosis<span asp-validation-for="MultipleDiagnosis" class="text-danger"></span></label>
+                    <select asp-for="MultipleDiagnosis" class="form-control" multiple>
                         <option>--Select Diagnosis--</option>
                         <option value="Clinical Diagnosis">Clinical Diagnosis</option>
                         <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
@@ -110,9 +110,10 @@
                 <input asp-for="DiagnosisCharges" class="form-control" readonly />
                 </div>
             }
+            <div class="form-group col-md-6"></div>
             <div class="form-group col-md-6">
-                <label asp-for="ExtraCharges" class="control-label">Extra Charges<span asp-validation-for="ExtraCharges" class="text-danger"></span></label>
-                <select asp-for="ExtraCharges" name="extracharges" id="extracharges" class="form-control" multiple>
+                <label asp-for="MultipleExtraCharges" class="control-label">Extra Charges<span asp-validation-for="MultipleExtraCharges" class="text-danger"></span></label>
+                <select asp-for="MultipleExtraCharges" id="extracharges" class="form-control" multiple>
                     <option>--Select Extra Charges--</option>
                     <option value="Covid Vaccine">Covid Vaccine</option>
                     <option value="X-Ray">X-Ray</option>
@@ -135,7 +136,7 @@
 </div>
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
 <script>
-    new MultiSelectTag('diagnosis')
+    new MultiSelectTag('MultipleDiagnosis')
 </script>
 
 @section Scripts {
