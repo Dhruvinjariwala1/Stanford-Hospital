@@ -1,7 +1,7 @@
-﻿@model StanfordHospital.Models.Appointment
+﻿@model StanfordHospital.Models.Ipd
 
 @{
-    ViewData["Title"] = Model.Patient.Firstname + " " + Model.Patient.Lastname + " - AppointmentPrint";
+    ViewData["Title"] = Model.Patient.Firstname +" "+ Model.Patient.Lastname + " - Print";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.js"></script>
@@ -17,7 +17,7 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Appointment">Appointment</a></li>
+                            <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Ipd">Ipd</a></li>
                             <li class="breadcrumb-item active">Invoice</li>
                         </ol>
                     </div>
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="col-sm-3 invoice-col">
-                    To Checking
+                    To FollowUp
                     <address>
                         <strong>Doctor Details</strong><br />
                         Dr. @Model.User.FirstName @Model.User.LastName<br />
@@ -88,11 +88,11 @@
 
                 <!-- /.col -->
                 <div class="col-sm-2 invoice-col">
-                    <b>Invoice No:#@Model.Appointmentid</b><br>
-                    @*  <b>Order ID:</b> 4F3S8J<br> *@
-                    <b>@Model.AppointmentDate.ToString("dd/MM/yyyy")</b><br>
-                    @*  <b>Account:</b> 968-34567 *@
+                    <b>Invoice No: #@Model.Ipdid</b><br><br /><br />
+                    <b>Admit Date:</b> @Model.AdmitDate.ToString("dd/MM/yyyy")<br />
+                    <b>Discharge Date:</b> @Model.DischargeDate.ToString("dd/MM/yyyy")
                 </div>
+
                 <!-- /.col -->
             </div>
             <!-- /.row -->
@@ -102,40 +102,20 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>@Html.DisplayNameFor(model => model.Patient)</th>
-                                <th>@Html.DisplayNameFor(model => model.User)</th>
-                                <th>@Html.DisplayNameFor(model => model.AppointmentDate)</th>
-                                <th>@Html.DisplayNameFor(model => model.AppointmentTime)</th>
-                                <th>@Html.DisplayNameFor(model => model.AppointmentStatus)</th>
                                 <th>@Html.DisplayNameFor(model => model.Diagnosis)</th>
                                 <th>@Html.DisplayNameFor(model => model.Prescription)</th>
-                                <th>@Html.DisplayNameFor(model => model.ReasonForAppointment)</th>
-                                <th>@Html.DisplayNameFor(model => model.Cases)</th>
-                                <th>@Html.DisplayNameFor(model => model.Price)</th>
-                                <th>@Html.DisplayNameFor(model => model.ExtraCharges)</th>
-                                <th>Extra Charges Sub Total</th>
+                                <th>@Html.DisplayNameFor(model => model.RoomType)</th>
+                                <th>@Html.DisplayNameFor(model => model.MediclaimName)</th>
+                                <th>@Html.DisplayNameFor(model => model.InsuranceNumber)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>
-                                    @Html.DisplayFor(model => model.Patient.Firstname)
-                                    @Html.DisplayFor(model => model.Patient.Lastname)
-                                </td>
-                                <td>Dr.
-                                    @Html.DisplayFor(model => model.User.FirstName)
-                                    @Html.DisplayFor(model => model.User.LastName)
-                                </td>
-                                <td> @Html.DisplayFor(model => model.AppointmentDate)</td>
-                                <td>@Html.DisplayFor(model => model.AppointmentTime)</td>
-                                <td> @Html.DisplayFor(model => model.AppointmentStatus)</td>
                                 <td>@Html.DisplayFor(model => model.Diagnosis)</td>
                                 <td>@Html.DisplayFor(model => model.Prescription)</td>
-                                <td> @Html.DisplayFor(model => model.ReasonForAppointment)</td>
-                                <td> @Html.DisplayFor(model => model.Cases)</td>
-                                <td> @Html.DisplayFor(model => model.Price)</td>
-                                <td> @Html.DisplayFor(model => model.ExtraCharges)</td>
-                                <td> @Html.DisplayFor(model => model.DiagnosisCharges)</td>
+                                <td>@Html.DisplayFor(model => model.RoomType)</td>
+                                <td>@Html.DisplayFor(model => model.MediclaimName)</td>
+                                <td>@Html.DisplayFor(model => model.InsuranceNumber)</td>
                             </tr>
                             @*  <tr>
                             <td>1</td>
@@ -168,17 +148,17 @@
             <div class="row">
                 <!-- accepted payments column -->
                 @* <div class="col-6">
-                    <p class="lead">Payment Methods:</p>
-                    <img src="../../dist/img/credit/visa.png" alt="Visa">
-                    <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
-                    <img src="../../dist/img/credit/american-express.png" alt="American Express">
-                    <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
+                <p class="lead">Payment Methods:</p>
+                <img src="../../dist/img/credit/visa.png" alt="Visa">
+                <img src="../../dist/img/credit/mastercard.png" alt="Mastercard">
+                <img src="../../dist/img/credit/american-express.png" alt="American Express">
+                <img src="../../dist/img/credit/paypal2.png" alt="Paypal">
 
-                    <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
-                        Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                        plugg
-                        dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                    </p>
+                <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
+                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
+                plugg
+                dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+                </p>
                 </div> *@
                 <!-- /.col -->
                 <div class="col-6">
@@ -188,20 +168,34 @@
                                 <th style="width:50%;">Diagnosis</th>
                                 <th>Price</th>
                             </tr>
-                            <tr>
+                            @* <tr>
                                 <td><b>Extra Charges</b>:(@Model.ExtraCharges)</td>
+                                <td>@Model.DiagnosisCharges</td>
+                            </tr> *@
+
+                            <tr>
+                                <td><b>Room Charges</b></td>
+                                <td>@Model.RoomCharges</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Per Day Room</b></td>
+                                <td>@Model.PerDayRoom</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Total Room Price</b></td>
+                                <td>@(Model.RoomCharges * Model.PerDayRoom)</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Extra Charges</b>:@Model.ExtraCharges</td>
                                 <td>@Model.DiagnosisCharges</td>
                             </tr>
 
-
                             <tr>
-                                <th>Cases Charges</th>
-                                <td>@Model.Price</td>
-                            </tr>
-
-                            <tr>
-                                <th style="width:50%">Subtotal</th>
-                                <td><b>₹@(Model.DiagnosisCharges + Model.Price)</b></td>
+                                <td><b>Total Payment</b></td>
+                                <td><b>₹@(Model.RoomCharges * Model.PerDayRoom + Model.DiagnosisCharges)</b></td>
                             </tr>
                         </table>
 
@@ -229,8 +223,9 @@
         </div>
         <!-- /.invoice -->
     </div><!-- /.col -->
-</div><br /><!-- /.row -->
-            @* </div><!-- /.container-fluid -->
+</div>
+<br /><!-- /.row -->
+@* </div><!-- /.container-fluid -->
         </section>
 <!-- /.content -->
     </div>
@@ -241,13 +236,13 @@
     });
 </script> *@
 <script>
-    function appointmentprint(){
+    function appointmentprint() {
         var print = document.getElementById("print");
         window.print();
     }
 </script>
 <script>
-    window.onload = function(){
+    window.onload = function () {
         document.getElementById("pdf").addEventListener("click", () => {
             const invoice = this.document.getElementById("invoice");
             console.log(invoice);
@@ -263,3 +258,6 @@
         })
     }
 </script>
+
+
+

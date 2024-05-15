@@ -59,6 +59,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.TotalRoomPrice)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MediclaimName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InsuranceNumber)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -107,8 +113,15 @@
                     @Html.DisplayFor(modelItem => item.TotalRoomPrice)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.MediclaimName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InsuranceNumber)
+                </td>
+                <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Ipdid"><i class='fas fa-edit'></i></a>
                     <a class="btn btn-danger" asp-action="Delete" onclick="confirmFunction('@item.Ipdid')"><i class='fas fa-trash-alt'></i></a>
+                    <a class="btn btn-primary" asp-action="IpdPrint" asp-route-id="@item.Ipdid" target="_blank"><i class="fas fa-print"></i></a>
                 </td>
             </tr>
         }

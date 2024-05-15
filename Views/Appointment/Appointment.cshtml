@@ -115,7 +115,7 @@
                     <td>
                         <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Appointmentid"><i class='fas fa-edit'></i></a>
                         <a class="btn btn-danger" asp-action="Delete" onclick="confirmFunction('@item.Appointmentid')"><i class='fas fa-trash-alt'></i></a>
-                        <a class="btn btn-primary" asp-action="AppointmentPrint" asp-route-id="@item.Appointmentid"><i class="fas fa-print"></i></a>
+                        <a class="btn btn-primary" asp-action="AppointmentPrint" asp-route-id="@item.Appointmentid" target="_blank"><i class="fas fa-print"></i></a>
                     </td>
                 }
             </tr>

@@ -17,6 +17,32 @@ namespace StanfordHospital.Controllers
             _context = context;
         }
 
+        public IActionResult IpdPrint(int id) 
+        {
+            ViewBag.isipd = "active";
+            var model = new Ipd();
+            model = _context.Ipd.Where(i => i.Ipdid == id).Select(i => new Ipd
+            {
+                Ipdid = i.Ipdid,
+                Patient = i.Patient,
+                User = i.User,
+                AdmitDate = i.AdmitDate,
+                DischargeDate = i.DischargeDate,
+                Diagnosis = i.Diagnosis,
+                Prescription = i.Prescription,
+                DiagnosisCharges = i.DiagnosisCharges,
+                ExtraCharges = i.ExtraCharges,
+                RoomType = i.RoomType,
+                RoomCharges = i.RoomCharges,
+                PerDayRoom = i.PerDayRoom,
+                TotalRoomPrice = i.TotalRoomPrice,
+                MediclaimName = i.MediclaimName,
+                InsuranceNumber = i.InsuranceNumber,
+            }).FirstOrDefault();
+            return View(model);
+        }
+
+
         public IActionResult Index() 
         {
             ViewBag.isipd = "active";
@@ -37,6 +63,8 @@ namespace StanfordHospital.Controllers
                 RoomCharges = a.RoomCharges,
                 PerDayRoom = a.PerDayRoom,
                 TotalRoomPrice = a.TotalRoomPrice ,
+                MediclaimName = a.MediclaimName,
+                InsuranceNumber = a.InsuranceNumber,
             }).ToList();
 
             return View("Ipd",model);
@@ -62,6 +90,8 @@ namespace StanfordHospital.Controllers
                     RoomCharges = ipd.RoomCharges,
                     PerDayRoom = ipd.PerDayRoom,
                     TotalRoomPrice = ipd.TotalRoomPrice,
+                    MediclaimName= ipd.MediclaimName,
+                    InsuranceNumber= ipd.InsuranceNumber,
                 };
 
                 if (Ipd.Ipdid != 0)
@@ -88,6 +118,8 @@ namespace StanfordHospital.Controllers
                         ipd.RoomCharges = ipd.RoomCharges;
                         ipd.PerDayRoom = ipd.PerDayRoom;
                         ipd.TotalRoomPrice = ipd.TotalRoomPrice;
+                        ipd.MediclaimName = ipd.MediclaimName;
+                        ipd.InsuranceNumber = ipd.InsuranceNumber;
                         _context.SaveChanges();
                         TempData["Message"] = "In-Patient Department Updated Successfully....";
                     }
@@ -95,6 +127,14 @@ namespace StanfordHospital.Controllers
                 else
                 {
                     //Create
+                    if (ipd.MultipleDiagnosis != null)
+                    {
+                        Ipd.Diagnosis = string.Join(",", ipd.MultipleDiagnosis);
+                    }
+                     if (ipd.MultipleExtraCharges != null)
+                    {
+                        Ipd.ExtraCharges = string.Join(",", ipd.MultipleExtraCharges);
+                    }
                     _context.Ipd.Add(Ipd);
                     _context.SaveChanges();
                     TempData["Message"] = "In-Patient Department Added Successfully....";
@@ -132,6 +172,8 @@ namespace StanfordHospital.Controllers
                     Ipd.RoomCharges = ipd.RoomCharges;
                     Ipd.PerDayRoom = ipd.PerDayRoom;
                     Ipd.TotalRoomPrice = ipd.TotalRoomPrice;
+                    Ipd.MediclaimName = ipd.MediclaimName;
+                    Ipd.InsuranceNumber = ipd.InsuranceNumber;
                     _context.Ipd.Update(Ipd);
                     _context.SaveChanges();
                     TempData["Message"] = "In-Patient Department Updated Successfully....";
@@ -178,42 +220,46 @@ namespace StanfordHospital.Controllers
             return View("AddIpd", ipd);
         }
 
-        public IActionResult Edit(int Id) 
+        public IActionResult Edit(int Id)
         {
             ViewBag.isipd = "active";
-            var patients = _context.Patient.Select(p => new {
-                p.Patientid,
-                FullName = $"{p.Firstname} {p.Lastname}"
-            }).ToList();
-            ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
-            //var doctors = _context.Users.Where(u => u.Role == "doctor")
-            //                   .Select(u => new
-            //                   {
-            //                       Id = u.Id,
-            //                       FullName = $"Dr. {u.FirstName} {u.LastName}"
-            //                   })
-            //                   .ToList();
-            //ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
-            var editipds = _context.Ipd.Where(a => a.Ipdid == Id)
-               .Select(a => new IpdDto
-               {
-                   Ipdid = a.Ipdid,
-                   Patientid = a.Patientid,
-                   Id = a.Id,
-                   AdmitDate = a.AdmitDate,
-                   DischargeDate = a.DischargeDate,
-                   //Diagnosis = a.Diagnosis,
-                   Prescription = a.Prescription,
-                   DiagnosisCharges = a.DiagnosisCharges,
-                   //ExtraCharges = a.ExtraCharges,
-                   RoomType = a.RoomType,
-                   RoomCharges = a.RoomCharges,
-                   PerDayRoom = a.PerDayRoom,
-                   TotalRoomPrice = a.TotalRoomPrice,
-               }).FirstOrDefault();
+            //var patients = _context.Patient.Select(p => new {
+            //    p.Patientid,
+            //    FullName = $"{p.Firstname} {p.Lastname}"
+            //}).ToList();
+            //ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
 
-            return View("EditIpd", editipds);
+            var editipd = _context.Ipd.Where(a => a.Ipdid == Id).FirstOrDefault();
+            if (editipd == null)
+            {
+                return NotFound();
+            }
+
+            var Diagnoses = editipd.Diagnosis?.Split(',').ToList();
+            var ExtraCharges = editipd.ExtraCharges?.Split(',').ToList();
+
+            var ipdDto = new IpdDto
+            {
+                Ipdid = editipd.Ipdid,
+                Patientid = editipd.Patientid,
+                Id = editipd.Id,
+                AdmitDate = editipd.AdmitDate,
+                DischargeDate = editipd.DischargeDate,
+                Prescription = editipd.Prescription,
+                DiagnosisCharges = editipd.DiagnosisCharges,
+                RoomType = editipd.RoomType,
+                RoomCharges = editipd.RoomCharges,
+                PerDayRoom = editipd.PerDayRoom,
+                TotalRoomPrice = editipd.TotalRoomPrice,
+                MediclaimName = editipd.MediclaimName,
+                InsuranceNumber = editipd.InsuranceNumber,
+                MultipleDiagnosis = Diagnoses,
+                MultipleExtraCharges = ExtraCharges,
+            };
+
+            return View("EditIpd", ipdDto);
         }
+
 
         public IActionResult Delete(Ipd ipd)
         {
@@ -233,6 +279,8 @@ namespace StanfordHospital.Controllers
                     RoomCharges = a.RoomCharges,
                     PerDayRoom = a.PerDayRoom,
                     TotalRoomPrice = a.TotalRoomPrice,
+                    MediclaimName = ipd.MediclaimName,
+                    InsuranceNumber = ipd.InsuranceNumber,
                 }).FirstOrDefault();
 
             return View("DeleteIpd", deleteipd);

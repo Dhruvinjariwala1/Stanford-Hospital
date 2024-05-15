@@ -50,5 +50,11 @@ namespace StanfordHospital.Models
 
         [Display(Name = "Total Room Price ")]
         public decimal? TotalRoomPrice { get; set; }
+
+        [Display(Name = " Mediclaim Name")]
+        public string? MediclaimName { get; set; }
+
+        [Display(Name = "Insurance Number")]
+        public string? InsuranceNumber { get; set; }
     }
 }
