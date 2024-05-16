@@ -32,15 +32,15 @@ namespace StanfordHospital.Controllers
             var model = new List<Patient>();
             model = _context.Patient.Select(p => new Patient
             {
-               Patientid = p.Patientid,
-               Firstname = p.Firstname,
-               Lastname = p.Lastname,
-               Gender = p.Gender,
-               DateOfBirth = p.DateOfBirth,
-               ContactNumber = p.ContactNumber,
-               EmailId = p.EmailId,
-               Age = p.Age,
-               Address = p.Address,
+                Patientid = p.Patientid,
+                Firstname = p.Firstname,
+                Lastname = p.Lastname,
+                Gender = p.Gender,
+                DateOfBirth = p.DateOfBirth,
+                ContactNumber = p.ContactNumber,
+                EmailId = p.EmailId,
+                Age = p.Age,
+                Address = p.Address,
             }).ToList();
 
             return View(model);
@@ -52,43 +52,27 @@ namespace StanfordHospital.Controllers
             ViewBag.ispatient = "active";
             if (ModelState.IsValid)
             {
-                var Patient = new Patient
-                {
-                    Firstname = patient.Firstname,
-                    Lastname = patient.Lastname,
-                    Gender = patient.Gender,
-                    DateOfBirth = patient.DateOfBirth,
-                    ContactNumber = patient.ContactNumber,
-                    EmailId = patient.EmailId,
-                    Age = patient.Age,
-                    Address = patient.Address,
-                };
-
-                if (patient.Patientid != 0)
-                {
-                    //Edit
-                    var patients = _context.Patient.Find(patient.Patientid);
-                    if (Patient != null)
-                    {
-                        patient.Patientid = patient.Patientid;
-                        patient.Firstname = patient.Firstname;
-                        patient.Lastname = patient.Lastname;
-                        patient.Gender = patient.Gender;
-                        patient.DateOfBirth = patient.DateOfBirth;
-                        patient.ContactNumber = patient.ContactNumber;
-                        patient.EmailId = patient.EmailId;
-                        patient.Age = patient.Age;
-                        patient.Address = patient.Address;
-                        _context.SaveChanges();
-                        TempData["Message"] = "Patient Updated Successfully....";
-                    }
-                }
-                else
+                try
                 {
                     //Create
+                    var Patient = new Patient
+                    {
+                        Firstname = patient.Firstname,
+                        Lastname = patient.Lastname,
+                        Gender = patient.Gender,
+                        DateOfBirth = patient.DateOfBirth,
+                        ContactNumber = patient.ContactNumber,
+                        EmailId = patient.EmailId,
+                        Age = patient.Age,
+                        Address = patient.Address,
+                    };
                     _context.Patient.Add(Patient);
                     _context.SaveChanges();
                     TempData["Message"] = "Patient Added Successfully....";
+                }
+                catch (Exception ex)
+                {
+                    throw;
                 }
                 return RedirectToAction("Patient");
             }
@@ -99,10 +83,10 @@ namespace StanfordHospital.Controllers
         public IActionResult EditPatient(Patient patient)
         {
             ViewBag.ispatient = "active";
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var Patient = _context.Patient.Find(patient.Patientid);
-                if(Patient != null) 
+                if (Patient != null)
                 {
                     Patient.Patientid = patient.Patientid;
                     Patient.Firstname = patient.Firstname;
@@ -123,13 +107,13 @@ namespace StanfordHospital.Controllers
                     return NotFound();
                 }
             }
-            return View("EditPatient",patient);
+            return View("EditPatient", patient);
         }
 
-        public IActionResult DeletePatient(int Patientid) 
+        public IActionResult DeletePatient(int Patientid)
         {
             var patient = _context.Patient.Find(Patientid);
-            if(patient != null) 
+            if (patient != null)
             {
                 _context.Patient.Remove(patient);
                 _context.SaveChanges();
@@ -142,10 +126,10 @@ namespace StanfordHospital.Controllers
         public IActionResult Create(Patient patient)
         {
             ViewBag.ispatient = "active";
-            return View("AddPatient",patient);
+            return View("AddPatient", patient);
         }
 
-        public IActionResult Edit(int Id) 
+        public IActionResult Edit(int Id)
         {
             ViewBag.ispatient = "active";
             var editpatient = _context.Patient.Where(p => p.Patientid == Id)
@@ -162,16 +146,16 @@ namespace StanfordHospital.Controllers
                     Address = p.Address,
                 }).FirstOrDefault();
 
-            return View("EditPatient",editpatient);
+            return View("EditPatient", editpatient);
         }
 
-        public IActionResult Delete(Patient patient) 
+        public IActionResult Delete(Patient patient)
         {
             var deletepatient = _context.Patient.Where(p => p.Patientid == patient.Patientid)
                 .Select(p => new Patient
                 {
-                    Firstname= p.Firstname,
-                    Lastname= p.Lastname,
+                    Firstname = p.Firstname,
+                    Lastname = p.Lastname,
                     Gender = p.Gender,
                     DateOfBirth = p.DateOfBirth,
                     ContactNumber = p.ContactNumber,

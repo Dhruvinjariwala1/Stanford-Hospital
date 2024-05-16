@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.CodeAnalysis.Differencing;
 using StanfordHospital.Data;
 using StanfordHospital.Models;
 using StanfordHospital.Models.Dtos;
@@ -21,12 +20,6 @@ namespace StanfordHospital.Controllers
             _logger = logger;
             _context = context;
         }
-
-        //public IActionResult AppointmentDetails()
-        //{
-        //    ViewBag.isappointment = "active";
-        //    return View();
-        //}
 
         public IActionResult AppointmentPrint(int id)
         {
@@ -81,7 +74,7 @@ namespace StanfordHospital.Controllers
             return View("Appointment", model);
         }
 
-        public IActionResult Index() 
+        public IActionResult Index()
         {
             ViewBag.isappointment = "active";
 
@@ -107,61 +100,43 @@ namespace StanfordHospital.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddAppointment(AppointmentDto appointment) 
+        public IActionResult AddAppointment(AppointmentDto appointment)
         {
             ViewBag.isappointment = "active";
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
-                var Appointment = new Appointment
-                {
-                    Patientid = appointment.Patientid,
-                    Id = appointment.Id,
-                    AppointmentDate = appointment.AppointmentDate,
-                    AppointmentTime = appointment.AppointmentTime,
-                    AppointmentStatus = appointment.AppointmentStatus,
-                    //Diagnosis = appointment.Diagnosis,
-                    Prescription = appointment.Prescription,
-                    ReasonForAppointment = appointment.ReasonForAppointment,
-                    Cases= appointment.Cases,
-                    Price = appointment.Price,
-                    DiagnosisCharges = appointment.DiagnosisCharges,
-                    //ExtraCharges = appointment.ExtraCharges,
-                };
-
-                if(Appointment.Appointmentid != 0) 
-                {
-                    //Edit
-                    var appointments = _context.Appointment.Find(appointment.Appointmentid);
-                    if(appointments != null) 
-                    {
-                        appointment.Patientid = appointment.Patientid;
-                        appointment.Id = appointment.Id; 
-                        appointment.AppointmentDate = appointment.AppointmentDate;
-                        appointment.AppointmentTime = appointment.AppointmentTime;
-                        appointment.AppointmentStatus = appointment.AppointmentStatus;
-                        if (appointment.MultipleDiagnosis != null)
-                        {
-                            Appointment.Diagnosis = string.Join(",", appointment.MultipleDiagnosis);
-                        }
-                        appointment.Prescription = appointment.Prescription;
-                        appointment.ReasonForAppointment = appointment.ReasonForAppointment;
-                        appointment.Cases = appointment.Cases;
-                        appointment.Price = appointment.Price;
-                        appointment.DiagnosisCharges = appointment.DiagnosisCharges;
-                        if (appointment.MultipleExtraCharges != null)
-                        {
-                            Appointment.ExtraCharges = string.Join(",", appointment.MultipleExtraCharges);
-                        }
-                        _context.SaveChanges();
-                        TempData["Message"] = "Appointment Updated Successfully....";
-                    }
-                }
-                else
+                try
                 {
                     //Create
+                    var Appointment = new Appointment
+                    {
+                        Patientid = appointment.Patientid,
+                        Id = appointment.Id,
+                        AppointmentDate = appointment.AppointmentDate,
+                        AppointmentTime = appointment.AppointmentTime,
+                        AppointmentStatus = appointment.AppointmentStatus,
+                        Prescription = appointment.Prescription,
+                        ReasonForAppointment = appointment.ReasonForAppointment,
+                        Cases = appointment.Cases,
+                        Price = appointment.Price,
+                        DiagnosisCharges = appointment.DiagnosisCharges,
+                    };
+
+                    if (appointment.MultipleDiagnosis != null)
+                    {
+                        Appointment.Diagnosis = string.Join(",", appointment.MultipleDiagnosis);
+                    }
+                    if (appointment.MultipleExtraCharges != null)
+                    {
+                        Appointment.ExtraCharges = string.Join(",", appointment.MultipleExtraCharges);
+                    }
                     _context.Appointment.Add(Appointment);
                     _context.SaveChanges();
                     TempData["Message"] = "Appointment Added Successfully....";
+                }
+                catch (Exception ex)
+                {
+                    throw;
                 }
                 return RedirectToAction("Index");
             }
@@ -172,10 +147,10 @@ namespace StanfordHospital.Controllers
         public IActionResult EditAppointment(AppointmentDto appointment)
         {
             ViewBag.isappointment = "active";
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var Appointment = _context.Appointment.Find(appointment.Appointmentid);
-                if(Appointment != null) 
+                if (Appointment != null)
                 {
                     Appointment.Appointmentid = appointment.Appointmentid;
                     Appointment.Patientid = appointment.Patientid;
@@ -188,7 +163,7 @@ namespace StanfordHospital.Controllers
                         Appointment.Diagnosis = string.Join(",", appointment.MultipleDiagnosis);
                     }
                     Appointment.Prescription = appointment.Prescription;
-                    Appointment.ReasonForAppointment= appointment.ReasonForAppointment;
+                    Appointment.ReasonForAppointment = appointment.ReasonForAppointment;
                     Appointment.Cases = appointment.Cases;
                     Appointment.Price = appointment.Price;
                     Appointment.DiagnosisCharges = appointment.DiagnosisCharges;
@@ -209,10 +184,10 @@ namespace StanfordHospital.Controllers
             return View("EditAppointment", appointment);
         }
 
-        public IActionResult DeleteAppointment(int Appointmentid) 
+        public IActionResult DeleteAppointment(int Appointmentid)
         {
             var appointment = _context.Appointment.Find(Appointmentid);
-            if(appointment != null) 
+            if (appointment != null)
             {
                 _context.Appointment.Remove(appointment);
                 _context.SaveChanges();
@@ -225,31 +200,13 @@ namespace StanfordHospital.Controllers
         public IActionResult Create(AppointmentDto appointment)
         {
             ViewBag.isappointment = "active";
-            var patients = _context.Patient.Select(p => new {
-                p.Patientid,
-                FullName = $"{p.Firstname} {p.Lastname}"
-            }).ToList();
-            ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
-            //var doctors = _context.Users.Where(u => u.Role == "doctor")
-            //                   .Select(u => new
-            //                   {
-            //                       Id = u.Id,
-            //                       FullName = $"Dr. {u.FirstName} {u.LastName}"
-            //                   })
-            //                   .ToList();
-            //ViewBag.Doctors = new SelectList(doctors, "Id", "FullName");
-            //ViewBag.Users = new SelectList(_context.Users, "Id", "FirstName");
             return View("AddAppointment", appointment);
         }
 
         public IActionResult Edit(int Id)
         {
             ViewBag.isappointment = "active";
-            //var patients = _context.Patient.Select(p => new {
-            //    p.Patientid,
-            //    FullName = $"{p.Firstname} {p.Lastname}"
-            //}).ToList();
-            //ViewBag.Patients = new SelectList(patients, "Patientid", "FullName");
+            
 
             var editappointment = _context.Appointment.Where(e => e.Appointmentid == Id).FirstOrDefault();
             if (editappointment == null)
@@ -281,9 +238,9 @@ namespace StanfordHospital.Controllers
             return View("EditAppointment", AppointmentDto);
         }
 
-        public IActionResult Delete(Appointment appointment) 
+        public IActionResult Delete(Appointment appointment)
         {
-            var deleteappointment = _context.Appointment.Where(a => a.Appointmentid ==  appointment.Appointmentid)
+            var deleteappointment = _context.Appointment.Where(a => a.Appointmentid == appointment.Appointmentid)
                 .Select(a => new Appointment
                 {
                     Appointmentid = a.Appointmentid,
@@ -316,9 +273,10 @@ namespace StanfordHospital.Controllers
             return Json(doctors);
         }
 
-        public IActionResult PatientName() 
+        public IActionResult PatientName()
         {
-            var patients = _context.Patient.Select(p => new {
+            var patients = _context.Patient.Select(p => new
+            {
                 p.Patientid,
                 FullName = $"{p.Firstname} {p.Lastname}"
             }).ToList();

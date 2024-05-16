@@ -47,36 +47,24 @@ namespace StanfordHospital.Controllers
             ViewBag.isroom = "active";
             if (ModelState.IsValid)
             {
-                var Room = new Room
-                {
-                   Roomid =room.Roomid,
-                   RoomName = room.RoomName,
-                   RoomFloor = room.RoomFloor,
-                   RoomType = room.RoomType,
-                   RoomPrice = room.RoomPrice,
-                };
-
-                if (room.Roomid != 0)
-                {
-                    //Edit
-                    var rooms = _context.Room.Find(room.Roomid);
-                    if (Room != null)
-                    {
-                        room.Roomid = room.Roomid;
-                        room.RoomName = room.RoomName;
-                        room.RoomFloor = room.RoomFloor;
-                        room.RoomType = room.RoomType;
-                        room.RoomPrice = room.RoomPrice;
-                        _context.SaveChanges();
-                        TempData["Message"] = "Room Updated Successfully....";
-                    }
-                }
-                else
+                try
                 {
                     //Create
+                    var Room = new Room
+                    {
+                        Roomid = room.Roomid,
+                        RoomName = room.RoomName,
+                        RoomFloor = room.RoomFloor,
+                        RoomType = room.RoomType,
+                        RoomPrice = room.RoomPrice,
+                    };
                     _context.Room.Add(Room);
                     _context.SaveChanges();
                     TempData["Message"] = "Room Added Successfully....";
+                }
+                catch (Exception ex) 
+                {
+                    throw;
                 }
                 return RedirectToAction("Room");
             }
@@ -150,9 +138,9 @@ namespace StanfordHospital.Controllers
             var removeroom = _context.Room.Where(r => r.Roomid == room.Roomid)
                 .Select(r => new Room
                 {
-                    Roomid=r.Roomid,
-                    RoomName=r.RoomName,
-                    RoomFloor=r.RoomFloor,
+                    Roomid = r.Roomid,
+                    RoomName = r.RoomName,
+                    RoomFloor = r.RoomFloor,
                     RoomType = r.RoomType,
                     RoomPrice = r.RoomPrice,
                 }).FirstOrDefault();
