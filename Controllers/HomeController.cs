@@ -26,6 +26,21 @@ namespace StanfordHospital.Controllers
         public IActionResult Index()
         {
             ViewBag.isdashboard = "active";
+            DateTime today = DateTime.Today;
+            var dischargedate = _context.Ipd.Where(i => i.DischargeDate.Date == today).ToList();
+            decimal totalpayment = dischargedate.Sum(i => (i.RoomCharges ?? 0) * (i.PerDayRoom ?? 0) + (i.DiagnosisCharges ?? 0));
+            ViewBag.TotalPayment = totalpayment;
+
+            var todayappointmentdate = _context.Appointment.Where(a => a.AppointmentDate.Date == today).ToList();
+            decimal appointmentpayment = todayappointmentdate.Sum(a => (a.DiagnosisCharges ?? 0) + (a.Price ?? 0));
+            ViewBag.AppointmentPayment = appointmentpayment;
+
+            int todaydischargedatecount = _context.Ipd.Count(i => i.DischargeDate.Date == today);
+            
+            ViewBag.TodayDischargeDateCount = todaydischargedatecount;
+
+            int todayappointmentpatientcount = _context.Appointment.Count(a => a.AppointmentDate.Date == today);
+            ViewBag.AppointmentCount = todayappointmentpatientcount;
             return View();
         }
 
