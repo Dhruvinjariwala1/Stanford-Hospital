@@ -22,11 +22,13 @@ namespace StanfordHospital.Controllers
             _roleManager = roleManager;
         }
 
+
         public IActionResult Index()
         {
             ViewBag.isdashboard = "active";
             return View();
         }
+
 
         [Authorize(Roles = "Admin")]
         public IActionResult Role(List<Roles> roles)
