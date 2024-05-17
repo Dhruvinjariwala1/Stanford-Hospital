@@ -244,6 +244,7 @@ namespace StanfordHospital.Controllers
 
         public async Task<IActionResult> EditProfile()
         {
+            ViewBag.isuser = "active";
             var currentUserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
             var applicationUser = _context.Users.Find(currentUserId);
             return View("EditProfile", applicationUser);
@@ -252,7 +253,8 @@ namespace StanfordHospital.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(ApplicationUser user, IFormFile ImageFile)
         {
-            if(ModelState.IsValid) 
+            ViewBag.isuser = "active";
+            if (ModelState.IsValid) 
             {
                 var updateuser = _context.Users.Where(u => u.Id == user.Id).FirstOrDefault();
                 if(updateuser != null) 
