@@ -41,6 +41,19 @@ namespace StanfordHospital.Controllers
 
             int todayappointmentpatientcount = _context.Appointment.Count(a => a.AppointmentDate.Date == today);
             ViewBag.AppointmentCount = todayappointmentpatientcount;
+
+            var currentyear = today.Year;
+            var monthlycount = _context.Ipd
+                .Where(i => i.DischargeDate.Year == currentyear)
+                .GroupBy(i => i.DischargeDate.Month)
+                .Select(g => new {Month = g.Key,Count = g.Count()}).ToList();
+
+            var monthlydate = new int[12];
+            foreach(var i in monthlycount)
+            {
+                monthlydate[i.Month -1] = i.Count;
+            }
+            ViewBag.MonthlyDateCount = monthlydate;
             return View();
         }
 

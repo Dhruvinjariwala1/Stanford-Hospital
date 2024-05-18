@@ -2,7 +2,6 @@
     ViewData["Title"] = "Dashboard";
 }
 
-
 <partial name="Form" />
 
 
@@ -96,7 +95,7 @@
                 <div class="tab-content p-0">
                     <!-- Morris chart - Sales -->
                     <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
-                        <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                        <canvas id="revenue-chart-canvas" height="300" style="height: 300px; width:950px;"></canvas>
                     </div>
                     <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
                         <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
@@ -568,6 +567,69 @@
     <!-- right col -->
 </div>
 <!-- /.row (main row) -->
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var monthlyDischargeCounts = @Html.Raw(Json.Serialize(ViewBag.MonthlyDateCount));
 
+        var ctxRevenue = document.getElementById('revenue-chart-canvas').getContext('2d');
+        var revenueChart = new Chart(ctxRevenue, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    label: 'Discharges',
+                    data: monthlyDischargeCounts,
+                    backgroundColor: 'rgba(60,141,188,0.2)',
+                    borderColor: 'rgba(60,141,188,1)',
+                    pointRadius: false,
+                    pointColor: '#3b8bba',
+                    pointStrokeColor: 'rgba(60,141,188,1)',
+                    pointHighlightFill: '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)'
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: false
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            }
+        });
+
+        
+        var ctxSales = document.getElementById('sales-chart-canvas').getContext('2d');
+        var salesChart = new Chart(ctxSales, {
+            type: 'doughnut',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                datasets: [{
+                    data: monthlyDischargeCounts,
+                    backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+                }]
+            },
+            options: {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: false
+                }
+            }
+        });
+    </script>
+}
 
 
