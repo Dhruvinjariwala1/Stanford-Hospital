@@ -574,13 +574,13 @@
 
         var ctxRevenue = document.getElementById('revenue-chart-canvas').getContext('2d');
         var revenueChart = new Chart(ctxRevenue, {
-            type: 'line',
+            type: 'bar',
             data: {
                 labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
                 datasets: [{
-                    label: 'Discharges',
+                    label: 'Discharge Date',
                     data: monthlyDischargeCounts,
-                    backgroundColor: 'rgba(60,141,188,0.2)',
+                    backgroundColor: '#00c0ef',
                     borderColor: 'rgba(60,141,188,1)',
                     pointRadius: false,
                     pointColor: '#3b8bba',
