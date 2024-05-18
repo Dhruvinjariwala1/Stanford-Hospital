@@ -28,12 +28,12 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="AdmitDate" class="control-label">Admit Date</label><span class="text-danger">*</span>
-                <input asp-for="AdmitDate" class="form-control" type="datetime-local" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                <input asp-for="AdmitDate" class="form-control" type="datetime-local" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
                 <span asp-validation-for="AdmitDate" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="DischargeDate" class="control-label">Discharge Date</label><span class="text-danger">*</span>
-                <input asp-for="DischargeDate" class="form-control" type="datetime-local" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+                <input asp-for="DischargeDate" class="form-control" type="datetime-local" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
                 <span asp-validation-for="DischargeDate" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">

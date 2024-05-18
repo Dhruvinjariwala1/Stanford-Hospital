@@ -19,11 +19,11 @@ namespace StanfordHospital.Models
         public string? Id { get; set; }
         public virtual ApplicationUser? User { get; set; }
 
-        [Required]
+        
         [Display(Name = "Admit Date")]
         [DataType(DataType.DateTime)]
         public DateTime AdmitDate { get; set; }
-        [Required]
+        
         [Display(Name = "Discharge Date")]
         [DataType(DataType.DateTime)]
         public DateTime DischargeDate { get; set; }
