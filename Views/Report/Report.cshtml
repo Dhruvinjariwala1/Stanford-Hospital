@@ -20,36 +20,38 @@
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Create Report</a>
-    <a class="btn btn-primary float-right">Search</a>
+    <button class="btn btn-primary float-right">Search</button>
 </p>
 
 
 
 <form class="row g-3">
     <div class="form-group col-md-6">
+        <label class="control-label">Select Patient</label>
         <select id="patient" class="form-control">
             <option value="">Select Patient</option>
         </select>
     </div>
 
     <div class="form-group col-md-6">
+        <label class="control-label">Select Doctor</label>
         <select id="doctor" class="form-control">
             <option value="">Select Doctor</option>
         </select>
     </div>     
     
     <div class="form-group col-md-6">
-        <label class="control-label">From</label><span class="text-danger">*</span>
+        <label class="control-label">From</label>
         <input class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
     </div>
 
     <div class="form-group col-md-6">
-        <label class="control-label">To</label><span class="text-danger">*</span>
+        <label class="control-label">To</label>
         <input class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
     </div>
 
     <div class="form-group col-md-6">
-        <label class="control-label">Select Room Type</label><span class="text-danger">*</span>
+        <label class="control-label">Select Room Type</label>
         <select id="roomtype" class="form-control">
             <option>--Select Room Type--</option>
             <option value="General Room">General Room</option>
@@ -68,10 +70,10 @@
     <thead>
         <tr style="background-color:dodgerblue;">
             <th>
-                Select Patient
+                Patient
             </th>
             <th>
-                Select Doctor
+                Doctor
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.AdmitDate)
@@ -86,7 +88,7 @@
                 @Html.DisplayNameFor(model => model.Prescription)
             </th>
             <th>
-                Select Extra Charges
+                Extra Charges
             </th>
             <th>
                 Extra Charges Total
