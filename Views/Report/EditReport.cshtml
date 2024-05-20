@@ -1,0 +1,361 @@
+﻿@model StanfordHospital.Models.Dtos.ReportDto
+
+@{
+    ViewData["Title"] = "EditReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+<h1>Edit Report</h1>
+
+<div>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="EditReport" class="row g-3" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Reportid" />
+            <div class="form-group col-md-6">
+                <label asp-for="Patientid" class="control-label">Select Patient</label><span class="text-danger">*</span>
+                <select asp-for="Patientid" class="form-control selectpatient"></select>
+                <span asp-validation-for="Patientid" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Id" class="control-label">Select Doctor</label><span class="text-danger">*</span>
+                <select asp-for="Id" class="form-control selectdoctor"></select>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="AdmitDate" class="control-label">Admit Date</label><span class="text-danger">*</span>
+                <input asp-for="AdmitDate" class="form-control" type="datetime-local" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="AdmitDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="DischargeDate" class="control-label">Discharge Date</label><span class="text-danger">*</span>
+                <input asp-for="DischargeDate" class="form-control" type="datetime-local" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+                <span asp-validation-for="DischargeDate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="MultipleDiagnosis" class="control-label">Diagnosis</label><span class="text-danger">*</span>
+                <select asp-for="MultipleDiagnosis" class="form-control" multiple>
+                    <option>--Select Diagnosis--</option>
+                    <option value="Clinical Diagnosis">Clinical Diagnosis</option>
+                    <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
+                    <option value="Imaging Diagnosis">Imaging Diagnosis</option>
+                    <option value="Pathological Diagnosis">Pathological Diagnosis</option>
+                    <option value="Differential Diagnosis">Differential Diagnosis</option>
+                    <option value="Genetic Diagnosis">Genetic Diagnosis</option>
+                    <option value="Provisional Diagnosis">Provisional Diagnosis</option>
+                    <option value="Primary Diagnosis">Primary Diagnosis</option>
+                    <option value="Secondary Diagnosis">Secondary Diagnosis</option>
+                    <option value="Comorbid Diagnosis">Comorbid Diagnosis</option>
+                </select>
+                <span asp-validation-for="MultipleDiagnosis" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="Prescription" class="control-label">Prescription</label><span class="text-danger">*</span>
+                <textarea asp-for="Prescription" class="form-control" ></textarea>
+                <span asp-validation-for="Prescription" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="MultipleExtraCharges" class="control-label">Select Extra Charges</label><span class="text-danger">*</span>
+                <select asp-for="MultipleExtraCharges" id="extracharges" class="form-control">
+                    @* <option>--Select Extra Charges--</option> *@
+                    <option value="Covid Vaccine">Covid Vaccine</option>
+                    <option value="X-Ray">X-Ray</option>
+                    <option value="Full Body Checkup">Full Body Checkup</option>
+                    <option value="ECG">ECG</option>
+                    <option value="Emergency Charge">Emergency Charge</option>
+                    <option value="Oxygen Charges">Oxygen Charges</option>
+                    <option value="RBS">RBS</option>
+                    <option value="Endoscopy">Endoscopy</option>
+                    <option value="Rehabilitation">Rehabilitation</option>
+                    <option value="Stethoscope">Stethoscope</option>
+                    <option value="MRI ">MRI </option>
+                </select>
+                <span asp-validation-for="MultipleExtraCharges" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="DiagnosisCharges" class="control-label">Extra Charges Total</label><span class="text-danger">*</span>
+                <input asp-for="DiagnosisCharges" class="form-control" readonly/>
+                <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="RoomType" class="control-label">Select Room Type</label><span class="text-danger">*</span>
+                <select asp-for="RoomType" name="roomtype" id="roomtype" class="form-control">
+                    <option>--Select Room Type--</option>
+                    <option value="General Room">General Room</option>
+                    <option value="ICU Room">ICU Room</option>
+                    <option value="Private Room">Private Room</option>
+                    <option value="Single Room (Non-AC and AC)">Single Room (Non-AC and AC)</option>
+                    <option value="Deluxe Room (Non-AC and AC)">Deluxe Room (Non-AC and AC)</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Presidential Suite">Presidential Suite</option>
+                </select>
+                <span asp-validation-for="RoomType" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="RoomCharges" class="control-label">Room Charge</label><span class="text-danger">*</span>
+                <input asp-for="RoomCharges" id="RoomCharges" class="form-control" readonly />
+                <span asp-validation-for="RoomCharges" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="PerDayRoom" class="control-label">Per Day Room</label><span class="text-danger">*</span>
+                <input asp-for="PerDayRoom" id="PerDayRoom" class="form-control" />
+                <span asp-validation-for="PerDayRoom" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="TotalRoomPrice" class="control-label">Total Room Price</label><span class="text-danger">*</span>
+                <input asp-for="TotalRoomPrice" id="TotalRoomPrice" class="form-control" readonly/>
+                <span asp-validation-for="TotalRoomPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="MediclaimName" class="control-label">Mediclaim Name</label><span class="text-danger">*</span>
+                <select asp-for="MediclaimName" class="form-control">
+                    @* <option>--Select Mediclaim Name--</option> *@
+                    <option value="Bajaj Allianz Health Insurance">Bajaj Allianz Health Insurance</option>
+                    <option value="HDFC ERGO Health Insurance">HDFC ERGO Health Insurance</option>
+                    <option value="Reliance Health Insurance">Reliance Health Insurance</option>
+                    <option value="Care Health Insurance">Care Health Insurance</option>
+                    <option value="Future Generali India Insurance">Future Generali India Insurance</option>
+                    <option value="IFFCO Tokio Health Insurance">IFFCO Tokio Health Insurance</option>
+                    <option value="Cholamandalam MS General Insurance">Cholamandalam MS General Insurance</option>
+                    <option value="Digit Health Insurance">Digit Health Insurance</option>
+                    <option value="ICICI Lombard">ICICI Lombard</option>
+                    <option value="Kotak Mahindra Health Insurance">Kotak Mahindra Health Insurance</option>
+                    <option value="New India General Insurance">New India General Insurance</option>
+                    <option value="Niva Bupa Health Insurance">Niva Bupa Health Insurance</option>
+                    <option value="Oriental General Insurance">Oriental General Insurance</option>
+                    <option value="SBI General Insurance">SBI General Insurance</option>
+                    <option value="Aditya Birla Health Insurance">Aditya Birla Health Insurance</option>
+                    <option value="Navi General Insurance">Navi General Insurance</option>
+                    <option value="Bharti AXA">Bharti AXA</option>
+                    <option value="Bharti AXA">Bharti AXA</option>
+                    <option value="ManipalCigna Health Insurance">ManipalCigna Health Insurance</option>
+                    <option value="National Insurance">National Insurance</option>
+                    <option value="Raheja QBE">Raheja QBE</option>
+                    <option value="Royal Sundaram Health Insurance">Royal Sundaram Health Insurance</option>
+                    <option value="Star Health Insurance">Star Health Insurance</option>
+                    <option value="Tata AIG Health Insurance">Tata AIG Health Insurance</option>
+                    <option value="Acko General Insurance">Acko General Insurance</option>
+                </select>
+                <span asp-validation-for="MediclaimName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-6">
+                <label asp-for="InsuranceNumber" class="control-label">Insurance Number</label><span class="text-danger">*</span>
+                <input asp-for="InsuranceNumber" class="form-control" />
+                <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-warning" >Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
+<script>
+    new MultiSelectTag('MultipleDiagnosis')
+</script>
+
+<script>
+    document.getElementById('roomtype').addEventListener('change', function () {
+        var roomType = this.value;
+        var roomCharges = 0;
+        switch (roomType) {
+            case 'General Room':
+                roomCharges = 2000;
+                break;
+            case 'ICU Room':
+                roomCharges = 5500;
+                break;
+            case 'Private Room':
+                roomCharges = 4000;
+                break;
+            case 'Single Room (Non-AC and AC)':
+                roomCharges = 4500;
+                break;
+            case 'Deluxe Room (Non-AC and AC)':
+                roomCharges = 6000;
+                break;
+            case 'Suite':
+                roomCharges = 8000;
+                break;
+            case 'Presidential Suite':
+                roomCharges = 7500;
+                break;
+        }
+        document.getElementById('RoomCharges').value = roomCharges;
+        TotalRoomPrice();
+    });
+    function TotalRoomPrice() {
+        var roomCharges = parseFloat(document.getElementById('RoomCharges').value);
+        var perDayRoomPrice = parseFloat(document.getElementById('PerDayRoom').value);
+        var totalRoomPrice = roomCharges * perDayRoomPrice;
+        document.getElementById('TotalRoomPrice').value = totalRoomPrice.toFixed(2);
+    }
+    document.getElementById('PerDayRoom').addEventListener('input', TotalRoomPrice);
+</script>
+
+<script>
+    document.getElementById('roomtype').addEventListener('change', function () {
+        var roomType = this.value;
+        var roomCharges = 0;
+        switch (roomType) {
+            case 'General Room':
+                roomCharges = 2000;
+                break;
+            case 'ICU Room':
+                roomCharges = 5500;
+                break;
+            case 'Private Room':
+                roomCharges = 4000;
+                break;
+            case 'Single Room (Non-AC and AC)':
+                roomCharges = 4500;
+                break;
+            case 'Deluxe Room (Non-AC and AC)':
+                roomCharges = 6000;
+                break;
+            case 'Suite':
+                roomCharges = 8000;
+                break;
+            case 'Presidential Suite':
+                roomCharges = 7500;
+                break;
+        }
+        document.getElementById('RoomCharges').value = roomCharges;
+        TotalRoomPrice();
+    });
+    function TotalRoomPrice() {
+        var roomCharges = parseFloat(document.getElementById('RoomCharges').value);
+        var perDayRoomPrice = parseFloat(document.getElementById('PerDayRoom').value);
+        var totalRoomPrice = roomCharges * perDayRoomPrice;
+        document.getElementById('TotalRoomPrice').value = totalRoomPrice.toFixed(7);
+    }
+    document.getElementById('PerDayRoom').addEventListener('input', TotalRoomPrice);
+</script>
+
+<script>
+    function RoomType() {
+        var roomtypeSelect = document.getElementById("roomtype");
+        var selectedOptions = roomtypeSelect.selectedOptions;
+        var TotalRoomPrice = 0;
+
+        for (var i = 0; i < selectedOptions.length; i++) {
+            var option = selectedOptions[i].value;
+            TotalRoomPrice += getroomtype(option);
+        }
+        document.getElementById("RoomCharges").value = TotalRoomPrice;
+    }
+    function getroomtype(roomtype) {
+        var Roomtype = {
+            "General Room": 2000,
+            "ICU Room": 5500,
+            "Private Room": 4000,
+            "Single Room (Non-AC and AC)": 4500,
+            "Deluxe Room (Non-AC and AC)": 6000,
+            "Suite": 8000,
+            "Presidential Suite": 7500
+        };
+        return Roomtype[roomtype] || 0;
+    }
+    document.getElementById("roomtype").addEventListener("change", RoomType);
+    RoomType();
+</script>
+
+
+<script>
+    function ExtraCharges() {
+        var extrachargesSelect = document.getElementById("extracharges");
+        var selectedOptions = extrachargesSelect.selectedOptions;
+        var TotalExtraCharges = 0;
+
+        for (var i = 0; i < selectedOptions.length; i++) {
+            var option = selectedOptions[i].value;
+            TotalExtraCharges += getextracharges(option);
+        }
+        document.getElementById("DiagnosisCharges").value = TotalExtraCharges;
+    }
+    function getextracharges(extracharges) {
+        var Extracharges = {
+            "Covid Vaccine": 225,
+            "X-Ray": 2000,
+            "Full Body Checkup": 1600,
+            "ECG": 500,
+            "Emergency Charge": 2500,
+            "Oxygen Charges": 5740,
+            "RBS": 270,
+            "Endoscopy": 4000,
+            "Rehabilitation": 5500,
+            "Stethoscope": 1200,
+            "MRI": 7000
+        };
+        return Extracharges[extracharges] || 0;
+    }
+    document.getElementById("extracharges").addEventListener("change", ExtraCharges);
+    ExtraCharges();
+</script>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function getDoctorRole() {
+                $.ajax({
+                    url: "@Url.Action("DoctorRole", "Appointment")",
+                    type: "GET",
+                    dataType: "Json",
+                    success: function (result) {
+                        let selectdoctor = $("#Id")
+                        selectdoctor.empty();
+                        var mySelect = $('.selectdoctor');
+                        $.each(result, function (idx, item) {
+                            mySelect.append(
+                                $('<option></option>').val(item.id).html(item.fullName)
+                            );
+                        });
+                        var selectedDoctorId = "@Model.Id";
+                        if (selectedDoctorId !== null && selectedDoctorId !== "") {
+                            selectdoctor.val(selectedDoctorId);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to retrieve doctors.');
+                    }
+                });
+            }
+            getDoctorRole();
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+            function getPatientName() {
+                $.ajax({
+                    url: "@Url.Action("PatientName", "Appointment")",
+                    type: "GET",
+                    dataType: "Json",
+                    success: function (result) {
+                        let selectpatient = $("#Patientid")
+                        selectpatient.empty();
+                        var mySelect = $('.selectpatient');
+                        $.each(result, function (idx, item) {
+                            mySelect.append(
+                                $('<option></option>').val(item.patientid).html(item.fullName)
+                            );
+                        });
+                        var selectedPatientId = "@Model.Patientid";
+                        if (selectedPatientId !== null && selectedPatientId !== "") {
+                            selectpatient.val(selectedPatientId);
+                        }
+                    },
+                    error: function () {
+                        alert('Failed to retrieve patients.');
+                    }
+                });
+            }
+            getPatientName();
+        })
+    </script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

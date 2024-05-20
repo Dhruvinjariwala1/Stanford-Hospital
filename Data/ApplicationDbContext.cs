@@ -16,6 +16,7 @@ namespace StanfordHospital.Data
         public DbSet<Appointment> Appointment { get; set; }
         public DbSet<Room> Room { get; set; }
         public DbSet<Ipd> Ipd { get; set; }
+        public DbSet<Report> Report { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

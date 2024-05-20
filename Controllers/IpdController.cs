@@ -231,8 +231,8 @@ namespace StanfordHospital.Controllers
                     RoomCharges = a.RoomCharges,
                     PerDayRoom = a.PerDayRoom,
                     TotalRoomPrice = a.TotalRoomPrice,
-                    MediclaimName = ipd.MediclaimName,
-                    InsuranceNumber = ipd.InsuranceNumber,
+                    MediclaimName = a.MediclaimName,
+                    InsuranceNumber = a.InsuranceNumber,
                 }).FirstOrDefault();
 
             return View("DeleteIpd", deleteipd);

@@ -116,6 +116,17 @@
                         </p>
                     </a>
                 </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Report" asp-action="Index" class="nav-link @ViewBag.isreport">
+                            <img src="~/dist/img/report.png" alt="Image" width="30px" />
+                            <p>
+                                Ipd Report
+                            </p>
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

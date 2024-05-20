@@ -1,0 +1,229 @@
+﻿@model IEnumerable<StanfordHospital.Models.Report>
+
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<h1>Report</h1>
+
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create Report</a>
+    <a class="btn btn-primary float-right">Search</a>
+</p>
+
+
+
+<form class="row g-3">
+    <div class="form-group col-md-6">
+        <select id="patient" class="form-control">
+            <option value="">Select Patient</option>
+        </select>
+    </div>
+
+    <div class="form-group col-md-6">
+        <select id="doctor" class="form-control">
+            <option value="">Select Doctor</option>
+        </select>
+    </div>     
+    
+    <div class="form-group col-md-6">
+        <label class="control-label">From</label><span class="text-danger">*</span>
+        <input class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+    </div>
+
+    <div class="form-group col-md-6">
+        <label class="control-label">To</label><span class="text-danger">*</span>
+        <input class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+    </div>
+
+    <div class="form-group col-md-6">
+        <label class="control-label">Select Room Type</label><span class="text-danger">*</span>
+        <select id="roomtype" class="form-control">
+            <option>--Select Room Type--</option>
+            <option value="General Room">General Room</option>
+            <option value="ICU Room">ICU Room</option>
+            <option value="Private Room">Private Room</option>
+            <option value="Single Room (Non-AC and AC)">Single Room (Non-AC and AC)</option>
+            <option value="Deluxe Room (Non-AC and AC)">Deluxe Room (Non-AC and AC)</option>
+            <option value="Suite">Suite</option>
+            <option value="Presidential Suite">Presidential Suite</option>
+        </select>
+    </div>
+</form>
+
+
+<table class="table" id="reportlist">
+    <thead>
+        <tr style="background-color:dodgerblue;">
+            <th>
+                Select Patient
+            </th>
+            <th>
+                Select Doctor
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdmitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnosis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prescription)
+            </th>
+            <th>
+                Select Extra Charges
+            </th>
+            <th>
+                Extra Charges Total
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomCharges)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerDayRoom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalRoomPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MediclaimName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InsuranceNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patient.Firstname)
+                    @Html.DisplayFor(modelItem => item.Patient.Lastname)
+                </td>
+                <td>
+                    Dr.
+
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                    @Html.DisplayFor(modelItem => item.User.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdmitDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DischargeDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Diagnosis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiagnosisCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ExtraCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerDayRoom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalRoomPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MediclaimName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InsuranceNumber)
+                </td>
+                <td>
+                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Reportid"><i class='fas fa-edit'></i></a>
+                    <a class="btn btn-danger" asp-action="Delete" onclick="confirmFunction('@item.Reportid')"><i class='fas fa-trash-alt'></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function confirmFunction(Reportid) {
+            if (confirm('Are you sure you want to delete this Report') == true) {
+                deleteReport(Reportid)
+            }
+        }
+
+        function deleteReport(Reportid) {
+            $.ajax({
+                url: "@Url.Action("DeleteReport", "Report")",
+                datatype: "json",
+                data: { Reportid: Reportid },
+                success: function (resp) {
+
+                    if (resp.status) {
+                        location.reload();
+                    }
+                    else {
+                        alert("Report is not deleted");
+                    }
+                },
+                error: function (resp) {
+                    console.log("Delete Report error:", resp);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("PatientName", "Report")',
+                type: 'GET',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#patient').append($('<option>').val(item.patientid).text(item.fullName));
+                    });
+                }
+            });
+
+            $.ajax({
+                url: '@Url.Action("DoctorRole", "Report")',
+                type: 'GET',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#doctor').append($('<option>').val(item.id).text(item.fullName));
+                    });
+                }
+            });
+        });
+    </script>
+}
+@section reportlist {
+    <script src="~/js/reportlist.js"></script>
+}
