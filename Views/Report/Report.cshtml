@@ -10,8 +10,8 @@
     var today = DateTime.Now;
 }
 
-<h1>Report</h1>
-
+<h1>Ipd Report</h1>
+<br />
 <form class="row g-3">
     <div class="form-group col-md-6">
         <label class="control-label">Select Patient</label>
@@ -147,7 +147,18 @@
             </tr>
         }
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="5"></td>
+            <td><strong>Total Amount:</strong><br/><strong>@Model.Sum(i => i.DiagnosisCharges)</strong></td>
+            <td colspan="2" class="text-right"><strong>Total Room Charges:</strong><br /><strong>@Model.Sum(i => i.RoomCharges)</strong></td>
+            <td colspan="2" class="text-right"><strong>Total Room Price:</strong><br /><strong>@Model.Sum(i => i.TotalRoomPrice)</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
 </table>
+
+
 @section reportlist {
     <script src="~/js/reportlist.js"></script>
 }
@@ -191,6 +202,22 @@
             return day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds;
         }
 
+        function calculateTotals(data) {
+            var totalDiagnosisCharges = 0;
+            var totalRoomCharges = 0;
+            var totalRoomPrice = 0;
+
+            $.each(data, function (index, item) {
+                totalDiagnosisCharges += item.diagnosisCharges;
+                totalRoomCharges += item.roomCharges;
+                totalRoomPrice += item.totalRoomPrice;
+            });
+
+            $('tfoot td:eq(1)').html("<strong>Total Amount:</strong><br/><strong>" + totalDiagnosisCharges + "</strong>");
+            $('tfoot td:eq(2)').html("<strong>Total Room Charges:</strong><br /><strong>" + totalRoomCharges + "</strong>");
+            $('tfoot td:eq(3)').html("<strong>Total Room Price:</strong><br /><strong>" + totalRoomPrice + "</strong>");
+        }
+
         function showReport() {
             var patientId = $('#patient').val();
             var doctorId = $('#doctor').val();
@@ -214,6 +241,7 @@
                         var row = "<tr><td>" + item.patientFullname + "</td><td>Dr." + item.doctorfullname + "</td><td>" + formatDate(item.admitDate) + "</td><td>" + formatDate(item.dischargeDate) + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + item.roomType + "</td><td>" + item.roomCharges + "</td><td>" + item.perDayRoom + "</td><td>" + item.totalRoomPrice + "</td><td>" + item.mediclaimName + "</td><td>" + "</td></tr>";
                         $("#reportlist tbody").append(row);
                     });
+                    calculateTotals(data);
                 },
                 error: function (resp) {
                     console.log("Search error:", resp);

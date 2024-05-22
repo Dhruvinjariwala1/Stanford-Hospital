@@ -42,6 +42,31 @@ namespace StanfordHospital.Controllers
             return View("Report",model);
         }
 
+        public IActionResult IndexAppointmentReport()
+        {
+            ViewBag.isappointmentreport = "active";
+
+            var model = new List<Appointment>();
+            model = _context.Appointment.Select(a => new Appointment
+            {
+                Appointmentid = a.Appointmentid,
+                Patient = a.Patient,
+                User = a.User,
+                AppointmentDate = a.AppointmentDate,
+                AppointmentTime = a.AppointmentTime,
+                AppointmentStatus = a.AppointmentStatus,
+                Diagnosis = a.Diagnosis,
+                Prescription = a.Prescription,
+                ReasonForAppointment = a.ReasonForAppointment,
+                Cases = a.Cases,
+                Price = a.Price,
+                DiagnosisCharges = a.DiagnosisCharges,
+                ExtraCharges = a.ExtraCharges,
+            }).ToList();
+
+            return View("AppointmentReport", model);
+        }
+
         
         public IActionResult DoctorRole()
         {
@@ -123,7 +148,6 @@ namespace StanfordHospital.Controllers
 
             return Json(reports);
         }
-
     }
 }
     

@@ -121,6 +121,14 @@
             </tr>
         }
     </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="9"></td>
+            <td><strong>TotalPrice:</strong><br /><strong>@Model.Sum(i => i.Price)</strong></td>
+            <td colspan="11" class="text-right"><strong>Total Room Charges:</strong><br /><strong>@Model.Sum(i => i.DiagnosisCharges)</strong></td>
+            <td></td>
+        </tr>
+    </tfoot>
 </table>
 
 @section Scripts {
@@ -153,6 +161,6 @@
     </script>
 }
 
-@section appointmentlist {
+@section appointmentlist{
     <script src="~/js/appointmentlist.js"></script>
 }
