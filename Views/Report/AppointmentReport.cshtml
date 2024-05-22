@@ -172,6 +172,19 @@
             showReport();
         });
 
+        function calculateTotals(data) {
+            var totalDiagnosisCharges = 0;
+            var totalPrice = 0;
+
+            $.each(data, function (index, item) {
+                totalDiagnosisCharges += item.diagnosisCharges;
+                totalPrice += item.price;
+            });
+
+            $('tfoot td:eq(1)').html("<strong>Total Price:</strong><br/><strong>" + totalPrice + "</strong>");
+            $('tfoot td:eq(2)').html("<strong>Total Extra Charges:</strong><br /><strong>" + totalDiagnosisCharges + "</strong>");
+        }
+
         function showReport() {
             var patientId = $('#patient').val();
             var doctorId = $('#doctor').val();
@@ -195,6 +208,7 @@
                         var row = "<tr><td>" + item.patientFullname + "</td><td>Dr." + item.doctorfullname + "</td><td>" + item.appointmentDate + "</td><td>" + item.appointmentStatus + "</td><td>" + item.reasonForAppointment + "</td><td>" + item.cases + "</td><td>" + item.price + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + "</td></tr>";
                         $("#appointmentreport tbody").append(row);
                     });
+                    calculateTotals(data);
                 },
                 error: function (resp) {
                     console.log("Search error:", resp);
