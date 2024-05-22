@@ -40,14 +40,14 @@
     <div class="form-group col-md-6">
         <label>Cases</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="casetype" id="Oldcase">
-            <label class="form-check-label" for="flexRadioDefault1">
+            <input class="form-check-input" type="radio" name="caseType" id="Oldcase">
+            <label class="form-check-label" for="Oldcase">
                 OldCase
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="casetype" id="Newcase" checked>
-            <label class="form-check-label" for="flexRadioDefault2">
+            <input class="form-check-input" type="radio" name="caseType" id="Newcase" checked>
+            <label class="form-check-label" for="Newcase">
                NewCase
             </label>
         </div>
@@ -167,6 +167,41 @@
                 }
             });
         });
+
+        $('#search').click(function () {
+            showReport();
+        });
+
+        function showReport() {
+            var patientId = $('#patient').val();
+            var doctorId = $('#doctor').val();
+            var fromDate = $('#fromDate').val();
+            var status = $('#status').val();
+            var caseType = $('#caseType').val();
+
+            $.ajax({
+                url: '@Url.Action("AppointmentReport", "Report")',
+                type: 'GET',
+                data: {
+                    patientId: patientId,
+                    doctorId: doctorId,
+                    fromDate: fromDate,
+                    status: status,
+                    caseType: caseType
+                },
+                success: function (data) {
+                    $("#appointmentreport tbody").empty();
+                    $.each(data, function (index, item) {
+                        var row = "<tr><td>" + item.patientFullname + "</td><td>Dr." + item.doctorfullname + "</td><td>" + item.appointmentDate + "</td><td>" + item.appointmentStatus + "</td><td>" + item.reasonForAppointment + "</td><td>" + item.cases + "</td><td>" + item.price + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + "</td></tr>";
+                        $("#appointmentreport tbody").append(row);
+                    });
+                },
+                error: function (resp) {
+                    console.log("Search error:", resp);
+                }
+            });
+        }
+
         </script>
 }
 

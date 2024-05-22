@@ -148,6 +148,59 @@ namespace StanfordHospital.Controllers
 
             return Json(reports);
         }
+
+        public IActionResult AppointmentReport(int? patientId, string? doctorId, string? status, string? caseType, DateTime fromDate)
+        {
+            var appointment = (from a in _context.Appointment
+                               join p in  _context.Patient on a.Patientid equals p.Patientid into patientgroup
+                               from patient in patientgroup.DefaultIfEmpty()
+                               join u in _context.Users on a.Id equals u.Id into doctorgroup
+                               from doctor in doctorgroup.DefaultIfEmpty()
+                               select new 
+                               {
+                                   Appointmentid = a.Appointmentid,
+                                   a.Id,
+                                   a.Patientid,
+                                   Patient = a.Patient,
+                                   User = a.User,
+                                   AppointmentDate = a.AppointmentDate,
+                                   AppointmentStatus = a.AppointmentStatus,
+                                   ReasonForAppointment = a.ReasonForAppointment,
+                                   Cases = a.Cases,
+                                   Price = a.Price,
+                                   DiagnosisCharges = a.DiagnosisCharges,
+                                   ExtraCharges = a.ExtraCharges,
+                                   patientFullname = (patient.Firstname + " " + patient.Lastname),
+                                   doctorfullname = (doctor.FirstName + " " + doctor.LastName)
+                               }).ToList();
+
+            if (patientId != null)
+            {
+                appointment = appointment.Where(x => x.Patientid == patientId).ToList();
+            }
+
+            if (doctorId != null)
+            {
+                appointment = appointment.Where(x => x.Id == doctorId).ToList();
+            }
+
+            if(fromDate !=DateTime.MinValue) 
+            {
+                appointment = appointment.Where(x =>(fromDate.Date <= x.AppointmentDate.Date)).ToList();
+            }
+
+            if(status != null)
+            {
+                appointment = appointment.Where(x => x.AppointmentStatus == status).ToList();
+            }
+
+            if(caseType != null) 
+            {
+                appointment = appointment.Where(x => x.Cases ==  caseType).ToList();
+            }
+
+            return Json(appointment);
+        }
     }
 }
     
