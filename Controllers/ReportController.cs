@@ -149,7 +149,7 @@ namespace StanfordHospital.Controllers
             return Json(reports);
         }
 
-        public IActionResult AppointmentReport(int? patientId, string? doctorId, string? status, string? caseType, DateTime fromDate)
+        public IActionResult AppointmentReport(int? patientId, string? doctorId, string? status, string? cases, DateTime fromDate, DateTime toDate)
         {
             var appointment = (from a in _context.Appointment
                                join p in  _context.Patient on a.Patientid equals p.Patientid into patientgroup
@@ -164,6 +164,7 @@ namespace StanfordHospital.Controllers
                                    Patient = a.Patient,
                                    User = a.User,
                                    AppointmentDate = a.AppointmentDate,
+                                   AppointmentTime = a.AppointmentTime,
                                    AppointmentStatus = a.AppointmentStatus,
                                    ReasonForAppointment = a.ReasonForAppointment,
                                    Cases = a.Cases,
@@ -184,19 +185,19 @@ namespace StanfordHospital.Controllers
                 appointment = appointment.Where(x => x.Id == doctorId).ToList();
             }
 
-            if(fromDate !=DateTime.MinValue) 
+            if (fromDate != DateTime.MinValue && toDate != DateTime.MinValue)
             {
-                appointment = appointment.Where(x =>(fromDate.Date <= x.AppointmentDate.Date)).ToList();
+                appointment = appointment.Where(x => (fromDate.Date <= x.AppointmentDate.Date) && (x.AppointmentDate.Date <= toDate.Date)).ToList();
             }
 
-            if(status != null)
+            if (status != null)
             {
                 appointment = appointment.Where(x => x.AppointmentStatus == status).ToList();
             }
 
-            if(caseType != null) 
+            if (cases != null)
             {
-                appointment = appointment.Where(x => x.Cases ==  caseType).ToList();
+                appointment = appointment.Where(x => x.Cases == cases).ToList();
             }
 
             return Json(appointment);

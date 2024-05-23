@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@{
+    var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+    var today = DateTime.Now;
+}
+
 <h1>Appointment Report</h1>
 <br />
 
@@ -25,34 +30,45 @@
 
     <div class="form-group col-md-6">
         <label class="control-label">From</label>
-        <input id="fromDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        <input id="fromDate" class="form-control" type="date" value="@firstDayOfMonth.ToString("yyyy-MM-dd")" max="@today.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <div class="form-group col-md-6">
+        <label class="control-label">To</label>
+        <input id="toDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.ToString("yyyy-MM-dd")" />
     </div>
 
     <div class="form-group col-md-6">
         <label class="control-label">Select Appointment Status</label>
         <select id="status" class="form-control">
-            <option>--Select Status--</option>
+            <option value="">--Select Status--</option>
             <option value="Completed">Completed</option>
             <option value="Pending">Pending</option>
             <option value="Canceled">Canceled</option>
         </select>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-3">
         <label>Cases</label>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="caseType" id="Oldcase">
-            <label class="form-check-label" for="Oldcase">
-                OldCase
+            <input class="form-check-input" type="radio" name="cases" value="" checked>
+            <label class="form-check-label" for="Newcase">
+                All Case
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="caseType" id="Newcase" checked>
+            <input class="form-check-input" type="radio" name="cases" value="OldCase" >
+            <label class="form-check-label" for="Oldcase">
+                Old Case
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="cases" value="NewCase">
             <label class="form-check-label" for="Newcase">
-               NewCase
+               New Case
             </label>
         </div>
     </div>
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-3">
         <br />
         <button type="button" id="search" class="btn btn-primary btn-lg float-right">Search</button>
     </div>
@@ -138,7 +154,7 @@
         <tr>
             <td colspan="6"></td>
             <td><strong>TotalPrice:</strong><br /><strong>@Model.Sum(i => i.Price)</strong></td>
-            <td colspan="8" class="text-right"><strong>Total Room Charges:</strong><br /><strong>@Model.Sum(i => i.DiagnosisCharges)</strong></td>
+            <td colspan="8" class="text-right"><strong>TotalExtraCharges:</strong><br /><strong>@Model.Sum(i => i.DiagnosisCharges)</strong></td>
             <td></td>
         </tr>
     </tfoot>
@@ -172,6 +188,16 @@
             showReport();
         });
 
+        function formatDate(dateString) {
+            var date = new Date(dateString);
+            var day = date.getDate().toString().padStart(2, '0');
+            var month = (date.getMonth() + 1).toString().padStart(2, '0'); // Month starts from 0
+            var year = date.getFullYear();
+            var hours = date.getHours().toString().padStart(2, '0');
+            var minutes = date.getMinutes().toString().padStart(2, '0');
+            return day + '-' + month + '-' + year + ' ' + hours + ':' + minutes;
+        }
+
         function calculateTotals(data) {
             var totalDiagnosisCharges = 0;
             var totalPrice = 0;
@@ -181,7 +207,7 @@
                 totalPrice += item.price;
             });
 
-            $('tfoot td:eq(1)').html("<strong>Total Price:</strong><br/><strong>" + totalPrice + "</strong>");
+            $('tfoot td:eq(1)').html("<strong>TotalPrice:</strong><br/><strong>" + totalPrice + "</strong>");
             $('tfoot td:eq(2)').html("<strong>Total Extra Charges:</strong><br /><strong>" + totalDiagnosisCharges + "</strong>");
         }
 
@@ -189,8 +215,9 @@
             var patientId = $('#patient').val();
             var doctorId = $('#doctor').val();
             var fromDate = $('#fromDate').val();
+            var toDate = $('#toDate').val();
             var status = $('#status').val();
-            var caseType = $('#caseType').val();
+            var cases = $('input[name="cases"]:checked').val();
 
             $.ajax({
                 url: '@Url.Action("AppointmentReport", "Report")',
@@ -199,13 +226,14 @@
                     patientId: patientId,
                     doctorId: doctorId,
                     fromDate: fromDate,
+                    toDate: toDate,
                     status: status,
-                    caseType: caseType
+                    cases: cases
                 },
                 success: function (data) {
                     $("#appointmentreport tbody").empty();
                     $.each(data, function (index, item) {
-                        var row = "<tr><td>" + item.patientFullname + "</td><td>Dr." + item.doctorfullname + "</td><td>" + item.appointmentDate + "</td><td>" + item.appointmentStatus + "</td><td>" + item.reasonForAppointment + "</td><td>" + item.cases + "</td><td>" + item.price + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + "</td></tr>";
+                        var row = "<tr><td>" + item.patientFullname + "</td><td>Dr. " + item.doctorfullname + "</td><td>" + formatDate(item.appointmentTime )+ "</td><td>" + item.appointmentStatus + "</td><td>" + item.reasonForAppointment + "</td><td>" + item.cases + "</td><td>" + item.price + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + "</td></tr>";
                         $("#appointmentreport tbody").append(row);
                     });
                     calculateTotals(data);
