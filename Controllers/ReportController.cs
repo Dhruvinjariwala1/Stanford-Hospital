@@ -67,6 +67,51 @@ namespace StanfordHospital.Controllers
             return View("AppointmentReport", model);
         }
 
+        public IActionResult PatientIpdReportHistroy()
+        {
+            ViewBag.patientipdreport = "active";
+
+           var model = _context.Ipd.Select(a => new PatientReportDto
+               {
+                    Type = "Ipd",
+                    Ipdid = a.Ipdid,
+                    Patient = a.Patient,
+                    User = a.User,
+                    AdmitDate = a.AdmitDate,
+                    DischargeDate = a.DischargeDate,
+                    DiagnosisCharges = a.DiagnosisCharges,
+                   //MultipleDiagnosis = a.Diagnosis,
+                   //MultipleExtraCharges = a.ExtraCharges,
+                    RoomType = a.RoomType,
+                    RoomCharges = a.RoomCharges,
+                    PerDayRoom = a.PerDayRoom,
+                    TotalRoomPrice = a.TotalRoomPrice,
+                    MediclaimName = a.MediclaimName,
+                    InsuranceNumber = a.InsuranceNumber,
+                }).ToList();
+
+            var appointmentList = _context.Appointment.Select(a => new PatientReportDto
+            {
+                Type = "Appointment",
+                Appointmentid = a.Appointmentid,
+                Patient = a.Patient,
+                User = a.User,
+                AppointmentDate = a.AppointmentDate,
+                AppointmentTime = a.AppointmentTime,
+                AppointmentStatus = a.AppointmentStatus,
+                ReasonForAppointment = a.ReasonForAppointment,
+                //MultipleDiagnosis = a.Diagnosis,
+                Prescription = a.Prescription,
+                Cases = a.Cases,
+                Price = a.Price,
+                DiagnosisCharges = a.DiagnosisCharges,
+                //MultipleExtraCharges = a.ExtraCharges,         
+            }).ToList();
+
+            model.AddRange(appointmentList);
+
+            return View("PatientIpdHistroy", model);
+        }
         
         public IActionResult DoctorRole()
         {

@@ -1,0 +1,131 @@
+﻿@model IEnumerable<StanfordHospital.Models.Dtos.PatientReportDto>
+
+@{
+    ViewData["Title"] = "PatientIpdHistroy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Patient Ipd Report Histroy</h1>
+<br />
+<form class="row g-3">
+    <div class="form-group col-md-6">
+        <label class="control-label">Select Patient</label>
+        <select id="patient" class="form-control">
+            <option value="">Select Patient</option>
+        </select>
+    </div>
+    <div class="form-group col-md-6">
+        <br />
+        <button type="button" id="search" class="btn btn-primary btn-lg float-right">Search</button>
+    </div>
+</form>
+
+<table class="table" id="ipdhistory">
+    <thead>
+        <tr style="background-color:dodgerblue;">
+            <th>
+                Type
+            </th>
+            <th>
+                Doctor
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdmitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDate)
+            </th>
+            <th>
+                Select Extra Charges
+            </th>
+            <th>
+                Extra Charges Sub Total
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomCharges)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PerDayRoom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalRoomPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MediclaimName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.InsuranceNumber)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    Dr.
+
+                    @Html.DisplayFor(modelItem => item.User.FirstName)
+                    @Html.DisplayFor(modelItem => item.User.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdmitDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DischargeDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MultipleExtraCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiagnosisCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomCharges)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PerDayRoom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalRoomPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MediclaimName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InsuranceNumber)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("PatientName", "Report")',
+                type: 'GET',
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        $('#patient').append($('<option>').val(item.patientid).text(item.fullName));
+                    });
+                }
+            });
+        });
+   </script>
+   }
+
+
+@section ipdhistory {
+    <script src="~/js/ipdhistory.js"></script>
+}

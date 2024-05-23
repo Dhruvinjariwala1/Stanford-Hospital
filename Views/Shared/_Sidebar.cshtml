@@ -116,17 +116,17 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item menu-open">
-                    <a class="nav-link">
-                        <i class="nav-icon fas fa-file-alt"></i>
-                        <p>
-                            Report
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        @if (User.IsInRole("Admin"))
-                        {
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item menu-open">
+                        <a class="nav-link">
+                            <i class="nav-icon fas fa-file-alt"></i>
+                            <p>
+                                Report
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a asp-controller="Report" asp-action="Index" class="nav-link @ViewBag.isreport">
                                     <img src="~/dist/img/report.png" alt="Image" width="30px" />
@@ -135,16 +135,24 @@
                                     </p>
                                 </a>
                             </li>
-                        }
-                        <li class="nav-item">
-                            <a asp-controller="Report" asp-action="IndexAppointmentReport" class="nav-link @ViewBag.isappointmentreport">
-                                <img src="~/dist/img/appointmentreport.png" alt="Image" width="30px" />
-                                <p>
-                                    Appointment Report
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
+                            <li class="nav-item">
+                                <a asp-controller="Report" asp-action="IndexAppointmentReport" class="nav-link @ViewBag.isappointmentreport">
+                                    <img src="~/dist/img/appointmentreport.png" alt="Image" width="30px" />
+                                    <p>
+                                        Appointment Report
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a asp-controller="Report" asp-action="PatientIpdReportHistroy" class="nav-link @ViewBag.patientipdreport">
+                        <img src="~/dist/img/patienthistory.png" alt="Image" width="30px" />
+                        <p>
+                            Patient History
+                        </p>
+                    </a>
                 </li>
             </ul>
         </nav>

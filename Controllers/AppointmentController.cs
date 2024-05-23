@@ -96,6 +96,11 @@ namespace StanfordHospital.Controllers
                 ExtraCharges = a.ExtraCharges,
             }).ToList();
 
+            if (User.IsInRole("Doctor"))
+            {
+                return RedirectToAction("Doctor");
+            }
+
             return View("Appointment", model);
         }
 
