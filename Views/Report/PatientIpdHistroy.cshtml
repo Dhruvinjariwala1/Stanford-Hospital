@@ -122,8 +122,49 @@
                 }
             });
         });
-   </script>
-   }
+
+        $('#search').click(function () {
+            showReport();
+        });
+
+        function showReport() {
+            var patientId = $('#patient').val();
+
+            $.ajax({
+                url: '@Url.Action("SearchReport", "Report")',
+                type: 'GET',
+                data: {
+                    patientId: patientId,
+                },
+                success: function (data) {
+                    $("#ipdhistory tbody").empty();
+                    $.each(data, function (index, item) {
+                        var row = '<tr>' +
+                            '<td></td>' +
+                            '<td>Dr. ' + item.doctorfullname + '</td>' +
+                            '<td>' + item.admitDate + '</td>' +
+                            '<td>' + item.dischargeDate + '</td>' +
+                            '<td>' + item.extraCharges + '</td>' +
+                            '<td>' + item.diagnosisCharges + '</td>' +
+                            '<td>' + item.roomType + '</td>' +
+                            '<td>' + item.roomCharges + '</td>' +
+                            '<td>' + item.perDayRoom + '</td>' +
+                            '<td>' + item.totalRoomPrice + '</td>' +
+                            '<td>' + item.mediclaimName + '</td>' +
+                            '<td>' + item.insuranceNumber + '</td>' +
+                            '</tr>';
+                        $("#ipdhistory tbody").append(row);
+                    });
+                   
+                },
+                error: function (resp) {
+                    console.log("Search error:", resp);
+                }
+            });
+        }
+
+    </script>
+}
 
 
 @section ipdhistory {
