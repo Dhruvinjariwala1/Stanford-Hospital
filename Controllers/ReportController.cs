@@ -67,48 +67,64 @@ namespace StanfordHospital.Controllers
             return View("AppointmentReport", model);
         }
 
-        public IActionResult PatientIpdReportHistroy()
+        public IActionResult PatientIpdReportHistroy(PatientReportDto patientReport)
         {
             ViewBag.patientipdreport = "active";
 
-           var model = _context.Ipd.Select(a => new PatientReportDto
-               {
-                    Type = "Ipd",
-                    Ipdid = a.Ipdid,
-                    Patient = a.Patient,
-                    User = a.User,
-                    AdmitDate = a.AdmitDate,
-                    DischargeDate = a.DischargeDate,
-                    DiagnosisCharges = a.DiagnosisCharges,
-                   //MultipleDiagnosis = a.Diagnosis,
-                   //MultipleExtraCharges = a.ExtraCharges,
-                    RoomType = a.RoomType,
-                    RoomCharges = a.RoomCharges,
-                    PerDayRoom = a.PerDayRoom,
-                    TotalRoomPrice = a.TotalRoomPrice,
-                    MediclaimName = a.MediclaimName,
-                    InsuranceNumber = a.InsuranceNumber,
-                }).ToList();
+           //var model = _context.Ipd.Select(a => new PatientReportDto
+           //    {
+           //         Type = "Ipd",
+           //         Ipdid = a.Ipdid,
+           //         Patient = a.Patient,
+           //         User = a.User,
+           //         AdmitDate = a.AdmitDate,
+           //         DischargeDate = a.DischargeDate,
+           //         DiagnosisCharges = a.DiagnosisCharges,
+           //         RoomType = a.RoomType,
+           //         RoomCharges = a.RoomCharges,
+           //         PerDayRoom = a.PerDayRoom,
+           //         TotalRoomPrice = a.TotalRoomPrice,
+           //         MediclaimName = a.MediclaimName,
+           //         InsuranceNumber = a.InsuranceNumber,
+           //     }).ToList();
 
-            var appointmentList = _context.Appointment.Select(a => new PatientReportDto
-            {
-                Type = "Appointment",
-                Appointmentid = a.Appointmentid,
-                Patient = a.Patient,
-                User = a.User,
-                AppointmentDate = a.AppointmentDate,
-                AppointmentTime = a.AppointmentTime,
-                AppointmentStatus = a.AppointmentStatus,
-                ReasonForAppointment = a.ReasonForAppointment,
-                //MultipleDiagnosis = a.Diagnosis,
-                Prescription = a.Prescription,
-                Cases = a.Cases,
-                Price = a.Price,
-                DiagnosisCharges = a.DiagnosisCharges,
-                //MultipleExtraCharges = a.ExtraCharges,         
-            }).ToList();
+           // if(patientReport.MultipleDiagnosis != null)
+           // {
+           //     model.ForEach(item => item.MultipleDiagnosis = patientReport.MultipleDiagnosis);
+           // }
 
-            model.AddRange(appointmentList);
+           // if(patientReport.MultipleExtraCharges != null) 
+           // {
+           //     model.ForEach(item => item.MultipleExtraCharges = patientReport.MultipleExtraCharges);
+           // }
+
+           // var appointmentList = _context.Appointment.Select(a => new PatientReportDto
+           // {
+           //     Type = "Appointment",
+           //     Appointmentid = a.Appointmentid,
+           //     Patient = a.Patient,
+           //     User = a.User,
+           //     AppointmentDate = a.AppointmentDate,
+           //     AppointmentTime = a.AppointmentTime,
+           //     AppointmentStatus = a.AppointmentStatus,
+           //     ReasonForAppointment = a.ReasonForAppointment,
+           //     Prescription = a.Prescription,
+           //     Cases = a.Cases,
+           //     Price = a.Price,
+           //     DiagnosisCharges = a.DiagnosisCharges,      
+           // }).ToList();
+
+           // if (patientReport.MultipleDiagnosis != null)
+           // {
+           //     model.ForEach(item => item.MultipleDiagnosis = patientReport.MultipleDiagnosis);
+           // }
+
+           // if (patientReport.MultipleExtraCharges != null)
+           // {
+           //     model.ForEach(item => item.MultipleExtraCharges = patientReport.MultipleExtraCharges);
+           // }
+
+            var model = new List<PatientReportDto>();
 
             return View("PatientIpdHistroy", model);
         }
@@ -246,6 +262,87 @@ namespace StanfordHospital.Controllers
             }
 
             return Json(appointment);
+        }
+    
+        public IActionResult PatientHistory(int patientId)
+        {
+            var patienthistory = new List<PatientReportDto>();
+
+            var model = _context.Ipd.Where(a => a.Patientid == patientId)
+                .Select(a => new PatientReportDto
+               {
+                     Type = "Ipd",
+                     Ipdid = a.Ipdid,
+                     Patient = a.Patient,
+                     User = a.User,
+                     AdmitDate = a.AdmitDate,
+                     DischargeDate = a.DischargeDate,
+                     DiagnosisCharges = a.DiagnosisCharges,
+                     MultipleExtraCharges = new List<string> {a.ExtraCharges },
+                     RoomType = a.RoomType,
+                     RoomCharges = a.RoomCharges,
+                     PerDayRoom = a.PerDayRoom,
+                     TotalRoomPrice = a.TotalRoomPrice,
+                     MediclaimName = a.MediclaimName,
+                     InsuranceNumber = a.InsuranceNumber,
+                     AppointmentStatus = "",
+                     AppointmentTime = default(DateTime),
+                     Price = default(int),
+                     Cases = "",
+                     ReasonForAppointment = "",
+                 }).ToList();
+
+             //if(patientReport.MultipleDiagnosis != null)
+             //{
+             //   model.ForEach(item => item.MultipleDiagnosis = patientReport.MultipleDiagnosis);
+             //}
+
+             //if(patientReport.MultipleExtraCharges != null) 
+             //{
+             //   model.ForEach(item => item.MultipleExtraCharges = patientReport.MultipleExtraCharges);
+             //}
+
+            patienthistory.AddRange(model);
+
+             var appointmentList = _context.Appointment.Where(a => a.Patientid == patientId)
+                .Select(a => new PatientReportDto
+             {
+                 Type = "Appointment",
+                 Appointmentid = a.Appointmentid,
+                 Patient = a.Patient,
+                 User = a.User,
+                 AppointmentDate = a.AppointmentDate,
+                 AppointmentTime = a.AppointmentTime,
+                 AppointmentStatus = a.AppointmentStatus,
+                 MultipleExtraCharges = new List<string> {a.ExtraCharges },
+                 ReasonForAppointment = a.ReasonForAppointment,
+                 Prescription = a.Prescription,
+                 Cases = a.Cases,
+                 Price = a.Price,
+                 DiagnosisCharges = a.DiagnosisCharges,    
+                 RoomType = "",
+                 RoomCharges = default(int),
+                 PerDayRoom = default(int),
+                 TotalRoomPrice = default(int),
+                 MediclaimName = "",
+                 InsuranceNumber = "",
+                 AdmitDate = default(DateTime),
+                 DischargeDate = default(DateTime),
+             }).ToList();
+
+             //if (patientReport.MultipleDiagnosis != null)
+             //{
+             //    model.ForEach(item => item.MultipleDiagnosis = patientReport.MultipleDiagnosis);
+             //}
+
+             //if (patientReport.MultipleExtraCharges != null)
+             //{
+             //   model.ForEach(item => item.MultipleExtraCharges = patientReport.MultipleExtraCharges);
+             //}
+
+             patienthistory.AddRange(appointmentList);
+
+             return Json(patienthistory);
         }
     }
 }
