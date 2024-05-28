@@ -34,6 +34,6 @@ namespace StanfordHospital.Models
         [Display(Name ="Address")]
         public string? Address { get; set;}
         public string? Action { get; set; }
-
+        public string? Password { get; set; }
     }
 }
