@@ -65,7 +65,7 @@ namespace StanfordHospital.Controllers
                 TotalRoomPrice = a.TotalRoomPrice,
                 MediclaimName = a.MediclaimName,
                 InsuranceNumber = a.InsuranceNumber,
-                Cashless = a.Cashless,
+                CashLess = a.CashLess,
             }).ToList();
 
             return View("Ipd", model);
@@ -94,7 +94,7 @@ namespace StanfordHospital.Controllers
                         TotalRoomPrice = ipd.TotalRoomPrice,
                         MediclaimName = ipd.MediclaimName,
                         InsuranceNumber = ipd.InsuranceNumber,
-                        Cashless = ipd.Cashless,
+                        CashLess = ipd.CashLess,
                     };
                     if (ipd.MultipleDiagnosis != null)
                     {
@@ -147,7 +147,7 @@ namespace StanfordHospital.Controllers
                     Ipd.TotalRoomPrice = ipd.TotalRoomPrice;
                     Ipd.MediclaimName = ipd.MediclaimName;
                     Ipd.InsuranceNumber = ipd.InsuranceNumber;
-                    Ipd.Cashless = ipd.Cashless;
+                    Ipd.CashLess = ipd.CashLess;
                     _context.Ipd.Update(Ipd);
                     _context.SaveChanges();
                     TempData["Message"] = "In-Patient Department Updated Successfully....";
@@ -208,7 +208,7 @@ namespace StanfordHospital.Controllers
                 TotalRoomPrice = editipd.TotalRoomPrice,
                 MediclaimName = editipd.MediclaimName,
                 InsuranceNumber = editipd.InsuranceNumber,
-                Cashless = editipd.Cashless,
+                CashLess = editipd.CashLess,
                 MultipleDiagnosis = Diagnoses,
                 MultipleExtraCharges = ExtraCharges,
             };
@@ -237,7 +237,7 @@ namespace StanfordHospital.Controllers
                     TotalRoomPrice = a.TotalRoomPrice,
                     MediclaimName = a.MediclaimName,
                     InsuranceNumber = a.InsuranceNumber,
-                    Cashless = a.Cashless,
+                    CashLess = a.CashLess,
                 }).FirstOrDefault();
 
             return View("DeleteIpd", deleteipd);

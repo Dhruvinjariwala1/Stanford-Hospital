@@ -148,10 +148,12 @@
                 <input asp-for="InsuranceNumber" class="form-control" />
                 <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-6">
-                <label>CashLess</label><span class="text-danger">*</span>
-                <div class="form-check">
-                    <input asp-for="Cashless" class="form-check-input" type="checkbox">
+            <div class="form-group">
+                <div class="form-group col-md-6">
+                    <label>CashLess</label>
+                    <div class="form-check">
+                        <input asp-for="CashLess" class="form-check-input" type="checkbox">
+                    </div>
                 </div>
             </div>
             <div class="form-group col-md-6"></div>

@@ -4,12 +4,10 @@
     ViewData["Title"] = "AddIpd";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css"> 
-<h1>Add Ipd</h1>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+<h1>AddIpd</h1>
 
-<div>
-    <a class="btn btn-primary" asp-action="Index">Back to List</a>
-</div>
+<h4>Ipd</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -17,12 +15,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group col-md-6">
                 <label asp-for="Patientid" class="control-label">Select Patient</label><span class="text-danger">*</span>
-                <select asp-for="Patientid" class ="form-control selectpatient">
+                <select asp-for="Patientid" class="form-control selectpatient">
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Id" class="control-label">Select Doctor</label><span class="text-danger">*</span>
-                <select asp-for="Id" class ="form-control selectdoctor">
+                <select asp-for="Id" class="form-control selectdoctor">
                 </select>
             </div>
             <div class="form-group col-md-6">
@@ -54,12 +52,12 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="Prescription" class="control-label">Prescription</label><span class="text-danger">*</span>
-                <textarea asp-for="Prescription" class="form-control" ></textarea>
+                <textarea asp-for="Prescription" class="form-control"></textarea>
                 <span asp-validation-for="Prescription" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="MultipleExtraCharges" class="control-label">Select Extra Charges</label>
-                <select asp-for="MultipleExtraCharges" id="extracharges" class="form-control" >
+                <select asp-for="MultipleExtraCharges" id="extracharges" class="form-control">
                     <option>--Select Extra Charges--</option>
                     <option value="Covid Vaccine">Covid Vaccine</option>
                     <option value="X-Ray">X-Ray</option>
@@ -96,7 +94,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="RoomCharges" class="control-label">Room Charge</label>
-                <input asp-for="RoomCharges" id="RoomCharges" class="form-control" readonly/>
+                <input asp-for="RoomCharges" id="RoomCharges" class="form-control" readonly />
                 <span asp-validation-for="RoomCharges" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6"></div>
@@ -108,7 +106,7 @@
             <div class="form-group col-md-6"></div>
             <div class="form-group col-md-6">
                 <label asp-for="TotalRoomPrice" class="control-label">Total Room Price</label><span class="text-danger">*</span>
-                <input asp-for="TotalRoomPrice" id="TotalRoomPrice" class="form-control" readonly/>
+                <input asp-for="TotalRoomPrice" id="TotalRoomPrice" class="form-control" readonly />
                 <span asp-validation-for="TotalRoomPrice" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
@@ -147,10 +145,12 @@
                 <input asp-for="InsuranceNumber" class="form-control" />
                 <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-6">
-                <label>CashLess</label>
-                <div class="form-check">
-                    <input asp-for="Cashless" class="form-check-input" type="checkbox">
+            <div class="form-group">
+                <div class="form-group col-md-6">
+                    <label>CashLess</label>
+                    <div class="form-check">
+                        <input asp-for="CashLess" class="form-check-input" type="checkbox">
+                    </div>
                 </div>
             </div>
             <div class="form-group col-md-6"></div>
@@ -163,7 +163,7 @@
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
- <script>
+<script>
     new MultiSelectTag('MultipleDiagnosis')
 </script>
 
@@ -193,14 +193,14 @@
                 break;
             case 'Presidential Suite':
                 roomCharges = 7500;
-                break;  
+                break;
         }
         document.getElementById('RoomCharges').value = roomCharges;
         TotalRoomPrice();
-    });   
+    });
     function TotalRoomPrice() {
         var roomCharges = parseFloat(document.getElementById('RoomCharges').value);
-        var perDayRoomPrice = parseFloat(document.getElementById('PerDayRoom').value);  
+        var perDayRoomPrice = parseFloat(document.getElementById('PerDayRoom').value);
         var totalRoomPrice = roomCharges * perDayRoomPrice;
         document.getElementById('TotalRoomPrice').value = totalRoomPrice.toFixed(2);
     }
@@ -332,6 +332,8 @@
             getPatientName();
         })
     </script>
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-<script>
+
