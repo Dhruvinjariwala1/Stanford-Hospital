@@ -112,7 +112,7 @@
                 <span asp-validation-for="TotalRoomPrice" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="MediclaimName" class="control-label">Mediclaim Name</label><span class="text-danger">*</span>
+                <label asp-for="MediclaimName" class="control-label">Mediclaim Name</label>
                 <select asp-for="MediclaimName" class="form-control">
                     <option>--Select Mediclaim Name--</option>
                     <option value="Bajaj Allianz Health Insurance">Bajaj Allianz Health Insurance</option>
@@ -132,7 +132,6 @@
                     <option value="Aditya Birla Health Insurance">Aditya Birla Health Insurance</option>
                     <option value="Navi General Insurance">Navi General Insurance</option>
                     <option value="Bharti AXA">Bharti AXA</option>
-                    <option value="Bharti AXA">Bharti AXA</option>
                     <option value="ManipalCigna Health Insurance">ManipalCigna Health Insurance</option>
                     <option value="National Insurance">National Insurance</option>
                     <option value="Raheja QBE">Raheja QBE</option>
@@ -144,11 +143,20 @@
                 <span asp-validation-for="MediclaimName" class="text-danger"></span>
             </div>
             <div class="form-group col-md-6">
-                <label asp-for="InsuranceNumber" class="control-label">Insurance Number</label><span class="text-danger">*</span>
+                <label asp-for="InsuranceNumber" class="control-label">Insurance Number</label>
                 <input asp-for="InsuranceNumber" class="form-control" />
                 <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
+                <label>CashLess</label>
+                <div class="form-check">
+                    <input asp-for="Cashless" class="form-check-input" type="checkbox">
+                </div>
+            </div>
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-6">
                 <button type="submit" class="btn btn-primary">Create</button>
             </div>
         </form>
@@ -326,3 +334,4 @@
     </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>

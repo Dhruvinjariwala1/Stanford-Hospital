@@ -149,14 +149,17 @@
                         </ul>
                     </li>
                 }
-                <li class="nav-item">
-                    <a asp-controller="Report" asp-action="PatientIpdReportHistroy" class="nav-link @ViewBag.patientipdreport">
-                        <img src="~/dist/img/patienthistory.png" alt="Image" width="30px" />
-                        <p>
-                            <b>Patient History</b>
-                        </p>
-                    </a>
-                </li>
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a asp-controller="Report" asp-action="PatientIpdReportHistroy" class="nav-link @ViewBag.patientipdreport">
+                            <img src="~/dist/img/patienthistory.png" alt="Image" width="30px" />
+                            <p>
+                                <b>Patient History</b>
+                            </p>
+                        </a>
+                    </li>
+                }
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

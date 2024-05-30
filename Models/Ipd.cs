@@ -56,5 +56,8 @@ namespace StanfordHospital.Models
 
         [Display(Name = "Insurance Number")]
         public string? InsuranceNumber { get; set; }
+
+        [Display(Name ="Cashless")]
+        public string? Cashless {  get; set; }
     }
 }

@@ -133,7 +133,6 @@
                     <option value="Aditya Birla Health Insurance">Aditya Birla Health Insurance</option>
                     <option value="Navi General Insurance">Navi General Insurance</option>
                     <option value="Bharti AXA">Bharti AXA</option>
-                    <option value="Bharti AXA">Bharti AXA</option>
                     <option value="ManipalCigna Health Insurance">ManipalCigna Health Insurance</option>
                     <option value="National Insurance">National Insurance</option>
                     <option value="Raheja QBE">Raheja QBE</option>
@@ -149,7 +148,16 @@
                 <input asp-for="InsuranceNumber" class="form-control" />
                 <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group col-md-6">
+                <label>CashLess</label><span class="text-danger">*</span>
+                <div class="form-check">
+                    <input asp-for="Cashless" class="form-check-input" type="checkbox">
+                </div>
+            </div>
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-6"></div>
+            <div class="form-group col-md-6">
                 <button type="submit" class="btn btn-warning">Save</button>
             </div>
         </form>
