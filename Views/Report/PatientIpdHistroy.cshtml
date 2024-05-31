@@ -136,7 +136,21 @@
                     @Html.DisplayFor(modelItem => item.MediclaimName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CashLess)
+                    @if (bool.TryParse(item.CashLess, out bool CashLess))
+                    {
+                        if (CashLess)
+                        {
+                            <span style="font-size: 24px;">✅</span>
+                        }
+                        else
+                        {
+                            <span style="font-size: 24px;">❌</span>
+                        }
+                    }
+                    else
+                    {
+                        <span>Invalid value</span>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.InsuranceNumber)
