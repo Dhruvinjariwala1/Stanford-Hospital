@@ -114,7 +114,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label asp-for="MediclaimName" class="control-label">Mediclaim Name</label><span class="text-danger">*</span>
-                <select asp-for="MediclaimName" class="form-control">
+                <select asp-for="MediclaimName" id="mediclaim" class="form-control">
                     @* <option>--Select Mediclaim Name--</option> *@
                     <option value="Bajaj Allianz Health Insurance">Bajaj Allianz Health Insurance</option>
                     <option value="HDFC ERGO Health Insurance">HDFC ERGO Health Insurance</option>
@@ -148,18 +148,13 @@
                 <input asp-for="InsuranceNumber" class="form-control" />
                 <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="form-group col-md-6">
-                    <label>CashLess</label>
-                    <div class="form-check">
-                        <input asp-for="CashLess" class="form-check-input" type="checkbox">
-                    </div>
+            <div class="form-group col-md-6" id="cashless" style="display:none;">
+                <label>CashLess</label>
+                <div class="form-check">
+                    <input asp-for="CashLess" class="form-check-input" type="checkbox">
                 </div>
-            </div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6">
+            </div><br /><br /><br />
+            <div class="form-group col-md-12">
                 <button type="submit" class="btn btn-warning">Save</button>
             </div>
         </form>
@@ -373,3 +368,25 @@
     </script>
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mediclaimSelect = document.getElementById("mediclaim");
+        const cashlessContainer = document.getElementById("cashless");
+
+        mediclaimSelect.addEventListener("change", function () {
+            const selectedMediclaim = mediclaimSelect.value;
+            if (selectedMediclaim === 'Bajaj Allianz Health Insurance' || selectedMediclaim === 'HDFC ERGO Health Insurance' || selectedMediclaim === 'Reliance Health Insurance'
+                || selectedMediclaim === 'Care Health Insurance' || selectedMediclaim === 'Future Generali India Insurance' || selectedMediclaim === 'IFFCO Tokio Health Insurance'
+                || selectedMediclaim === 'Cholamandalam MS General Insurance' || selectedMediclaim === 'Digit Health Insurance' || selectedMediclaim === 'ICICI Lombard' || selectedMediclaim === 'Kotak Mahindra Health Insurance'
+                || selectedMediclaim === 'New India General Insurance' || selectedMediclaim === 'Niva Bupa Health Insurance' || selectedMediclaim === 'Oriental General Insurance'
+                || selectedMediclaim === 'SBI General Insurance' || selectedMediclaim === 'Aditya Birla Health Insurance' || selectedMediclaim === 'Navi General Insurance' || selectedMediclaim === 'Bharti AXA'
+                || selectedMediclaim === 'ManipalCigna Health Insurance' || selectedMediclaim === 'National Insurance' || selectedMediclaim === 'Raheja QBE'
+                || selectedMediclaim === 'Royal Sundaram Health Insurance' || selectedMediclaim === 'Star Health Insurance' || selectedMediclaim === 'Tata AIG Health Insurance'
+                || selectedMediclaim === 'Acko General Insurance') {
+                cashlessContainer.style.display = "block";
+            } else {
+                cashlessContainer.style.display = "none";
+            }
+        });
+    });
+</script>

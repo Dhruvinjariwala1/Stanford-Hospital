@@ -97,6 +97,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MediclaimName)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CashLess)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -139,6 +142,9 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.MediclaimName)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CashLess)
+                </td>
                 @* <td>
             <a asp-action="Edit" asp-route-id="@item.Ipdid">Edit</a> |
             <a asp-action="Details" asp-route-id="@item.Ipdid">Details</a> |
@@ -153,6 +159,7 @@
             <td><strong>Total Amount:</strong><br/><strong>@Model.Sum(i => i.DiagnosisCharges)</strong></td>
             <td colspan="2" class="text-right"><strong>Total Room Charges:</strong><br /><strong>@Model.Sum(i => i.RoomCharges)</strong></td>
             <td colspan="2" class="text-right"><strong>Total Room Price:</strong><br /><strong>@Model.Sum(i => i.TotalRoomPrice)</strong></td>
+            <td></td>
             <td></td>
         </tr>
     </tfoot>
@@ -238,7 +245,7 @@
                 success: function (data) {
                     $("#reportlist tbody").empty();
                     $.each(data, function (index, item) {
-                        var row = "<tr><td>" + item.patientFullname + "</td><td>Dr." + item.doctorfullname + "</td><td>" + formatDate(item.admitDate) + "</td><td>" + formatDate(item.dischargeDate) + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + item.roomType + "</td><td>" + item.roomCharges + "</td><td>" + item.perDayRoom + "</td><td>" + item.totalRoomPrice + "</td><td>" + item.mediclaimName + "</td><td>" + "</td></tr>";
+                        var row = "<tr><td>" + item.patientFullname + "</td><td>Dr." + item.doctorfullname + "</td><td>" + formatDate(item.admitDate) + "</td><td>" + formatDate(item.dischargeDate) + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + item.roomType + "</td><td>" + item.roomCharges + "</td><td>" + item.perDayRoom + "</td><td>" + item.totalRoomPrice + "</td><td>" + item.mediclaimName + "</td><td>" + item.cashless + "</td><td>" + "</td></tr>";
                         $("#reportlist tbody").append(row);
                     });
                     calculateTotals(data);

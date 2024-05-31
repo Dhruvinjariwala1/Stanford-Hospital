@@ -53,6 +53,9 @@ namespace StanfordHospital.Models.Dtos
         [Display(Name = " Mediclaim Name")]
         public string? MediclaimName { get; set; }
 
+        [Display(Name = "CashLess")]
+        public string? CashLess { get; set; }
+
         [Display(Name = "Insurance Number")]
         public string? InsuranceNumber { get; set; }
 

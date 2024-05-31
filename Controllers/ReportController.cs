@@ -37,6 +37,7 @@ namespace StanfordHospital.Controllers
                 PerDayRoom = a.PerDayRoom,
                 TotalRoomPrice = a.TotalRoomPrice,
                 MediclaimName = a.MediclaimName,
+                CashLess = a.CashLess,
             }).ToList();
 
             return View("Report",model);
@@ -284,6 +285,7 @@ namespace StanfordHospital.Controllers
                      PerDayRoom = a.PerDayRoom,
                      TotalRoomPrice = a.TotalRoomPrice,
                      MediclaimName = a.MediclaimName,
+                     CashLess = a.CashLess,
                      InsuranceNumber = a.InsuranceNumber,
                      AppointmentStatus = "",
                      AppointmentTime = default(DateTime),
@@ -325,6 +327,7 @@ namespace StanfordHospital.Controllers
                  PerDayRoom = default(int),
                  TotalRoomPrice = default(int),
                  MediclaimName = "",
+                 CashLess = "",
                  InsuranceNumber = "",
                  AdmitDate = default(DateTime),
                  DischargeDate = default(DateTime),

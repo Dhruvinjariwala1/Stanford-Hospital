@@ -63,10 +63,10 @@
                 @Html.DisplayNameFor(model => model.MediclaimName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.InsuranceNumber)
+                @Html.DisplayNameFor(model => model.CashLess)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CashLess)
+                @Html.DisplayNameFor(model => model.InsuranceNumber)
             </th>
             <th></th>
         </tr>
@@ -119,10 +119,10 @@
                     @Html.DisplayFor(modelItem => item.MediclaimName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.InsuranceNumber)
+                    @Html.DisplayFor(modelItem => item.CashLess)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CashLess)
+                    @Html.DisplayFor(modelItem => item.InsuranceNumber)
                 </td>
                 <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Ipdid"><i class='fas fa-edit'></i></a>

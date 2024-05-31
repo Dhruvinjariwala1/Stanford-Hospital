@@ -5,163 +5,159 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
-<h1>AddIpd</h1>
+<h1>Add Ipd</h1>
 
-<h4>Ipd</h4>
+<div>
+    <a class="btn btn-primary" asp-action="Index">Back to List</a>
+</div>
 <hr />
 <div class="row">
-    <div class="col-md-12">
-        <form asp-action="AddIpd" class="row g-3" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group col-md-6">
-                <label asp-for="Patientid" class="control-label">Select Patient</label><span class="text-danger">*</span>
-                <select asp-for="Patientid" class="form-control selectpatient">
-                </select>
+    <form asp-action="AddIpd" class="row g-3" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group col-md-6">
+            <label asp-for="Patientid" class="control-label">Select Patient</label><span class="text-danger">*</span>
+            <select asp-for="Patientid" class="form-control selectpatient">
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Id" class="control-label">Select Doctor</label><span class="text-danger">*</span>
+            <select asp-for="Id" class="form-control selectdoctor">
+            </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="AdmitDate" class="control-label">Admit Date</label><span class="text-danger">*</span>
+            <input asp-for="AdmitDate" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+            <span asp-validation-for="AdmitDate" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="DischargeDate" class="control-label">Discharge Date</label><span class="text-danger">*</span>
+            <input asp-for="DischargeDate" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
+            <span asp-validation-for="DischargeDate" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="MultipleDiagnosis" class="control-label">Diagnosis</label><span class="text-danger">*</span>
+            <select asp-for="MultipleDiagnosis" class="form-control" multiple>
+                <option>--Select Diagnosis--</option>
+                <option value="Clinical Diagnosis">Clinical Diagnosis</option>
+                <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
+                <option value="Imaging Diagnosis">Imaging Diagnosis</option>
+                <option value="Pathological Diagnosis">Pathological Diagnosis</option>
+                <option value="Differential Diagnosis">Differential Diagnosis</option>
+                <option value="Genetic Diagnosis">Genetic Diagnosis</option>
+                <option value="Provisional Diagnosis">Provisional Diagnosis</option>
+                <option value="Primary Diagnosis">Primary Diagnosis</option>
+                <option value="Secondary Diagnosis">Secondary Diagnosis</option>
+                <option value="Comorbid Diagnosis">Comorbid Diagnosis</option>
+            </select>
+            <span asp-validation-for="MultipleDiagnosis" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Prescription" class="control-label">Prescription</label><span class="text-danger">*</span>
+            <textarea asp-for="Prescription" class="form-control"></textarea>
+            <span asp-validation-for="Prescription" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="MultipleExtraCharges" class="control-label">Select Extra Charges</label>
+            <select asp-for="MultipleExtraCharges" id="extracharges" class="form-control">
+                <option>--Select Extra Charges--</option>
+                <option value="Covid Vaccine">Covid Vaccine</option>
+                <option value="X-Ray">X-Ray</option>
+                <option value="Full Body Checkup">Full Body Checkup</option>
+                <option value="ECG">ECG</option>
+                <option value="Emergency Charge">Emergency Charge</option>
+                <option value="Oxygen Charges">Oxygen Charges</option>
+                <option value="RBS">RBS</option>
+                <option value="Endoscopy">Endoscopy</option>
+                <option value="Rehabilitation">Rehabilitation</option>
+                <option value="Stethoscope">Stethoscope</option>
+                <option value="MRI ">MRI </option>
+            </select>
+            <span asp-validation-for="MultipleExtraCharges" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="DiagnosisCharges" class="control-label">Extra Charges Total</label>
+            <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
+            <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="RoomType" class="control-label">Select Room Type</label><span class="text-danger">*</span>
+            <select asp-for="RoomType" id="roomtype" class="form-control">
+                <option>--Select Room Type--</option>
+                <option value="General Room">General Room</option>
+                <option value="ICU Room">ICU Room</option>
+                <option value="Private Room">Private Room</option>
+                <option value="Single Room (Non-AC and AC)">Single Room (Non-AC and AC)</option>
+                <option value="Deluxe Room (Non-AC and AC)">Deluxe Room (Non-AC and AC)</option>
+                <option value="Suite">Suite</option>
+                <option value="Presidential Suite">Presidential Suite</option>
+            </select>
+            <span asp-validation-for="RoomType" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="RoomCharges" class="control-label">Room Charge</label>
+            <input asp-for="RoomCharges" id="RoomCharges" class="form-control" readonly />
+            <span asp-validation-for="RoomCharges" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6"></div>
+        <div class="form-group col-md-6">
+            <label asp-for="PerDayRoom" class="control-label">Per Day Room </label><span class="text-danger">*</span>
+            <input asp-for="PerDayRoom" id="PerDayRoom" class="form-control" />
+            <span asp-validation-for="PerDayRoom" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6"></div>
+        <div class="form-group col-md-6">
+            <label asp-for="TotalRoomPrice" class="control-label">Total Room Price</label><span class="text-danger">*</span>
+            <input asp-for="TotalRoomPrice" id="TotalRoomPrice" class="form-control" readonly />
+            <span asp-validation-for="TotalRoomPrice" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="MediclaimName" class="control-label">Mediclaim Name</label>
+            <select asp-for="MediclaimName" id="mediclaim" class="form-control">
+                <option>--Select Mediclaim Name--</option>
+                <option value="Bajaj Allianz Health Insurance">Bajaj Allianz Health Insurance</option>
+                <option value="HDFC ERGO Health Insurance">HDFC ERGO Health Insurance</option>
+                <option value="Reliance Health Insurance">Reliance Health Insurance</option>
+                <option value="Care Health Insurance">Care Health Insurance</option>
+                <option value="Future Generali India Insurance">Future Generali India Insurance</option>
+                <option value="IFFCO Tokio Health Insurance">IFFCO Tokio Health Insurance</option>
+                <option value="Cholamandalam MS General Insurance">Cholamandalam MS General Insurance</option>
+                <option value="Digit Health Insurance">Digit Health Insurance</option>
+                <option value="ICICI Lombard">ICICI Lombard</option>
+                <option value="Kotak Mahindra Health Insurance">Kotak Mahindra Health Insurance</option>
+                <option value="New India General Insurance">New India General Insurance</option>
+                <option value="Niva Bupa Health Insurance">Niva Bupa Health Insurance</option>
+                <option value="Oriental General Insurance">Oriental General Insurance</option>
+                <option value="SBI General Insurance">SBI General Insurance</option>
+                <option value="Aditya Birla Health Insurance">Aditya Birla Health Insurance</option>
+                <option value="Navi General Insurance">Navi General Insurance</option>
+                <option value="Bharti AXA">Bharti AXA</option>
+                <option value="ManipalCigna Health Insurance">ManipalCigna Health Insurance</option>
+                <option value="National Insurance">National Insurance</option>
+                <option value="Raheja QBE">Raheja QBE</option>
+                <option value="Royal Sundaram Health Insurance">Royal Sundaram Health Insurance</option>
+                <option value="Star Health Insurance">Star Health Insurance</option>
+                <option value="Tata AIG Health Insurance">Tata AIG Health Insurance</option>
+                <option value="Acko General Insurance">Acko General Insurance</option>
+            </select>
+            <span asp-validation-for="MediclaimName" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="InsuranceNumber" class="control-label">Insurance Number</label>
+            <input asp-for="InsuranceNumber" class="form-control" />
+            <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6" id="cashless" style="display:none;">
+            <label>CashLess</label>
+            <div class="form-check">
+                <input asp-for="CashLess" class="form-check-input" type="checkbox">
             </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Id" class="control-label">Select Doctor</label><span class="text-danger">*</span>
-                <select asp-for="Id" class="form-control selectdoctor">
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="AdmitDate" class="control-label">Admit Date</label><span class="text-danger">*</span>
-                <input asp-for="AdmitDate" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
-                <span asp-validation-for="AdmitDate" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="DischargeDate" class="control-label">Discharge Date</label><span class="text-danger">*</span>
-                <input asp-for="DischargeDate" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" max="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss")" />
-                <span asp-validation-for="DischargeDate" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="MultipleDiagnosis" class="control-label">Diagnosis</label><span class="text-danger">*</span>
-                <select asp-for="MultipleDiagnosis" class="form-control" multiple>
-                    <option>--Select Diagnosis--</option>
-                    <option value="Clinical Diagnosis">Clinical Diagnosis</option>
-                    <option value="Laboratory Diagnosis">Laboratory Diagnosis</option>
-                    <option value="Imaging Diagnosis">Imaging Diagnosis</option>
-                    <option value="Pathological Diagnosis">Pathological Diagnosis</option>
-                    <option value="Differential Diagnosis">Differential Diagnosis</option>
-                    <option value="Genetic Diagnosis">Genetic Diagnosis</option>
-                    <option value="Provisional Diagnosis">Provisional Diagnosis</option>
-                    <option value="Primary Diagnosis">Primary Diagnosis</option>
-                    <option value="Secondary Diagnosis">Secondary Diagnosis</option>
-                    <option value="Comorbid Diagnosis">Comorbid Diagnosis</option>
-                </select>
-                <span asp-validation-for="MultipleDiagnosis" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Prescription" class="control-label">Prescription</label><span class="text-danger">*</span>
-                <textarea asp-for="Prescription" class="form-control"></textarea>
-                <span asp-validation-for="Prescription" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="MultipleExtraCharges" class="control-label">Select Extra Charges</label>
-                <select asp-for="MultipleExtraCharges" id="extracharges" class="form-control">
-                    <option>--Select Extra Charges--</option>
-                    <option value="Covid Vaccine">Covid Vaccine</option>
-                    <option value="X-Ray">X-Ray</option>
-                    <option value="Full Body Checkup">Full Body Checkup</option>
-                    <option value="ECG">ECG</option>
-                    <option value="Emergency Charge">Emergency Charge</option>
-                    <option value="Oxygen Charges">Oxygen Charges</option>
-                    <option value="RBS">RBS</option>
-                    <option value="Endoscopy">Endoscopy</option>
-                    <option value="Rehabilitation">Rehabilitation</option>
-                    <option value="Stethoscope">Stethoscope</option>
-                    <option value="MRI ">MRI </option>
-                </select>
-                <span asp-validation-for="MultipleExtraCharges" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="DiagnosisCharges" class="control-label">Extra Charges Total</label>
-                <input asp-for="DiagnosisCharges" id="DiagnosisCharges" class="form-control" readonly />
-                <span asp-validation-for="DiagnosisCharges" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="RoomType" class="control-label">Select Room Type</label><span class="text-danger">*</span>
-                <select asp-for="RoomType" id="roomtype" class="form-control">
-                    <option>--Select Room Type--</option>
-                    <option value="General Room">General Room</option>
-                    <option value="ICU Room">ICU Room</option>
-                    <option value="Private Room">Private Room</option>
-                    <option value="Single Room (Non-AC and AC)">Single Room (Non-AC and AC)</option>
-                    <option value="Deluxe Room (Non-AC and AC)">Deluxe Room (Non-AC and AC)</option>
-                    <option value="Suite">Suite</option>
-                    <option value="Presidential Suite">Presidential Suite</option>
-                </select>
-                <span asp-validation-for="RoomType" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="RoomCharges" class="control-label">Room Charge</label>
-                <input asp-for="RoomCharges" id="RoomCharges" class="form-control" readonly />
-                <span asp-validation-for="RoomCharges" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6">
-                <label asp-for="PerDayRoom" class="control-label">Per Day Room </label><span class="text-danger">*</span>
-                <input asp-for="PerDayRoom" id="PerDayRoom" class="form-control" />
-                <span asp-validation-for="PerDayRoom" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6">
-                <label asp-for="TotalRoomPrice" class="control-label">Total Room Price</label><span class="text-danger">*</span>
-                <input asp-for="TotalRoomPrice" id="TotalRoomPrice" class="form-control" readonly />
-                <span asp-validation-for="TotalRoomPrice" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="MediclaimName" class="control-label">Mediclaim Name</label>
-                <select asp-for="MediclaimName" class="form-control">
-                    <option>--Select Mediclaim Name--</option>
-                    <option value="Bajaj Allianz Health Insurance">Bajaj Allianz Health Insurance</option>
-                    <option value="HDFC ERGO Health Insurance">HDFC ERGO Health Insurance</option>
-                    <option value="Reliance Health Insurance">Reliance Health Insurance</option>
-                    <option value="Care Health Insurance">Care Health Insurance</option>
-                    <option value="Future Generali India Insurance">Future Generali India Insurance</option>
-                    <option value="IFFCO Tokio Health Insurance">IFFCO Tokio Health Insurance</option>
-                    <option value="Cholamandalam MS General Insurance">Cholamandalam MS General Insurance</option>
-                    <option value="Digit Health Insurance">Digit Health Insurance</option>
-                    <option value="ICICI Lombard">ICICI Lombard</option>
-                    <option value="Kotak Mahindra Health Insurance">Kotak Mahindra Health Insurance</option>
-                    <option value="New India General Insurance">New India General Insurance</option>
-                    <option value="Niva Bupa Health Insurance">Niva Bupa Health Insurance</option>
-                    <option value="Oriental General Insurance">Oriental General Insurance</option>
-                    <option value="SBI General Insurance">SBI General Insurance</option>
-                    <option value="Aditya Birla Health Insurance">Aditya Birla Health Insurance</option>
-                    <option value="Navi General Insurance">Navi General Insurance</option>
-                    <option value="Bharti AXA">Bharti AXA</option>
-                    <option value="ManipalCigna Health Insurance">ManipalCigna Health Insurance</option>
-                    <option value="National Insurance">National Insurance</option>
-                    <option value="Raheja QBE">Raheja QBE</option>
-                    <option value="Royal Sundaram Health Insurance">Royal Sundaram Health Insurance</option>
-                    <option value="Star Health Insurance">Star Health Insurance</option>
-                    <option value="Tata AIG Health Insurance">Tata AIG Health Insurance</option>
-                    <option value="Acko General Insurance">Acko General Insurance</option>
-                </select>
-                <span asp-validation-for="MediclaimName" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="InsuranceNumber" class="control-label">Insurance Number</label>
-                <input asp-for="InsuranceNumber" class="form-control" />
-                <span asp-validation-for="InsuranceNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="form-group col-md-6">
-                    <label>CashLess</label>
-                    <div class="form-check">
-                        <input asp-for="CashLess" class="form-check-input" type="checkbox">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6"></div>
-            <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-primary">Create</button>
-            </div>
-        </form>
-    </div>
+        </div><br /><br /><br />
+        <div class="form-group col-md-12">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
 </div>
+
 <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
 <script>
     new MultiSelectTag('MultipleDiagnosis')
@@ -336,4 +332,25 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const mediclaimSelect = document.getElementById("mediclaim");
+        const cashlessContainer = document.getElementById("cashless");
 
+        mediclaimSelect.addEventListener("change", function () {
+            const selectedMediclaim = mediclaimSelect.value;
+            if (selectedMediclaim === 'Bajaj Allianz Health Insurance' || selectedMediclaim === 'HDFC ERGO Health Insurance' || selectedMediclaim === 'Reliance Health Insurance'
+                || selectedMediclaim === 'Care Health Insurance' || selectedMediclaim === 'Future Generali India Insurance' || selectedMediclaim === 'IFFCO Tokio Health Insurance'
+                || selectedMediclaim === 'Cholamandalam MS General Insurance' || selectedMediclaim === 'Digit Health Insurance' || selectedMediclaim === 'ICICI Lombard' || selectedMediclaim === 'Kotak Mahindra Health Insurance'
+                || selectedMediclaim === 'New India General Insurance' || selectedMediclaim === 'Niva Bupa Health Insurance' || selectedMediclaim === 'Oriental General Insurance'
+                || selectedMediclaim === 'SBI General Insurance' || selectedMediclaim === 'Aditya Birla Health Insurance' || selectedMediclaim === 'Navi General Insurance' || selectedMediclaim === 'Bharti AXA'
+                || selectedMediclaim === 'ManipalCigna Health Insurance' || selectedMediclaim === 'National Insurance' || selectedMediclaim === 'Raheja QBE'
+                || selectedMediclaim === 'Royal Sundaram Health Insurance' || selectedMediclaim === 'Star Health Insurance' || selectedMediclaim === 'Tata AIG Health Insurance'
+                || selectedMediclaim === 'Acko General Insurance') {
+                cashlessContainer.style.display = "block";
+            } else {
+                cashlessContainer.style.display = "none";
+            }
+        });
+    });
+</script>

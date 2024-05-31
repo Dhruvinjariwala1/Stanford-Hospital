@@ -54,7 +54,7 @@ namespace StanfordHospital.Models.Dtos
         [Display(Name = "Insurance Number")]
         public string? InsuranceNumber { get; set; }
 
-        [Display(Name = "Cash Less")]
+        [Display(Name = "CashLess")]
         public string? CashLess { get; set; }
     }
 }

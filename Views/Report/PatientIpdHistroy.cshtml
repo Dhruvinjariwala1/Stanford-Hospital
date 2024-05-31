@@ -72,6 +72,9 @@
                 @Html.DisplayNameFor(model => model.MediclaimName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.CashLess)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.InsuranceNumber)
             </th>
         </tr>
@@ -133,6 +136,9 @@
                     @Html.DisplayFor(modelItem => item.MediclaimName)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.CashLess)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.InsuranceNumber)
                 </td>
             </tr>
@@ -181,7 +187,7 @@
                 success: function (data) {
                     $("#ipdhistory tbody").empty();
                     $.each(data, function (index, item) {
-                        var row = "<tr><td>" + item.type + "</td><td>Dr. " + item.user.firstName + " " + item.user.lastName + "</td><td>" + formatDate(item.admitDate) + "</td><td>" + formatDate(item.dischargeDate) + "</td><td>" + item.multipleExtraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + item.appointmentStatus + "</td><td>" + formatDate(item.appointmentTime) + "</td><td>" + item.cases + "</td><td>" + item.price + "</td><td>" + item.reasonForAppointment + "</td><td>" + item.roomType + "</td><td>" + item.roomCharges + "</td><td>" + item.perDayRoom + "</td><td>" + item.totalRoomPrice + "</td><td>" + item.mediclaimName + "</td><td>" + item.insuranceNumber + "</td><td>" + "</td></tr>";
+                        var row = "<tr><td>" + item.type + "</td><td>Dr. " + item.user.firstName + " " + item.user.lastName + "</td><td>" + formatDate(item.admitDate) + "</td><td>" + formatDate(item.dischargeDate) + "</td><td>" + item.multipleExtraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + item.appointmentStatus + "</td><td>" + formatDate(item.appointmentTime) + "</td><td>" + item.cases + "</td><td>" + item.price + "</td><td>" + item.reasonForAppointment + "</td><td>" + item.roomType + "</td><td>" + item.roomCharges + "</td><td>" + item.perDayRoom + "</td><td>" + item.totalRoomPrice + "</td><td>" + item.mediclaimName + "</td><td>" + item.cashLess + "</td><td>" + item.insuranceNumber + "</td><td>" + "</td></tr>";
                         $("#ipdhistory tbody").append(row);
                     });
                    
