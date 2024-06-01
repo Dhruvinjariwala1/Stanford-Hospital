@@ -12,13 +12,11 @@ namespace StanfordHospital.Controllers
     {
         private readonly ILogger<PatientController> _logger;
         private readonly ApplicationDbContext _context;
-        private readonly IPasswordHasher<Patient> _passwordHasher;
 
-        public PatientController(ILogger<PatientController> logger, ApplicationDbContext context, IPasswordHasher<Patient> passwordHasher)
+        public PatientController(ILogger<PatientController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
-            _passwordHasher = passwordHasher;
         }
 
         //public IActionResult PatientDetails()
@@ -56,7 +54,6 @@ namespace StanfordHospital.Controllers
             {
                 try
                 {
-                    patient.Password = _passwordHasher.HashPassword(patient, patient.Password);
                     //Create
                     var Patient = new Patient
                     {
@@ -68,7 +65,6 @@ namespace StanfordHospital.Controllers
                         EmailId = patient.EmailId,
                         Age = patient.Age,
                         Address = patient.Address,
-                        Password = patient.Password,
                     };
                     _context.Patient.Add(Patient);
                     _context.SaveChanges();
@@ -76,7 +72,6 @@ namespace StanfordHospital.Controllers
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error Adding Patient");
                     throw;
                 }
                 return RedirectToAction("Patient");
@@ -102,12 +97,6 @@ namespace StanfordHospital.Controllers
                     Patient.EmailId = patient.EmailId;
                     Patient.Age = patient.Age;
                     Patient.Address = patient.Address;
-
-                    if(!string.IsNullOrEmpty(patient.Password))
-                    {
-                        Patient.Password = _passwordHasher.HashPassword(Patient, patient.Password);
-                    }
-
                     _context.Patient.Update(Patient);
                     _context.SaveChanges();
                     TempData["Message"] = "Patient Updated Successfully....";
@@ -155,7 +144,6 @@ namespace StanfordHospital.Controllers
                     EmailId = p.EmailId,
                     Age = p.Age,
                     Address = p.Address,
-                    Password = p.Password,
                 }).FirstOrDefault();
 
             return View("EditPatient", editpatient);
@@ -174,7 +162,6 @@ namespace StanfordHospital.Controllers
                     EmailId = p.EmailId,
                     Age = p.Age,
                     Address = p.Address,
-                    Password = p.Password,
                 }).FirstOrDefault();
 
             return View("DeletePatient", deletepatient);

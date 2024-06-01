@@ -183,6 +183,7 @@ namespace StanfordHospital.Controllers
                               PerDayRoom = r.PerDayRoom,
                               TotalRoomPrice = r.TotalRoomPrice,
                               MediclaimName = r.MediclaimName,
+                              CashLess = r.CashLess, 
                               InsuranceNumber = r.InsuranceNumber,
                               patientFullname = (patient.Firstname + " " + patient.Lastname),
                               doctorfullname = (doctor.FirstName + " " + doctor.LastName)
