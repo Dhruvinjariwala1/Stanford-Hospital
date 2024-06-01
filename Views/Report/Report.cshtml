@@ -259,7 +259,7 @@
                 success: function (data) {
                     $("#reportlist tbody").empty();
                     $.each(data, function (index, item) {
-                        var cashlessSymbol = item.cashless ? "❌" : "✅";
+                        var cashlessSymbol = (item.cashLess.toLowerCase() === 'true') ? "✅" : "❌";
                         var row = "<tr><td>" + item.patientFullname + "</td><td>Dr." + item.doctorfullname + "</td><td>" + formatDate(item.admitDate) + "</td><td>" + formatDate(item.dischargeDate) + "</td><td>" + item.extraCharges + "</td><td>" + item.diagnosisCharges + "</td><td>" + item.roomType + "</td><td>" + item.roomCharges + "</td><td>" + item.perDayRoom + "</td><td>" + item.totalRoomPrice + "</td><td>" + item.mediclaimName + "</td><td style='font-size: 24px;'>" + cashlessSymbol + "</td><td>" + "</td></tr>";
                         $("#reportlist tbody").append(row);
                     });
