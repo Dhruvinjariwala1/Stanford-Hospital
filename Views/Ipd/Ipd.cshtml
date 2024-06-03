@@ -116,23 +116,33 @@
                     @Html.DisplayFor(modelItem => item.TotalRoomPrice)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MediclaimName)
-                </td>
-                <td>
-                    @if (bool.TryParse(item.CashLess, out bool CashLess))
+                    @if (string.IsNullOrEmpty(item.MediclaimName) || item.MediclaimName == "--Select Mediclaim Name--")
                     {
-                        if (CashLess)
-                        {
-                            <span style="font-size: 24px;">✅</span>
-                        }
-                        else
-                        {
-                            <span style="font-size: 24px;">❌</span>
-                        }
+                        <span></span>
                     }
                     else
                     {
-                        <span>Invalid value</span>
+                        @Html.DisplayFor(modelItem => item.MediclaimName)
+                    }
+                </td>
+                <td id="cashlessColumn">
+                    @if (!string.IsNullOrEmpty(item.MediclaimName) && item.MediclaimName != "--Select Mediclaim Name--")
+                    {
+                        @if (bool.TryParse(item.CashLess, out bool cashless) || item.CashLess == "Please Cashless Checked")
+                        {
+                            if (cashless)
+                            {
+                                <span style="font-size: 24px;">✅</span>
+                            }
+                            else
+                            {
+                                <span style="font-size: 24px;">❌</span>
+                            }
+                        }
+                        else
+                        {
+                            <span>Invalid value</span>
+                        }
                     }
                 </td>
                 <td>
