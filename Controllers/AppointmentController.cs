@@ -23,6 +23,8 @@ namespace StanfordHospital.Controllers
 
         public IActionResult AppointmentPrint(int id)
         {
+            ViewBag.isappointment = "active";
+
             var model = new Appointment();
             model = _context.Appointment.Where(x => x.Appointmentid == id).Select(a => new Appointment
             {
