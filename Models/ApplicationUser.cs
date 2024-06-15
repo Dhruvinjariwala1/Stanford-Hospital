@@ -7,13 +7,13 @@ namespace StanfordHospital.Models
 {
     public class ApplicationUser : IdentityUser
     {
-        [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "First Name can only contain letters.")]
         [Display(Name ="First Name")]
         public string? FirstName { get; set; }
-        [Required]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last Name can only contain letters.")]
         [Display(Name = "Last Name")]
         public string? LastName { get; set; }
-        [MaxLength(10)]
+        [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone No must be 10 digits.")]
         [Display(Name = "Phone No")]
         public string? PhoneNo { get; set; }
         [Required]
