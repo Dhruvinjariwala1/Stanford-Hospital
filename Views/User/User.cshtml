@@ -25,9 +25,12 @@
 }
 <h1>User</h1>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create User</a>
-</p>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create User</a>
+    </p>
+}
 <table class="table" id="userlist">
     <thead>
         <tr style="background-color:#1E90FF;">
@@ -55,10 +58,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Role)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Action)
+            @if (User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Action)
             </th>
-
+            }
         </tr>
     </thead>
     <tbody>
@@ -89,10 +94,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Role)
                 </td>
-                <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class='fas fa-edit'></i></a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id"><i class='fas fa-edit'></i></a>
                     <button type="button" class="btn btn-danger" onclick="confirmFunction('@item.Id')"><i class='fas fa-trash-alt'></i></button>
                 </td>
+                }
             </tr>
         }
     </tbody>

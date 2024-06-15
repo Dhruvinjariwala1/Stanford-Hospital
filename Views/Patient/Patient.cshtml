@@ -18,9 +18,12 @@
 
 <h1>Patient</h1>
 
-<p>
-    <a class="btn btn-primary" asp-action="Create">Create Patient</a>
-</p>
+@if (User.IsInRole("Staff") || User.IsInRole("Admin"))
+{
+    <p>
+        <a class="btn btn-primary" asp-action="Create">Create Patient</a>
+    </p>
+}
 <table class="table" id="patientlist">
     <thead>
         <tr style="background-color:#1E90FF;">
@@ -48,9 +51,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Address)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Action)
+            @if (User.IsInRole("Staff") || User.IsInRole("Admin"))
+            {
+                <th>
+                    @Html.DisplayNameFor(model => model.Action)
             </th>
+            }
         </tr>
     </thead>
     <tbody>
@@ -81,10 +87,13 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Address)
                 </td>
-                <td>
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Patientid"><i class='fas fa-edit'></i></a>
+                @if (User.IsInRole("Staff") || User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Patientid"><i class='fas fa-edit'></i></a>
                     <button type="button" class="btn btn-danger" onclick="confirmFunction('@item.Patientid')"><i class='fas fa-trash-alt'></i></button>
-                </td>
+                    </td>
+                }
             </tr>
         }
     </tbody>
