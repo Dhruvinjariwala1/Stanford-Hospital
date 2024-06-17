@@ -14,7 +14,7 @@ namespace StanfordHospital.Models
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Last Name can only contain letters.")]
         public string? LastName { get; set; }
         [EmailAddress]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage ="Please Enter Valid Email Address")]
+        [Required(ErrorMessage = "Please Enter Valid Email Address")]
         [Display(Name = "Email Id")]
         public string? Email { get; set; }
         [Display(Name = "Phone No")]
