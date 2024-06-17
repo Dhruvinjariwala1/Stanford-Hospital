@@ -254,10 +254,10 @@ namespace StanfordHospital.Controllers
         public async Task<IActionResult> UpdateProfile(ApplicationUser user, IFormFile ImageFile)
         {
             ViewBag.isuser = "active";
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var updateuser = _context.Users.Where(u => u.Id == user.Id).FirstOrDefault();
-                if(updateuser != null) 
+                if (updateuser != null)
                 {
                     updateuser.FirstName = user.FirstName;
                     updateuser.LastName = user.LastName;
