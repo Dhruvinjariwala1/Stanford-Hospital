@@ -16,13 +16,13 @@ namespace StanfordHospital.Models
         [RegularExpression(@"^[0-9]{10}$", ErrorMessage = "Phone No must be 10 digits.")]
         [Display(Name = "Phone No")]
         public string? PhoneNo { get; set; }
-        [Required]
+        
         [Display(Name ="Address")]
         public string? Address { get; set; }
-        [Required]
+        
         [Display(Name = "Date Of Birth")]
         public DateTime BirthDate { get; set; }
-        [Required]
+        
         public string? Gender { get; set; }
         public string? Role { get; set; }
         public string? Image { get; set; }
